@@ -41,11 +41,10 @@ export class AuthService {
       );
   }
 
-  register(name:string, email: string, password: string): Observable<any> {
-    const userdata = { name,email, password };
-    return this.http.post<any>(`${this.apiUrl}/register`, { userdata });
-
+  register(name: string, email: string, password: string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register`, { email, password, name });
   }
+  
 
 
   forgotPassword(email: string): Observable<any> {
