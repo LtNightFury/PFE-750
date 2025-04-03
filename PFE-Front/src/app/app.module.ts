@@ -23,14 +23,18 @@ import { FormsModule } from '@angular/forms';
     ForgotPasswordComponent,
     VerifyEmailComponent,
     FooterComponent,
-    EditPropertyComponent
+    EditPropertyComponent,
+    ResetPasswordComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
     
   ],
   providers: [],
