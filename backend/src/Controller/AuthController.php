@@ -62,6 +62,7 @@ public function register(Request $request): JsonResponse
     $user = new User();
     $user->setEmail($data['email']);
     $user->setPassword($this->passwordHasher->hashPassword($user, $data['password']));
+    $user->setRoles(['ROLE_USER']);
     
     // Add the name field
     if (isset($data['name'])) {
@@ -114,7 +115,7 @@ public function register(Request $request): JsonResponse
         
         // Send email with reset link
         // In a real application, you would create a frontend URL with the token
-        $resetUrl = 'https://your-frontend-url.com/reset-password?token=' . $token;
+        $resetUrl = 'localhost:4200/reset-password' . $token;
         
         $email = (new Email())
             ->from('noreply@yourapp.com')
@@ -158,4 +159,5 @@ public function register(Request $request): JsonResponse
         
         return $this->json(['message' => 'Password has been reset successfully'], Response::HTTP_OK);
     }
+    
 }

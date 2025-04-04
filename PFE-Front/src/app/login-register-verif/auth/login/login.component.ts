@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     });
 
     // Get return URL from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/edit';
   }
 
   get f() { return this.loginForm.controls; }
@@ -43,7 +43,8 @@ export class LoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.authService.login(this.f['email'].value, this.f['password'].value)
+    const formData = this.loginForm.value;
+    this.authService.login( formData.email, formData.password)
       .subscribe({
         next: () => {
           this.router.navigate([this.returnUrl]);
