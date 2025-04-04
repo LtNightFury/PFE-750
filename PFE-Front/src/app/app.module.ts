@@ -13,6 +13,15 @@ import { EditPropertyComponent } from './pages/edit-property/edit-property.compo
 import { ResetPasswordComponent } from './login-register-verif/auth/reset-password/reset-password.component';
 import { HttpClientModule } from '@angular/common/http';  
 import { FormsModule } from '@angular/forms';
+import { HeaderComponent } from './layout/header/header.component';
+import { GeneralTabComponent } from './components/tabs/general-tab/general-tab.component';
+import { LocationTabComponent } from './components/tabs/location-tab/location-tab.component';
+import { SpecificationTabComponent } from './components/tabs/specification-tab/specification-tab.component';
+import { AmenitiesTabComponent } from './components/tabs/amenities-tab/amenities-tab.component';
+import { PriceTabComponent } from './components/tabs/price-tab/price-tab.component';
+import { MediaTabComponent } from './components/tabs/media-tab/media-tab.component';
+import { PublicationTabComponent } from './components/tabs/publication-tab/publication-tab.component';
+import { ContactsTabComponent } from './components/tabs/contacts-tab/contacts-tab.component';
 
 
 @NgModule({
@@ -25,6 +34,15 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     EditPropertyComponent,
     ResetPasswordComponent,
+    HeaderComponent,
+    GeneralTabComponent,
+    LocationTabComponent,
+    SpecificationTabComponent,
+    AmenitiesTabComponent,
+    PriceTabComponent,
+    MediaTabComponent,
+    PublicationTabComponent,
+    ContactsTabComponent,
     
   ],
   imports: [
