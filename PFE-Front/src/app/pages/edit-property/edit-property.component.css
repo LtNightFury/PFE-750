@@ -24,6 +24,7 @@
       .btn_tab{
         border: none;
         outline: none;
+        
         cursor: pointer;
         position: relative;
         padding-top: 0;
@@ -41,17 +42,21 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        height: 1px; /* Adjust the thickness as needed */
+        height: 0.12rem; /* Adjust the thickness as needed */
         background-color: black; /* Adjust the color as needed */
       }
       .form_tab_view {
       border-bottom: #DEDEDE 1px solid;
+      
       }
       
       .header_title{
        font-family: poppins, sans-serif;
-       font-weight: 500;
+       font-weight: 600;
+      
+        
       }
+
         li {
         padding: 12px 1px;
         color: #666;
@@ -65,7 +70,7 @@
 
 
       .invalid-tab {
-        border: 2px solid #dc3545 !important;
+        border: 2px solid red !important;
         
       }
       

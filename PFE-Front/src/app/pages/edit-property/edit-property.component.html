@@ -15,7 +15,7 @@
         
         <!-- breadcrumbs end -->
     </div>
-    <div class="header_title  d-flex justify-content-between m-3 align-items-center">
+    <div class="header_title  d-flex justify-content-between m-3 mb-4 align-items-center">
         <h1 class="">Create Property</h1>
         <div class="header_end">
             <div class="header_end_btn">
@@ -27,7 +27,7 @@
     
     <form [formGroup]="propertyForm">
       <!-- Tab navigation -->
-      <div class="form_tab_view d-flex gap-3 m-3 overflow-auto">
+      <div class="form_tab_view d-flex gap-3 mt-4 overflow-auto">
         <div class="form_tab" *ngFor="let tab of tabs" [class.active]="activeTab === tab.id" (click)="setActiveTab(tab.id)">
             <button class="btn btn_tab" 
             [ngClass]="{
