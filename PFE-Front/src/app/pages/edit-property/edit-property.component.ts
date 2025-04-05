@@ -45,6 +45,38 @@ export class EditPropertyComponent implements OnInit {
       contacts: this.fb.group({})
     });
   }
+  get generalGroup(): FormGroup {
+    return this.propertyForm.get('general') as FormGroup;
+  }
+  
+  get locationGroup(): FormGroup {
+    return this.propertyForm.get('location') as FormGroup;
+  }
+  
+  get specificationGroup(): FormGroup {
+    return this.propertyForm.get('specification') as FormGroup;
+  }
+  
+  get amenitiesGroup(): FormGroup {
+    return this.propertyForm.get('amenities') as FormGroup;
+  }
+  
+  get priceGroup(): FormGroup {
+    return this.propertyForm.get('price') as FormGroup;
+  }
+  
+  get mediaGroup(): FormGroup {
+    return this.propertyForm.get('media') as FormGroup;
+  }
+  
+  get publicationGroup(): FormGroup {
+    return this.propertyForm.get('publication') as FormGroup;
+  }
+  
+  get contactsGroup(): FormGroup {
+    return this.propertyForm.get('contacts') as FormGroup;
+  }
+  
   
   setActiveTab(tabId: string) {
     this.activeTab = tabId;

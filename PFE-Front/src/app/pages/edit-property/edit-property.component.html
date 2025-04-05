@@ -1,4 +1,4 @@
-
+<div class="property-edit">
 <div class="top_body">
     <header class="header">
     <div class="header m-2 d-flex ">
@@ -43,8 +43,10 @@
        <!--
       <div class="tab-content">
         <-- Each tab is a separate component -->
-        <!-- General Tab 
-        <app-general-tab *ngIf="activeTab === 'general'" [parentForm]="propertyForm.get('general')"></app-general-tab>
+        <!-- General Tab -->
+        <app-general-tab *ngIf="activeTab === 'general'" [parentForm]="generalGroup"></app-general-tab>
+
+      <!---
         <app-location-tab *ngIf="activeTab === 'location'" [parentForm]="propertyForm.get('location')"></app-location-tab>
         <app-specification-tab *ngIf="activeTab === 'specification'" [parentForm]="propertyForm.get('specification')"></app-specification-tab>
         <app-amenities-tab *ngIf="activeTab === 'amenities'" [parentForm]="propertyForm.get('amenities')"></app-amenities-tab>
@@ -57,3 +59,4 @@
     </form>
   </header>
   </div>
+</div>

@@ -1,1 +1,83 @@
 <p>general-tab works!</p>
+<!-- general-tab.component.html -->
+<div class="tab-container" [formGroup]="parentForm">
+    <h2>General</h2>
+    <p class="subtitle">Set status and category for this property</p>
+    
+    <div class="form-row">
+      <div class="form-group full-width">
+        <label>Deal type</label>
+        <div class="radio-group">
+          <div class="radio-option" [class.selected]="parentForm?.get('dealType')?.value === 'sale'">
+            <input type="radio" id="sale" formControlName="dealType" value="sale">
+            <label for="sale">Sale</label>
+          </div>
+          <div class="radio-option" [class.selected]="parentForm?.get('dealType')?.value === 'rent'">
+            <input type="radio" id="rent" formControlName="dealType" value="rent">
+            <label for="rent">Rent</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-row">
+      <div class="form-group half-width">
+        <label>Reference</label>
+        <input type="text" formControlName="reference" placeholder="Enter reference">
+        <div class="form-error" *ngIf="parentForm?.get('reference')?.touched && parentForm?.get('reference')?.invalid">
+          Required
+        </div>
+      </div>
+      
+      <div class="form-group half-width">
+        <label>Status</label>
+        <select formControlName="status">
+          <option value="">Select status</option>
+          <option value="active">Active</option>
+          <option value="pending">Pending</option>
+          <option value="sold">Sold</option>
+        </select>
+        <div class="form-error" *ngIf="parentForm?.get('status')?.touched && parentForm?.get('status')?.invalid">
+          Required
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-row">
+      <div class="form-group half-width">
+        <label>Category</label>
+        <select formControlName="category">
+          <option value="">Select category</option>
+          <option value="apartment">Apartment</option>
+          <option value="house">House</option>
+          <option value="commercial">Commercial</option>
+        </select>
+        <div class="form-error" *ngIf="parentForm?.get('category')?.touched && parentForm?.get('category')?.invalid">
+          Required
+        </div>
+      </div>
+      
+      <div class="form-group half-width">
+        <label>Broker</label>
+        <div class="select-with-icon">
+          <select formControlName="broker">
+            <option value="john-doe">John Doe</option>
+            <option value="jane-smith">Jane Smith</option>
+          </select>
+        </div>
+        <div class="form-error" *ngIf="parentForm?.get('broker')?.touched && parentForm?.get('broker')?.invalid">
+          Required
+        </div>
+      </div>    </div>
+    
+    <div class="form-row">
+      <div class="form-group half-width">
+        <label>Workflow</label>
+        <select formControlName="workflow">
+          <option value="">Select workflow</option>
+          <option value="standard">Standard</option>
+          <option value="premium">Premium</option>
+        </select>
+      </div>
+    </div>
+  </div>
