@@ -159,5 +159,5 @@ public function register(Request $request): JsonResponse
         
         return $this->json(['message' => 'Password has been reset successfully'], Response::HTTP_OK);
     }
-    
+     
 }

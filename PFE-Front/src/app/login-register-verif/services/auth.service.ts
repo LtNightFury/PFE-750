@@ -8,7 +8,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8000/api'; // Your Symfony API URL
+  private apiUrl = 'http://backend.ddev.site/api'; // Your Symfony API URL
   private tokenKey = 'auth_token';
   private jwtHelper = new JwtHelperService();
   private currentUserSubject = new BehaviorSubject<any>(null);
