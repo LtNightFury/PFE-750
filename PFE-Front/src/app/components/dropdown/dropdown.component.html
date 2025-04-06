@@ -1,0 +1,20 @@
+
+<div class="dropdown select-status"[ngClass]="customClass">
+    <button type="button" class="dropdown-button" (click)="toggleDropdown($event)">
+      {{ selectedLabel }}
+    </button>
+  
+    <div class="dropdown-content" [class.show]="isOpen">
+      <div
+        *ngFor="let option of options"
+        class="dropdown-option"
+        [ngClass]="{
+          'disabled-option': option.disabled,
+          'selected-option': option.value === selectedValue
+        }"
+        (click)="selectOption(option)">
+        {{ option.label }}
+      </div>
+    </div>
+  </div>
+  

@@ -22,6 +22,7 @@ import { PriceTabComponent } from './components/tabs/price-tab/price-tab.compone
 import { MediaTabComponent } from './components/tabs/media-tab/media-tab.component';
 import { PublicationTabComponent } from './components/tabs/publication-tab/publication-tab.component';
 import { ContactsTabComponent } from './components/tabs/contacts-tab/contacts-tab.component';
+import { DropdownComponent } from './components/dropdown/dropdown.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import { ContactsTabComponent } from './components/tabs/contacts-tab/contacts-ta
     MediaTabComponent,
     PublicationTabComponent,
     ContactsTabComponent,
+    DropdownComponent,
     
   ],
   imports: [
