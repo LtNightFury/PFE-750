@@ -106,7 +106,7 @@ export class EditPropertyComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.propertyForm.valid) {
+   // if (this.propertyForm.valid) {
       this.isSubmitting = true;
       this.submitError = '';
 
@@ -124,9 +124,9 @@ export class EditPropertyComponent implements OnInit {
             console.error('Error saving property', error);
           }
         );
-    } else {
+   // } else {
       this.markFormGroupAsTouched(this.propertyForm);
-    }
+   // }
   }
 
   markFormGroupAsTouched(formGroup: FormGroup) {
