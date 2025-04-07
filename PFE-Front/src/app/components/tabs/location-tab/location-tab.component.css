@@ -1,0 +1,145 @@
+.form-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.form-row-view {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    width: min(75rem, 100%);
+    margin-inline: auto;
+}
+
+.title-2 {
+    font-size: 1.875rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.desc {
+    line-height: 1.5;
+    color: #918f90;
+}
+
+.form-row-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: min(45rem, 100%);
+}
+.form-row-legend {
+    flex-grow: 1;
+    flex-basis: 0;
+    display: grid;
+    gap: 0.25rem;
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+    border-radius: 10px;
+}
+.grid{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+
+}
+.form-list-view{
+    display: flex
+    ;
+        flex-direction: column;
+        gap: 1.5rem;
+        width: min(45rem, 100%);
+    }
+    .input_label{
+        display: block;
+        width: fit-content;
+        margin: 0 0 0.25rem;
+        font-weight: 500;
+        cursor: pointer;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+    .input_inner{display: flex;
+    align-items: center;
+    height: 3rem;
+    padding: 0 0.05rem;
+    background: #ffffff;
+    border: 0.0625rem solid #dedede;
+    border-radius: 0.25rem;
+    transition: .25s;
+
+    }
+    .input_control{flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    padding: 0 0.4rem;
+    font: inherit;
+    color: #1e1e1e;
+    background: none;
+    border: none;
+    border-radius: 0.25rem;
+    
+    }
+    
+    .select-status option.selected-option{
+        background-color:#E5E7EB;
+        color: #fff important;
+    }
+    
+    
+    
+    .select-status option:disabled{
+        background-color:#E5E7EB;
+        color: #fff important;
+        cursor: not-allowed;
+    }
+    .select-status option:disabled {
+        pointer-events: none;
+      }
+      .select{
+        flex-grow: 1;
+        width: 100%;
+        height: 3rem;
+       
+        font: inherit;
+        color: inherit;
+        background: none;
+        border: 1px solid #DEDEDE;
+        border-radius: 0.25rem;
+    
+        padding: 0 0.9375rem 0 0.875rem;
+        
+    
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 15px center;
+        
+        
+      
+    
+      font-size: 17px;
+      line-height: 1.5;
+      
+    
+      
+    
+      width: 100%; 
+      
+    }
+    .input_hint{
+        font-size: .875rem;
+        line-height: 1.43;
+        color: #918f90;
+    
+    
+    }
+      
+    

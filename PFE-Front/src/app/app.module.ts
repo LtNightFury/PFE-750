@@ -23,6 +23,7 @@ import { MediaTabComponent } from './components/tabs/media-tab/media-tab.compone
 import { PublicationTabComponent } from './components/tabs/publication-tab/publication-tab.component';
 import { ContactsTabComponent } from './components/tabs/contacts-tab/contacts-tab.component';
 import { DropdownComponent } from './components/dropdown/dropdown.component';
+import { MapComponent } from './components/map/map.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { DropdownComponent } from './components/dropdown/dropdown.component';
     PublicationTabComponent,
     ContactsTabComponent,
     DropdownComponent,
+    MapComponent,
     
   ],
   imports: [
