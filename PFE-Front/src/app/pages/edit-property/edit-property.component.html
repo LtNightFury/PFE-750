@@ -32,7 +32,7 @@
             <button class="btn btn_tab" 
             [ngClass]="{
               'active_tab': activeTab === tab.id,
-              'invalid-tab': propertyForm.get(tab.id)?.invalid && propertyForm.get(tab.id)?.touched
+              'invalid-tab': propertyForm.get(tab.id)?.invalid && (propertyForm.get(tab.id)?.dirty || propertyForm.get(tab.id)?.touched)
             }">
       {{ tab.label }}
     </button>

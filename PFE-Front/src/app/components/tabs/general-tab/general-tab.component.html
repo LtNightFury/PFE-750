@@ -8,11 +8,11 @@
       <div class="form-group full-width">
         <label>Deal type</label>
         <div class="radio-group">
-          <div class="radio-option" [class.selected]="parentForm?.get('dealType')?.value === 'sale'">
+          <div class="radio-option" [class.selected]="parentForm.get('dealType')?.value === 'sale'">
             <input type="radio" id="sale" formControlName="dealType" value="sale">
             <label for="sale">Sale</label>
           </div>
-          <div class="radio-option" [class.selected]="parentForm?.get('dealType')?.value === 'rent'">
+          <div class="radio-option" [class.selected]="parentForm.get('dealType')?.value === 'rent'">
             <input type="radio" id="rent" formControlName="dealType" value="rent">
             <label for="rent">Rent</label>
           </div>
