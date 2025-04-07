@@ -33,19 +33,22 @@
             <div *ngIf="isInvalid('title')" class="error-message">title is required</div>
           </div>
           
+          
           <!-- Status field without dropdown -->
           <div class="select-status">
-            <label for="status" class="input_label">Status</label>
-            <p class="input_hint mt-1">Required</p>
-            <div *ngIf="isInvalid('status')" class="error-message">Status is required</div>
+            <label for="propertyType" class="input_label">property Type</label>
+            <app-dropdown
+            [options]="propertyType"
+            formControlName=propertyType
+            [placeholder]="'Select a property type'"
+            [selectedValue]="selectedPropertyType"
+            (optionSelected)="onPropertyTypeSelected($event)">
+            </app-dropdown>
+            <div *ngIf="isInvalid('propertyType')" class="error-message">Status is required</div>
           </div>
+          
   
-          <!-- Category field without dropdown -->
-          <div class="select-status">
-            <label for="category" class="input_label">Category</label>
-            
-            <div *ngIf="isInvalid('category')" class="error-message">Category is required</div>
-          </div>
+          
   
           <div class="input" *ngIf="parentForm.get('deal_type')?.value === 'rent'">
             <label for="availabilityDate" class="input_label">Availability Date</label>
@@ -60,11 +63,7 @@
           
   
           <!-- WorkFlow field without dropdown -->
-          <div class="select-status">
-            <label for="WorkFlow" class="input_label">WorkFlow</label>
-            <p class="input_hint mt-1">Required</p>
-            <div *ngIf="isInvalid('workflow')" class="error-message">Workflow is required</div>
-          </div>
+          
   
           <!-- Frequency field without dropdown -->
           <div class="select-status" *ngIf="parentForm.get('deal_type')?.value === 'rent'">

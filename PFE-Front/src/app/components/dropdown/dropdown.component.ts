@@ -30,8 +30,24 @@ export class DropdownComponent {
   // Toggle the dropdown open/close
   toggleDropdown(event: Event) {
     this.isOpen = !this.isOpen;
-    event.stopPropagation(); // Prevents event from closing dropdown immediately
+    event.stopPropagation();
+  
+    // Smart dropdown direction
+    setTimeout(() => {
+      const dropdown = this.eRef.nativeElement.querySelector('.dropdown-content');
+      const rect = dropdown.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+  
+      if (rect.bottom > windowHeight) {
+        dropdown.style.top = 'auto';
+        dropdown.style.bottom = '100%'; // flip upward
+      } else {
+        dropdown.style.top = '100%';
+        dropdown.style.bottom = 'auto';
+      }
+    });
   }
+  
 
   // Select an option from the dropdown
   selectOption(option: { value: string; label: string; disabled?: boolean }) {
@@ -47,4 +63,5 @@ export class DropdownComponent {
     const selectedOption = this.options.find(o => o.value === this.selectedValue);
     return selectedOption ? selectedOption.label : this.placeholder;
   }
+  
 }

@@ -29,7 +29,7 @@
       <!-- Tab navigation -->
       <div class="form_tab_view d-flex gap-3 mt-4 overflow-auto">
         <div class="form_tab" *ngFor="let tab of tabs" [class.active]="activeTab === tab.id" (click)="setActiveTab(tab.id)">
-            <button class="btn btn_tab" 
+            <button type="button" class="btn btn_tab" 
             [ngClass]="{
               'active_tab': activeTab === tab.id,
               'invalid-tab': propertyForm.get(tab.id)?.invalid && (propertyForm.get(tab.id)?.dirty || propertyForm.get(tab.id)?.touched)
