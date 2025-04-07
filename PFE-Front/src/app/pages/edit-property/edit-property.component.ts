@@ -1,6 +1,5 @@
-// edit-property.component.ts
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -35,8 +34,22 @@ export class EditPropertyComponent implements OnInit {
   ngOnInit() {
     // Initialize the parent form with groups for each tab
     this.propertyForm = this.fb.group({
-      general: this.fb.group({}),
-      location: this.fb.group({}),
+      general: this.fb.group({
+        deal_type: ['sale', Validators.required],
+        title: ['', Validators.required],
+        description: ['', Validators.required],
+        category: ['', Validators.required],
+        availabilityDate: [''],  // Only required if deal_type is 'rent'
+        broker: ['', Validators.required],
+        workflow: ['', Validators.required],
+        frequency: [''],  // Only required if deal_type is 'rent'
+       
+       
+      }),
+      location: this.fb.group({
+        
+
+      }),
       specification: this.fb.group({}),
       amenities: this.fb.group({}),
       price: this.fb.group({}),
@@ -45,6 +58,7 @@ export class EditPropertyComponent implements OnInit {
       contacts: this.fb.group({})
     });
   }
+
   get generalGroup(): FormGroup {
     return this.propertyForm.get('general') as FormGroup;
   }
@@ -77,7 +91,6 @@ export class EditPropertyComponent implements OnInit {
     return this.propertyForm.get('contacts') as FormGroup;
   }
   
-  
   setActiveTab(tabId: string) {
     this.activeTab = tabId;
   }
@@ -104,6 +117,7 @@ export class EditPropertyComponent implements OnInit {
       this.markFormGroupAsTouched(this.propertyForm);
     }
   }
+
   markFormGroupAsTouched(formGroup: FormGroup) {
     Object.values(formGroup.controls).forEach(control => {
       control.markAsTouched();
@@ -112,5 +126,9 @@ export class EditPropertyComponent implements OnInit {
         this.markFormGroupAsTouched(control);
       }
     });
+  }
+  isInvalid(formGroup: FormGroup, controlName: string): boolean {
+    const control = formGroup.get(controlName);
+    return control ? control.invalid && (control.dirty || control.touched) : false;
   }
 }

@@ -25,7 +25,7 @@
         
     </div>
     
-    <form [formGroup]="propertyForm">
+    <form [formGroup]="propertyForm" class="property-form" (ngSubmit)="onSubmit()">
       <!-- Tab navigation -->
       <div class="form_tab_view d-flex gap-3 mt-4 overflow-auto">
         <div class="form_tab" *ngFor="let tab of tabs" [class.active]="activeTab === tab.id" (click)="setActiveTab(tab.id)">

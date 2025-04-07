@@ -1,6 +1,103 @@
-<p>general-tab works!</p>
 <!-- general-tab.component.html -->
 <div class="tab-container" [formGroup]="parentForm">
+  
+  <div class="form-body">
+    <div class="form-row-view">
+      <div class="form-row-legend">
+        <h2 class="title-2">General</h2>
+        <p class="desc text-body-secondary">Set status and category for this property</p>
+      </div>
+      <div class="form-row-body">
+        <div class="form-list-view">
+          <legend class="radio_legend">Deal type</legend>
+          <div class="radio_options">
+            <label class="radio_option">
+              <input type="radio" name="deal_type" formControlName="deal_type" value="sale" class="radio_input" />
+              <span class="radio_state text-base">Sale</span>
+            </label>
+            <label class="radio_option">
+              <input type="radio" name="deal_type" formControlName="deal_type" value="rent" class="radio_input" />
+              <span class="radio_state text-base">Rent</span>
+            </label>
+          </div>
+          <div *ngIf="isInvalid('deal_type')" class="error-message">Deal type is required</div>
+        </div>
+        <div class="d-grid gap-4" style="grid-template-columns: repeat(2, 1fr)">
+          <div class="input">
+            <label for="inputref" class="input_label">Title</label>
+            <div class="input_inner">
+              <input type="text" id="title" name="inputref" formControlName="title" placeholder="Enter a title" class="input_control" [ngClass]="{'is-invalid': isInvalid('title')}" />
+              
+            </div>
+            
+            <div *ngIf="isInvalid('title')" class="error-message">title is required</div>
+          </div>
+          
+          <!-- Status field without dropdown -->
+          <div class="select-status">
+            <label for="status" class="input_label">Status</label>
+            <p class="input_hint mt-1">Required</p>
+            <div *ngIf="isInvalid('status')" class="error-message">Status is required</div>
+          </div>
+  
+          <!-- Category field without dropdown -->
+          <div class="select-status">
+            <label for="category" class="input_label">Category</label>
+            
+            <div *ngIf="isInvalid('category')" class="error-message">Category is required</div>
+          </div>
+  
+          <div class="input" *ngIf="parentForm.get('deal_type')?.value === 'rent'">
+            <label for="availabilityDate" class="input_label">Availability Date</label>
+            <div class="input_inner">
+              <input type="date" class="input_control" formControlName="availabilityDate" [ngClass]="{'is-invalid': isInvalid('availabilityDate')}" />
+            </div>
+            <p class="input_hint mt-1">Required</p>
+            <div *ngIf="isInvalid('availabilityDate')" class="error-message">Availability date is required for rent properties</div>
+          </div>
+  
+          <!-- Broker field without dropdown -->
+          
+  
+          <!-- WorkFlow field without dropdown -->
+          <div class="select-status">
+            <label for="WorkFlow" class="input_label">WorkFlow</label>
+            <p class="input_hint mt-1">Required</p>
+            <div *ngIf="isInvalid('workflow')" class="error-message">Workflow is required</div>
+          </div>
+  
+          <!-- Frequency field without dropdown -->
+          <div class="select-status" *ngIf="parentForm.get('deal_type')?.value === 'rent'">
+            <label for="frequency" class="input_label">Rental frequency</label>
+            <p class="input_hint mt-1">Required</p>
+            <div *ngIf="isInvalid('frequency')" class="error-message">Rental frequency is required for rent properties</div>
+          </div>
+        </div>
+        
+        
+        
+       
+      </div>
+    </div>
+    
+    
+          <!-- Broker field without dropdown -->
+         
+    
+  </div>
+  
+<!-- general-tab.component.html 
+  <div class="form-body">
+    <div class="form-row-view">
+      <div class="form-row-legend">
+        <h2 class="title-2">General</h2>
+        <p class="desc text-body-secondary">Set status and category for this property</p>
+      </div>
+      div.form
+    </div>
+  </div>
+  -->
+  <!--
     <h2>General</h2>
     <p class="subtitle">Set status and category for this property</p>
     
@@ -8,22 +105,23 @@
       <div class="form-group full-width">
         <label>Deal type</label>
         <div class="radio-group">
-          <div class="radio-option" [class.selected]="parentForm.get('dealType')?.value === 'sale'">
-            <input type="radio" id="sale" formControlName="dealType" value="sale">
+          <div class="radio-option" [class.selected]="parentForm.get('deal_Type')?.value === 'sale'">
+            <input type="radio" id="sale" formControlName="deal_Type" value="sale">
             <label for="sale">Sale</label>
           </div>
-          <div class="radio-option" [class.selected]="parentForm.get('dealType')?.value === 'rent'">
-            <input type="radio" id="rent" formControlName="dealType" value="rent">
+          <div class="radio-option" [class.selected]="parentForm.get('deal_Type')?.value === 'rent'">
+            <input type="radio" id="rent" formControlName="deal_Type" value="rent">
             <label for="rent">Rent</label>
           </div>
         </div>
       </div>
     </div>
-    
+    -->
+    <!--
     <div class="form-row">
       <div class="form-group half-width">
-        <label>Reference</label>
-        <input type="text" formControlName="reference" placeholder="Enter reference">
+        <label class="input_label">Reference</label>
+        <input type="text input_control" formControlName="reference" placeholder="Enter reference">
         <div class="form-error" *ngIf="parentForm?.get('reference')?.touched && parentForm?.get('reference')?.invalid">
           Required
         </div>
@@ -81,3 +179,4 @@
       </div>
     </div>
   </div>
+  -->
