@@ -48,6 +48,10 @@ export class EditPropertyComponent implements OnInit {
        
       }),
       location: this.fb.group({
+        latitude: ['', Validators.required],
+        longitude: ['', Validators.required],
+        country: ['', Validators.required],
+        city: ['', Validators.required],
 
 
       }),
@@ -55,12 +59,12 @@ export class EditPropertyComponent implements OnInit {
         bedrooms: ['', Validators.required],
       bathrooms: ['', Validators.required],
       parkingSpots: ['', Validators.required],
-      size: ['', Validators.required],
-      plotSize: ['', Validators.required],
-      builtUpArea: ['', Validators.required],
-      constructionYear: ['', Validators.required],
-      Renovationyear: ['', Validators.required],
-      Furnishing: ['', Validators.required]
+      size: [''],
+      plotSize: [''],
+      builtUpArea: [''],
+      constructionYear: [''],
+      Renovationyear: [''],
+      Furnishing: ['']
       }),
       amenities: this.fb.group({}),
       price: this.fb.group({}),

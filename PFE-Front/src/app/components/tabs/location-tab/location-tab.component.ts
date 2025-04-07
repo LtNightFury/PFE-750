@@ -53,10 +53,7 @@ export class LocationTabComponent implements OnInit {
   
 
   ngOnInit(): void {
-    this.parentForm.addControl('latitude', this.fb.control('', [Validators.required]));
-    this.parentForm.addControl('longitude', this.fb.control('', [Validators.required]));
-    this.parentForm.addControl('city', this.fb.control('', [Validators.required]));
-    this.parentForm.addControl('country', this.fb.control('', [Validators.required]));
+  
   }
 
   ngAfterViewInit() {
@@ -72,9 +69,7 @@ export class LocationTabComponent implements OnInit {
     this.cdr.markForCheck();
   }
 
-  onSubmit(): void {
-    console.log(this.parentForm.value);
-  }
+  
   cityOptions = Object.entries(this.city).map(([key, label]) => ({
     value: key,
     label: label
@@ -96,7 +91,10 @@ export class LocationTabComponent implements OnInit {
     this.selectedCountry = countryKey;
     this.parentForm.get('country')?.setValue(countryKey);
   }
-    
+  isInvalid(controlName: string): boolean {
+    const control = this.parentForm.get(controlName);
+    return control ? control.invalid && (control.dirty || control.touched) : false;
+  }
      
   }
 

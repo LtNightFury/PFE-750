@@ -141,5 +141,11 @@
     
     
     }
+    .error-message{
+        color: red;
+        font-size: 0.875rem;
+        line-height: 1.43;
+        margin-top: 0.25rem;
+    }
       
     
