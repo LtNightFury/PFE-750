@@ -50,7 +50,17 @@ export class EditPropertyComponent implements OnInit {
         
 
       }),
-      specification: this.fb.group({}),
+      specification: this.fb.group({
+        bedrooms: ['', Validators.required],
+      bathrooms: ['', Validators.required],
+      parkingSpots: ['', Validators.required],
+      size: ['', Validators.required],
+      plotSize: ['', Validators.required],
+      builtUpArea: ['', Validators.required],
+      constructionYear: ['', Validators.required],
+      Renovationyear: ['', Validators.required],
+      Furnishing: ['', Validators.required]
+      }),
       amenities: this.fb.group({}),
       price: this.fb.group({}),
       media: this.fb.group({}),
@@ -99,7 +109,8 @@ export class EditPropertyComponent implements OnInit {
     if (this.propertyForm.valid) {
       this.isSubmitting = true;
       this.submitError = '';
-      
+
+      console.log('Form submitted:', this.propertyForm.value);
       // Send data to Symfony backend
       this.http.post('/api/properties', this.propertyForm.value)
         .subscribe(
