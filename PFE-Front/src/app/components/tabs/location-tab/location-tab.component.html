@@ -1,1 +1,76 @@
-<p>location-tab works!</p>
+<form [formGroup]="parentForm">
+  <div class="form-body">
+    <div class="form-row-view">
+      <div class="form-row-legend">
+        <h2 class="title-2">Location</h2>
+        <p class="desc">
+          Indicate longitude and latitude on the map and select an address from
+          the list
+        </p>
+      </div>
+      <div class="form-row-body">
+        <div class="form-list-view">
+          <div class="map-container">
+            <div style="height: 25rem; width: 100%">
+              <app-map
+                accessToken="ctKDhXSujtr3KEz3ny53"
+                [center]="[latitude, longitude]"
+                [zoom]="16"
+                (positionSelected)="onPositionSelected($event)"
+              >
+              </app-map>
+            </div>
+          </div>
+          <div class="grid">
+            <div>
+              <label for="latitude" class="input_label">Latitude:</label>
+              <div class="input_inner">
+                <input
+                  type="text"
+                  id="latitude"
+                  formControlName="latitude"
+                  class="input_control"
+                />
+              </div>
+              <p class="input_hint mt-1">Required</p>
+            </div>
+
+            <div>
+              <label for="longitude" class="input_label">Longitude:</label>
+              <div class="input_inner">
+                <input
+                  type="text"
+                  id="longitude"
+                  formControlName="longitude"
+                  class="input_control"
+                />
+              </div>
+              <p class="input_hint mt-1">Required</p>
+            </div>
+            <div class="select-status">
+              <label for="country" class="input_label">Country</label>
+              <app-dropdown
+    [options]="countryOptions"
+    [placeholder]="'Select a country'"
+    [selectedValue]="selectedCountry"
+    (optionSelected)="onCountrySelected($event)">
+  </app-dropdown>
+              <p class="input_hint mt-1">Required</p>
+            </div>
+            <div class="select-status">
+              <label for="city" class="input_label">City</label>
+              <app-dropdown
+              [options]="cityOptions"
+              [placeholder]="'Select a city'"
+              [selectedValue]="selectedCity"
+              (optionSelected)="onCitySelected($event)">
+            </app-dropdown>
+              <p class="input_hint mt-1">Required</p>
+            </div>
+          </div>
+          <button type="submit" (click)="onSubmit()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
