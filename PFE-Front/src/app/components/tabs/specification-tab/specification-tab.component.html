@@ -1,1 +1,163 @@
-<p>specification-tab works!</p>
+<div class="tab-container" [formGroup]="parentForm">
+    <div class="form-body">
+      <div class="form-row-view">
+        <div class="form-row-legend">
+          <h2 class="title-2">Rooms</h2>
+          <p class="desc">
+            Specify the number of rooms. Kitchen and other auxiliary premises do
+            not need to be indicated.
+          </p>
+        </div>
+        <div class="form-row-body">
+          <div class="form-list-view">
+            <label for="bedroom-options" class="input_label"
+              >Number of bedrooms</label
+            >
+            <div class="bedroom-options">
+              <button
+                type="button"
+                *ngFor="let option of bedroomOptions"
+                [class.selected]="
+                  parentForm.get('bedrooms')?.value === option.value
+                "
+                (click)="selectBedroom(option.value)"
+              >
+                {{ option.label }}
+              </button>
+            </div>
+            <div class="input_hint mt-1">Required</div>
+          </div>
+          <div class="form-list-view">
+            <label for="bathroom-options" class="input_label"
+              >Number of bathrooms</label
+            >
+            <div class="bedroom-options">
+              <button
+                type="button"
+                *ngFor="let option of bathroomOptions"
+                [class.selected]="
+                  parentForm.get('bathrooms')?.value === option.value
+                "
+                (click)="selectBathroom(option.value)"
+              >
+                {{ option.label }}
+              </button>
+            </div>
+            <div class="input_hint mt-1">Required</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row-view">
+        <div class="form-row-legend">
+          <h2 class="title-2">Parking</h2>
+          <p class="desc">Provide information about parking availability</p>
+        </div>
+        <div class="form-row-body">
+          <div class="form-list-view">
+            <label for="parking-options" class="input_label"
+              >Number of parking slots</label
+            >
+            <div class="bedroom-options">
+              <button
+                type="button"
+                *ngFor="let option of parkingOptions"
+                [class.selected]="
+                  parentForm.get('parkingSpots')?.value === option.value
+                "
+                (click)="selectParking(option.value)"
+              >
+                {{ option.label }}
+              </button>
+            </div>
+            <div class="input_hint mt-1">Required</div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row-view">
+        <div class="form-row-legend">
+          <h2 class="title-2">Parameters</h2>
+          <p class="desc">Provide apartment's characteristics</p>
+        </div>
+        <div class="form-row-body">
+          <div class="grid">
+            <div class="input">
+              <label for="size" class="input_label">Size</label>
+              <div class="input_inner">
+                <input
+                  type="number"
+                  id="size"
+                  formControlName="size"
+                  class="form_control"
+                /><span class="unit">m²</span>
+              </div>
+            </div>
+            <div class="input">
+              <label for="plotSize" class="input_label">Plot Size</label>
+              <div class="input_inner">
+                <input
+                  type="number"
+                  id="plotSize"
+                  formControlName="plotSize"
+                  class="form_control"
+                /><span class="unit">m²</span>
+              </div>
+            </div>
+            <div class="input">
+              <label for="builtUpArea" class="input_label">Built-up area</label>
+              <div class="input_inner">
+                <input
+                  type="number"
+                  id="builtUpArea"
+                  formControlName="builtUpArea"
+                  class="form_control"
+                /><span class="unit">m²</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="grid-2">
+            <div class="input">
+              <label for="constructionYear" class="input_label">Construction year</label>
+              <div class="input_inner">
+                <input
+                  type="number"
+                  id="constructionYear"
+                  formControlName="constructionYear"
+                  class="form_control"
+                />
+              </div>
+            </div>
+            <div class="input">
+              <label for="Renovationyear" class="input_label">Renovation year</label>
+              <div class="input_inner">
+                <input
+                  type="number"
+                  id="Renovationyear"
+                  formControlName="Renovationyear"
+                  class="form_control"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="input">
+            <label for="Furnishing" class="input_label">Furnishing</label>
+            <div class="radio_options">
+              <label class="radio_option">
+                <input type="radio" formControlName="Furnishing" value="YES" class="radio_input" />
+                <span class="radio_state text-bold">Yes</span>
+              </label>
+              <label class="radio_option">
+                <input type="radio" formControlName="Furnishing" value="NO" class="radio_input" />
+                <span class="radio_state">No</span>
+              </label>
+              <label class="radio_option">
+                <input type="radio" formControlName="Furnishing" value="PARTLY" class="radio_input" />
+                <span class="radio_state">Partly</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button type="submit" (click)="onSubmit()">Submit</button>
+  </div>
