@@ -25,4 +25,18 @@ export class GeneralTabComponent implements OnInit {
     return control ? control.invalid && (control.dirty || control.touched) : false;
   }
   
+  propertyType = [
+    { value: 'apartment', label: 'Apartment' },
+    { value: 'house', label: 'House' },
+    { value: 'studio', label: 'Studio' },
+    { value: 'villa', label: 'Villa' }
+  ];
+  
+  selectedPropertyType: string | null = null;
+  
+  onPropertyTypeSelected(propertyType: string) {
+    this.selectedPropertyType = propertyType;
+    this.parentForm.get('propertyType')?.setValue(propertyType);
+  }
+  
 }

@@ -5,6 +5,7 @@
     margin-top: 2rem;
 }
 
+
 .form-row-view {
     display: flex;
     align-items: flex-start;
@@ -28,6 +29,7 @@
     flex-direction: column;
     gap: 1.5rem;
     width: min(45rem, 100%);
+   
 }
 
 .radio_legend {
@@ -187,6 +189,7 @@
 
 
 .select-status option.selected-option{
+    
     background-color:#E5E7EB;
     color: #fff important;
 }
@@ -197,8 +200,10 @@
     background-color:#E5E7EB;
     color: #fff important;
     cursor: not-allowed;
+    
 }
 .select-status option:disabled {
+    
     pointer-events: none;
   }
 
@@ -213,9 +218,7 @@
 }
 
 
-.cheque-select{
-    display: block;
-}
+
 
 .select-wraper {
     display: flex;

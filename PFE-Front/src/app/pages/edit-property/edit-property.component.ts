@@ -38,6 +38,7 @@ export class EditPropertyComponent implements OnInit {
         deal_type: ['sale', Validators.required],
         title: ['', Validators.required],
         description: ['', Validators.required],
+        propertyType: ['', Validators.required],
         category: ['', Validators.required],
         availabilityDate: [''],  // Only required if deal_type is 'rent'
         broker: ['', Validators.required],
@@ -47,7 +48,7 @@ export class EditPropertyComponent implements OnInit {
        
       }),
       location: this.fb.group({
-        
+
 
       }),
       specification: this.fb.group({
@@ -109,7 +110,7 @@ export class EditPropertyComponent implements OnInit {
    // if (this.propertyForm.valid) {
       this.isSubmitting = true;
       this.submitError = '';
-
+      
       console.log('Form submitted:', this.propertyForm.value);
       // Send data to Symfony backend
       this.http.post('/api/properties', this.propertyForm.value)
@@ -142,4 +143,29 @@ export class EditPropertyComponent implements OnInit {
     const control = formGroup.get(controlName);
     return control ? control.invalid && (control.dirty || control.touched) : false;
   }
+  setConditionalValidation() {
+    const generalGroup = this.generalGroup;
+    const dealTypeControl = generalGroup.get('deal_type');
+    
+    dealTypeControl?.valueChanges.subscribe(dealType => {
+      const availabilityDateControl = generalGroup.get('availabilityDate');
+      const frequencyControl = generalGroup.get('frequency');
+      const chequesControl = generalGroup.get('cheques');
+      
+      if (dealType === 'rent') {
+        availabilityDateControl?.setValidators([Validators.required]);
+        frequencyControl?.setValidators([Validators.required]);
+        chequesControl?.setValidators([Validators.required]);
+      } else {
+        availabilityDateControl?.clearValidators();
+        frequencyControl?.clearValidators();
+        chequesControl?.clearValidators();
+      }
+      
+      availabilityDateControl?.updateValueAndValidity();
+      frequencyControl?.updateValueAndValidity();
+      chequesControl?.updateValueAndValidity();
+    });
+  }
+
 }
