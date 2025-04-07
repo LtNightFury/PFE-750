@@ -38,12 +38,11 @@ export class EditPropertyComponent implements OnInit {
         deal_type: ['sale', Validators.required],
         title: ['', Validators.required],
         description: ['', Validators.required],
+        PropertyCondition: ['', Validators.required],
         propertyType: ['', Validators.required],
-        category: ['', Validators.required],
+        
         availabilityDate: [''],  // Only required if deal_type is 'rent'
-        broker: ['', Validators.required],
-        workflow: ['', Validators.required],
-        frequency: [''],  // Only required if deal_type is 'rent'
+         // Only required if deal_type is 'rent'
        
        
       }),
@@ -52,7 +51,7 @@ export class EditPropertyComponent implements OnInit {
 
       }),
       specification: this.fb.group({
-        bedrooms: ['', Validators.required],
+      bedrooms: ['', Validators.required],
       bathrooms: ['', Validators.required],
       parkingSpots: ['', Validators.required],
       size: ['', Validators.required],
@@ -107,7 +106,7 @@ export class EditPropertyComponent implements OnInit {
   }
 
   onSubmit() {
-   // if (this.propertyForm.valid) {
+    if (this.propertyForm.valid) {
       this.isSubmitting = true;
       this.submitError = '';
       
@@ -125,9 +124,9 @@ export class EditPropertyComponent implements OnInit {
             console.error('Error saving property', error);
           }
         );
-   // } else {
+    } else {
       this.markFormGroupAsTouched(this.propertyForm);
-   // }
+    }
   }
 
   markFormGroupAsTouched(formGroup: FormGroup) {

@@ -21,6 +21,7 @@
             </label>
           </div>
           <div *ngIf="isInvalid('deal_type')" class="error-message">Deal type is required</div>
+          
         </div>
         <div class="d-grid gap-4" style="grid-template-columns: repeat(2, 1fr)">
           <div class="input">
@@ -31,12 +32,14 @@
             </div>
             
             <div *ngIf="isInvalid('title')" class="error-message">title is required</div>
+
+           
           </div>
           
           
           <!-- Status field without dropdown -->
           <div class="select-status">
-            <label for="propertyType" class="input_label">property Type</label>
+            <label for="propertyType" class="input_label">Property Type</label>
             <app-dropdown
             [options]="propertyType"
             formControlName=propertyType
@@ -47,6 +50,8 @@
             <div *ngIf="isInvalid('propertyType')" class="error-message">Status is required</div>
           </div>
           
+          
+  
   
           
   
@@ -58,13 +63,25 @@
             <p class="input_hint mt-1">Required</p>
             <div *ngIf="isInvalid('availabilityDate')" class="error-message">Availability date is required for rent properties</div>
           </div>
+          
   
           <!-- Broker field without dropdown -->
-          
-  
+           
+         
           <!-- WorkFlow field without dropdown -->
           
-  
+          <div class="select-status">
+            <label for="PropertyCondition" class="input_label">Property Condition</label>
+            <app-dropdown
+            [options]="PropertyCondition"
+            formControlName=PropertyCondition
+            [placeholder]="'Select Property Condition'"
+            [selectedValue]="selectedPropertyCondition"
+            (optionSelected)="onPropertyConditionSelected($event)">
+            </app-dropdown>
+            <div *ngIf="isInvalid('PropertyCondition')" class="error-message">Status is required</div>
+          </div>
+
           <!-- Frequency field without dropdown -->
           <div class="select-status" *ngIf="parentForm.get('deal_type')?.value === 'rent'">
             <label for="frequency" class="input_label">Rental frequency</label>
@@ -75,12 +92,29 @@
         
         
         
+
+        <div class="input">
+          <label for="description" class="input_label">Description</label>
+          
+            <textarea
+            id="description"
+            formControlName="description"
+            class="form-control"
+            rows="5"
+            placeholder="Enter property description"
+          ></textarea>
+        
+          <div *ngIf="isInvalid('description')" class="error-message">
+            Description is required
+          </div>
+        
        
-      </div>
+      
     </div>
     
     
           <!-- Broker field without dropdown -->
+          
          
     
   </div>

@@ -24,7 +24,13 @@ export class GeneralTabComponent implements OnInit {
     const control = this.parentForm.get(controlName);
     return control ? control.invalid && (control.dirty || control.touched) : false;
   }
-  
+  PropertyCondition= [
+    { value: 'new', label: 'New' },
+    { value: 'renovated', label: 'Renovated' },
+    { value: 'under_construction', label: 'Under Construction' },
+    { value: 'Needs_Renovation', label: 'Needs Renovation' },
+  ]
+
   propertyType = [
     { value: 'apartment', label: 'Apartment' },
     { value: 'house', label: 'House' },
@@ -33,10 +39,16 @@ export class GeneralTabComponent implements OnInit {
   ];
   
   selectedPropertyType: string | null = null;
+  selectedPropertyCondition: string | null = null;
   
   onPropertyTypeSelected(propertyType: string) {
     this.selectedPropertyType = propertyType;
     this.parentForm.get('propertyType')?.setValue(propertyType);
+  }
+
+  onPropertyConditionSelected(propertyCondition: string) {
+    this.parentForm.get('PropertyCondition')?.setValue(propertyCondition);
+    this.selectedPropertyCondition = propertyCondition;
   }
   
 }
