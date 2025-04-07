@@ -29,11 +29,16 @@
                   type="text"
                   id="latitude"
                   formControlName="latitude"
+                  [ngClass]="{ 'is-invalid': isInvalid('latitude') }"
                   class="input_control"
                 />
               </div>
-              <p class="input_hint mt-1">Required</p>
+              <p class="input_hint mt-1"*ngIf="isInvalid('latitude')" class="error-message">Required</p>
+              <div *ngIf="isInvalid('latitude')" class="error-message">
+                please  select the location on the map
+              </div>
             </div>
+            
 
             <div>
               <label for="longitude" class="input_label">Longitude:</label>
@@ -45,7 +50,7 @@
                   class="input_control"
                 />
               </div>
-              <p class="input_hint mt-1">Required</p>
+              <p class="input_hint mt-1"*ngIf="isInvalid('latitude')" class="error-message">Required</p>
             </div>
             <div class="select-status">
               <label for="country" class="input_label">Country</label>
@@ -55,20 +60,20 @@
     [selectedValue]="selectedCountry"
     (optionSelected)="onCountrySelected($event)">
   </app-dropdown>
-              <p class="input_hint mt-1">Required</p>
+              <p class="input_hint mt-1"*ngIf="isInvalid('country')" class="error-message">Required</p>
             </div>
             <div class="select-status">
-              <label for="city" class="input_label">City</label>
+              <label for="city" class="input_label">State</label>
               <app-dropdown
               [options]="cityOptions"
               [placeholder]="'Select a city'"
               [selectedValue]="selectedCity"
               (optionSelected)="onCitySelected($event)">
             </app-dropdown>
-              <p class="input_hint mt-1">Required</p>
+              <p class="input_hint mt-1" *ngIf="isInvalid('city')" class="error-message">Required</p>
             </div>
           </div>
-          <button type="submit" (click)="onSubmit()">Submit</button>
+         
         </div>
       </div>
     </div>

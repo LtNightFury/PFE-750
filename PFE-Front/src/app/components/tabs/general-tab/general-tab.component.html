@@ -1,22 +1,35 @@
 <!-- general-tab.component.html -->
 <div class="tab-container" [formGroup]="parentForm">
-  
   <div class="form-body">
     <div class="form-row-view">
       <div class="form-row-legend">
         <h2 class="title-2">General</h2>
-        <p class="desc text-body-secondary">Set status and category for this property</p>
+        <p class="desc text-body-secondary">
+          Set status and category for this property
+        </p>
       </div>
       <div class="form-row-body">
         <div class="form-list-view">
           <legend class="radio_legend">Deal type</legend>
           <div class="radio_options">
             <label class="radio_option">
-              <input type="radio" name="deal_type" formControlName="deal_type" value="sale" class="radio_input" />
+              <input
+                type="radio"
+                name="deal_type"
+                formControlName="deal_type"
+                value="sale"
+                class="radio_input"
+              />
               <span class="radio_state text-base">Sale</span>
             </label>
             <label class="radio_option">
-              <input type="radio" name="deal_type" formControlName="deal_type" value="rent" class="radio_input" />
+              <input
+                type="radio"
+                name="deal_type"
+                formControlName="deal_type"
+                value="rent"
+                class="radio_input"
+              />
               <span class="radio_state text-base">Rent</span>
             </label>
           </div>
@@ -27,27 +40,40 @@
           <div class="input">
             <label for="inputref" class="input_label">Title</label>
             <div class="input_inner">
-              <input type="text" id="title" name="inputref" formControlName="title" placeholder="Enter a title" class="input_control" [ngClass]="{'is-invalid': isInvalid('title')}" />
-              
+              <input
+                type="text"
+                id="title"
+                name="inputref"
+                formControlName="title"
+                placeholder="Enter a title"
+                class="input_control"
+                [ngClass]="{ 'is-invalid': isInvalid('title') }"
+              />
+            </div>
+
+            <div *ngIf="isInvalid('title')" class="error-message">
+              title is required
             </div>
             
             <div *ngIf="isInvalid('title')" class="error-message">title is required</div>
 
            
           </div>
-          
-          
+
           <!-- Status field without dropdown -->
           <div class="select-status">
             <label for="propertyType" class="input_label">Property Type</label>
             <app-dropdown
-            [options]="propertyType"
-            formControlName=propertyType
-            [placeholder]="'Select a property type'"
-            [selectedValue]="selectedPropertyType"
-            (optionSelected)="onPropertyTypeSelected($event)">
+              [options]="propertyType"
+              formControlName="propertyType"
+              [placeholder]="'Select a property type'"
+              [selectedValue]="selectedPropertyType"
+              (optionSelected)="onPropertyTypeSelected($event)"
+            >
             </app-dropdown>
-            <div *ngIf="isInvalid('propertyType')" class="error-message">Status is required</div>
+            <div *ngIf="isInvalid('propertyType')" class="error-message">
+              Status is required
+            </div>
           </div>
           
           
@@ -58,10 +84,17 @@
           <div class="input" *ngIf="parentForm.get('deal_type')?.value === 'rent'">
             <label for="availabilityDate" class="input_label">Availability Date</label>
             <div class="input_inner">
-              <input type="date" class="input_control" formControlName="availabilityDate" [ngClass]="{'is-invalid': isInvalid('availabilityDate')}" />
+              <input
+                type="date"
+                class="input_control"
+                formControlName="availabilityDate"
+                [ngClass]="{ 'is-invalid': isInvalid('availabilityDate') }"
+              />
             </div>
             <p class="input_hint mt-1">Required</p>
-            <div *ngIf="isInvalid('availabilityDate')" class="error-message">Availability date is required for rent properties</div>
+            <div *ngIf="isInvalid('availabilityDate')" class="error-message">
+              Availability date is required for rent properties
+            </div>
           </div>
           
   
@@ -83,10 +116,15 @@
           </div>
 
           <!-- Frequency field without dropdown -->
-          <div class="select-status" *ngIf="parentForm.get('deal_type')?.value === 'rent'">
+          <div
+            class="select-status"
+            *ngIf="parentForm.get('deal_type')?.value === 'rent'"
+          >
             <label for="frequency" class="input_label">Rental frequency</label>
             <p class="input_hint mt-1">Required</p>
-            <div *ngIf="isInvalid('frequency')" class="error-message">Rental frequency is required for rent properties</div>
+            <div *ngIf="isInvalid('frequency')" class="error-message">
+              Rental frequency is required for rent properties
+            </div>
           </div>
         </div>
         
@@ -118,8 +156,8 @@
          
     
   </div>
-  
-<!-- general-tab.component.html 
+
+  <!-- general-tab.component.html 
   <div class="form-body">
     <div class="form-row-view">
       <div class="form-row-legend">
@@ -150,7 +188,7 @@
       </div>
     </div>
     -->
-    <!--
+  <!--
     <div class="form-row">
       <div class="form-group half-width">
         <label class="input_label">Reference</label>
@@ -213,3 +251,4 @@
     </div>
   </div>
   -->
+</div>

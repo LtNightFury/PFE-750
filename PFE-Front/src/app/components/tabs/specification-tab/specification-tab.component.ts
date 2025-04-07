@@ -56,10 +56,6 @@ export class SpecificationTabComponent implements OnInit {
   selectParking(value: string): void {
     this.parentForm.get('parkingSpots')?.setValue(value);
   }
-  onSubmit(): void {
-    if (this.parentForm.valid) {
-      console.log('Form submitted:', this.parentForm.value);
-    }
-  }
+  
 
 }
