@@ -25,6 +25,11 @@ import { ContactsTabComponent } from './components/tabs/contacts-tab/contacts-ta
 import { DropdownComponent } from './components/dropdown/dropdown.component';
 import { MapComponent } from './components/map/map.component';
 import { AmenitiesTabComponent } from './components/tabs/amenities-tab/amenities-tab.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -58,6 +63,11 @@ import { AmenitiesTabComponent } from './components/tabs/amenities-tab/amenities
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    BrowserAnimationsModule
     
   ],
   providers: [],

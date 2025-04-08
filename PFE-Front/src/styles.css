@@ -7,3 +7,13 @@ html, body { height: 100%;
        
        
     }
+    ::ng-deep .cdk-overlay-container {
+        z-index: 1000; 
+      }
+      
+    ::ng-deep .cdk-overlay-pane {
+        position: fixed !important;
+        top: auto !important;
+        z-index: 2000;
+      }
+      
