@@ -1,1 +1,254 @@
-<p>media-tab works!</p>
+<form [formGroup]="parentForm">
+    <div class="form-body">
+      <!-- Photos Section -->
+      <div class="form-row-view">
+        <div class="form-row-legend">
+          <h2 class="title-2">Photos</h2>
+          <p class="desc text-body-secondary fs-6">
+            Upload photos of all the rooms, kitchen, bathroom, views from the window. The pictures should not contain people, animals, alcohol, tobacco, weapons.
+          </p>
+        </div>
+  
+        <div class="form-row-body">
+          <div class="form-list-view">
+            <div class="form-list-veiw-body">
+              <div 
+                class="file-uploader" 
+                [class.dragover]="isPhotoDragOver"
+                (click)="triggerPhotoFileInput()"
+                (dragover)="onPhotoDragOver($event)"
+                (dragleave)="onPhotoDragLeave()"
+                (drop)="onPhotoDrop($event)"
+              >
+                <input 
+                  type="file" 
+                  #photoFileInput
+                  class="upload-input"
+                  (change)="onPhotoFileSelect($event)"
+                  accept="image/webp, image/jpeg, image/jpg, image/png"
+                  multiple
+                  hidden
+                />
+                <div class="upload-area">
+                  <p class="input-text">
+                    <span class="text-decoration-underline">Upload a file</span> or drag and drop
+                  </p>
+                  <p class="upload-limits text-sm">WEBP, JPG, JPEG, PNG up to 5 MB</p>
+                </div>
+                <p class="text-hint text-sm error" *ngIf="showPhotoError">Please upload at least 1 item</p>
+              </div>
+  
+              <!-- Image Preview Section -->
+              <div class="preview-container" *ngIf="imagePreviews.length">
+                <div class="preview-item" *ngFor="let img of imagePreviews; let i = index">
+                  <img [src]="img" alt="Preview">
+                  <button class="remove-btn" (click)="removePhoto(i)">
+                    <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M135.2 17.7C140.1 7.125 150.5 0 161.9 0H286.1C297.5 0 307.9 7.125 312.8 17.7L320 32H432C440.8 32 448 39.16 448 48V80C448 88.84 440.8 96 432 96H16C7.164 96 0 88.84 0 80V48C0 39.16 7.164 32 16 32H128L135.2 17.7zM32 128H416L395.6 467.8C394.2 489.1 377.4 505.7 355.1 505.7H92.9C70.58 505.7 53.79 489.1 52.42 467.8L32 128z"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Floor Section -->
+      <div class="form-row-view">
+        <div class="form-row-legend">
+          <h2 class="title-2">Floor</h2>
+          <p class="desc text-body-secondary fs-6">
+            Upload photos of all the rooms, kitchen, bathroom, views from the window. The pictures should not contain people, animals, alcohol, tobacco, weapons.
+          </p>
+        </div>
+  
+        <div class="form-row-body">
+          <div class="form-list-view">
+            <div class="form-list-veiw-body">
+              <div 
+                class="file-uploader" 
+                [class.dragover]="isFloorDragOver"
+                (click)="triggerFloorFileInput()"
+                (dragover)="onFloorDragOver($event)"
+                (dragleave)="onFloorDragLeave()"
+                (drop)="onFloorDrop($event)"
+              >
+                <input 
+                  type="file" 
+                  #floorFileInput
+                  class="upload-input"
+                  (change)="onFloorFileSelect($event)"
+                  accept="image/webp, image/jpeg, image/jpg, image/png"
+                  multiple
+                  hidden
+                />
+                <div class="upload-area">
+                  <p class="input-text">
+                    <span class="text-decoration-underline">Upload floor plan</span> or drag and drop
+                  </p>
+                  <p class="upload-limits text-sm">WEBP, JPG, JPEG, PNG up to 5 MB</p>
+                </div>
+                <p class="text-hint text-sm error" *ngIf="showFloorError">Please upload at least 1 floor plan</p>
+              </div>
+              
+              <!-- Floor Preview Section -->
+              <div class="preview-container" *ngIf="floorPreviews.length">
+                <div class="preview-item" *ngFor="let img of floorPreviews; let i = index">
+                  <img [src]="img" alt="Floor Preview">
+                  <button class="remove-btn" (click)="removeFloorPlan(i)">
+                    <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M135.2 17.7C140.1 7.125 150.5 0 161.9 0H286.1C297.5 0 307.9 7.125 312.8 17.7L320 32H432C440.8 32 448 39.16 448 48V80C448 88.84 440.8 96 432 96H16C7.164 96 0 88.84 0 80V48C0 39.16 7.164 32 16 32H128L135.2 17.7zM32 128H416L395.6 467.8C394.2 489.1 377.4 505.7 355.1 505.7H92.9C70.58 505.7 53.79 489.1 52.42 467.8L32 128z"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Video Tour Section -->
+      <div class="form-row-view">
+        <div class="form-row-legend">
+          <h2 class="title-2">Video Tour</h2>
+          <p class="desc text-body-secondary fs-6">
+            Add a YouTube link.
+          </p>
+        </div>
+  
+        <div class="form-row-body">
+          <div class="form-list-view">
+            <div class="form-list-veiw-body">
+              <div class="video-tour">
+                <!-- Video Fields -->
+                <div class="video-inputs" *ngFor="let video of videos; let i = index">
+                  <div class="input-group">
+                    <label>Title</label>
+                    <input type="text" [(ngModel)]="video.title" placeholder="Enter video title">
+                    
+                    <!-- Delete Button (Trashcan Icon) -->
+                    <button class="delete-btn" (click)="removeVideo(i)">
+                      <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M135.2 17.7C140.1 7.125 150.5 0 161.9 0H286.1C297.5 0 307.9 7.125 312.8 17.7L320 32H432C440.8 32 448 39.16 448 48V80C448 88.84 440.8 96 432 96H16C7.164 96 0 88.84 0 80V48C0 39.16 7.164 32 16 32H128L135.2 17.7zM32 128H416L395.6 467.8C394.2 489.1 377.4 505.7 355.1 505.7H92.9C70.58 505.7 53.79 489.1 52.42 467.8L32 128z"/>
+                      </svg>
+                    </button>
+                  </div>
+                  
+                  <label>Url</label>
+                  <input type="text" [(ngModel)]="video.url" placeholder="Enter video URL">
+                  
+                  <label>Description</label>
+                  <input type="text" [(ngModel)]="video.description" placeholder="Enter video description">
+                </div>
+                
+                <!-- Add new button -->
+                <button class="btn btn-dark add-btn" (click)="addVideo()">
+                  <span>+ Add new</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- 3D Video Tour Section -->
+      <div class="form-row-view">
+        <div class="form-row-legend">
+          <h2 class="title-2">3D Video Tour</h2>
+          <p class="desc text-body-secondary fs-6">
+            Add a link.
+          </p>
+        </div>
+  
+        <div class="form-row-body">
+          <div class="form-list-view">
+            <div class="form-list-veiw-body">
+              <div class="virtual-tour">
+                <!-- 3D Virtual Tour Fields -->
+                <div class="virtual-tour-inputs" *ngFor="let tour of virtualTours; let i = index">
+                  <div class="input-group">
+                    <label>Title</label>
+                    <input type="text" [(ngModel)]="tour.title" placeholder="Enter tour title">
+                    
+                    <!-- Delete Button (Trashcan Icon) -->
+                    <button class="delete-btn" (click)="removeVirtualTour(i)">
+                      <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M135.2 17.7C140.1 7.125 150.5 0 161.9 0H286.1C297.5 0 307.9 7.125 312.8 17.7L320 32H432C440.8 32 448 39.16 448 48V80C448 88.84 440.8 96 432 96H16C7.164 96 0 88.84 0 80V48C0 39.16 7.164 32 16 32H128L135.2 17.7zM32 128H416L395.6 467.8C394.2 489.1 377.4 505.7 355.1 505.7H92.9C70.58 505.7 53.79 489.1 52.42 467.8L32 128z"/>
+                      </svg>
+                    </button>
+                  </div>
+                  
+                  <label>Url</label>
+                  <input type="text" [(ngModel)]="tour.url" placeholder="Enter tour URL">
+                  
+                  <label>Description</label>
+                  <input type="text" [(ngModel)]="tour.description" placeholder="Enter tour description">
+                </div>
+                
+                <button class="btn btn-dark add-btn" (click)="addVirtualTour()">
+                  <span>+ Add new</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Documents Section -->
+      <div class="form-row-view">
+        <div class="form-row-legend">
+          <h2 class="title-2">Documents</h2>
+          <p class="desc text-body-secondary fs-6">
+            Upload all the necessary documents one by one and set their visibility
+          </p>
+        </div>
+  
+        <div class="form-row-body">
+          <div class="form-list-view">
+            <div class="form-list-veiw-body">
+              <div 
+                class="file-uploader" 
+                [class.dragover]="isDocDragOver"
+                (click)="triggerDocFileInput()"
+                (dragover)="onDocDragOver($event)"
+                (dragleave)="onDocDragLeave()"
+                (drop)="onDocDrop($event)"
+              >
+                <input 
+                  type="file" 
+                  #docFileInput
+                  class="upload-input"
+                  (change)="onDocFileSelect($event)"
+                  accept="image/webp, image/jpeg, image/jpg, image/png"
+                  multiple
+                  hidden
+                />
+                <div class="upload-area">
+                  <p class="input-text">
+                    <span class="text-decoration-underline">Upload a document</span> or drag and drop
+                  </p>
+                  <p class="upload-limits text-sm">WEBP, JPG, JPEG, PNG up to 5 MB</p>
+                </div>
+                <p class="text-hint text-sm error" *ngIf="showDocError">Please upload at least 1 document</p>
+              </div>
+              
+              <!-- Document Preview Section -->
+              <div class="preview-container" *ngIf="documentPreviews.length">
+                <div class="preview-item" *ngFor="let doc of documentPreviews; let i = index">
+                  <img [src]="doc" alt="Document Preview">
+                  <button class="remove-btn" (click)="removeDocument(i)">
+                    <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M135.2 17.7C140.1 7.125 150.5 0 161.9 0H286.1C297.5 0 307.9 7.125 312.8 17.7L320 32H432C440.8 32 448 39.16 448 48V80C448 88.84 440.8 96 432 96H16C7.164 96 0 88.84 0 80V48C0 39.16 7.164 32 16 32H128L135.2 17.7zM32 128H416L395.6 467.8C394.2 489.1 377.4 505.7 355.1 505.7H92.9C70.58 505.7 53.79 489.1 52.42 467.8L32 128z"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="add-btn">Submit</button>
+      
+    </div>
+  </form>
