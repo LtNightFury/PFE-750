@@ -56,6 +56,7 @@ export class SpecificationTabComponent implements OnInit {
   selectParking(value: string): void {
     this.parentForm.get('parkingSpots')?.setValue(value);
   }
+ 
   
 
 }

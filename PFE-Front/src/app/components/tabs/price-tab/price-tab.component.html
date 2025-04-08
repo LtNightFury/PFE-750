@@ -1,1 +1,120 @@
-<p>price-tab works!</p>
+<div class="tab-container" [formGroup]="parentForm" >
+    <div class="form-body">
+      <div class="form-row-view">
+        <div class="form-row-legend">
+          <h2 class="title-2">Price</h2>
+          <p class="desc text-body-secondary">
+            Specify the real price without additional fees, charges and other
+            payments
+          </p>
+        </div>
+        <div class="form-row-body">
+          <div class="form-list-view">
+            <div class="input">
+              <label for="inputref" class="input_label">Price</label>
+              <div class="input_inner">
+                <input
+                  type="number"
+                  id="inputref"
+                  name="inputref"
+                  formControlName="price"
+                  placeholder="Enter the price"
+                  class="input_control"
+                />
+                <span class="unit">DTN</span>
+              </div>
+              <p class="input_hint mt-1"*ngIf="isInvalid('price')" class="error-message">Required</p>
+            </div>
+          </div>
+          <div class="grid">
+              <div class="input">
+                  <label for="price/sqt" class="input_label">Price/m²</label>
+                  <div class="input_inner">
+                    <input
+                      type="number"
+                      id="price/sqt"
+                      name="inputref"
+                      formControlName="pricesqft"
+                      placeholder="Enter the price per sqft"
+                      class="input_control"
+                    />
+                    <span class="unit">DTN</span>
+                  </div>
+                 
+                </div>
+                
+                <div class="input">
+                  <label for="originalprice" class="input_label">Original price</label>
+                  <div class="input_inner">
+                    <input
+                      type="number"
+                      id="originalprice"
+                      name="inputref"
+                      formControlName="originalprice"
+                      placeholder="Original Price"
+                      class="input_control"
+                    />
+                    <span class="unit">DTN</span>
+                  </div>
+                  
+                </div>
+                
+          </div>
+          <div class="input">
+              <div class="checkbox-container">
+                  <label class="custom-checkbox">
+                    <input type="checkbox"
+                    formControlName="hideprice">
+                    <span class="checkmark"></span>
+                    Hides the price
+                  </label>
+                </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-row-view">
+          <div class="form-row-legend">
+            <h2 class="title-2">Costs</h2>
+            <p class="desc text-body-secondary">
+              Specify all the additional fees and charges
+            </p>
+          </div>
+          <div class="form-row-body">
+            <div class="form-list-view">
+              <label class="input_label">Charges</label>
+              <div class="radio_options">
+                  <label class="radio_option">
+                    <input type="radio" name="charges" formControlName="charges" value="Included"  class="radio_input"  />
+                    <span class="radio_state text-base">Included</span>
+                  </label>
+                  <label class="radio_option">
+                    <input type="radio" name="charges" formControlName="charges" value="Notincluded" class="radio_input" />
+                    <span class="radio_state text-base">
+                      Not included</span>
+                  </label>
+                </div>
+  
+            </div>
+            <div class="input">
+              <label for="Service" class="input_label">Service Charges</label>
+              <div class="input_inner">
+                <input
+                  type="number"
+                  id="Service"
+                  name="inputref"
+                  formControlName="servicecharge"
+                  placeholder="Enter amount"
+                  class="input_control"
+                />
+                <span class="unit">DTN</span>
+              </div>
+              
+            </div>
+           
+            
+            
+          </div>
+        </div>
+    </div>
+</div>
+  

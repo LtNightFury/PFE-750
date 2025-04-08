@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-amenities-tab',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./amenities-tab.component.css']
 })
 export class AmenitiesTabComponent {
+   @Input() parentForm!: FormGroup;
 
 }

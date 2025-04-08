@@ -50,9 +50,10 @@
         <app-location-tab *ngIf="activeTab === 'location'"[parentForm]="locationGroup" ></app-location-tab>
          
         <app-specification-tab *ngIf="activeTab === 'specification'" [parentForm]="specificationGroup"></app-specification-tab>
-          <!-- 
-        <app-amenities-tab *ngIf="activeTab === 'amenities'" [parentForm]="propertyForm.get('amenities')"></app-amenities-tab>
-        <app-price-tab *ngIf="activeTab === 'price'" [parentForm]="propertyForm.get('price')"></app-price-tab>
+         
+        <app-amenities-tab *ngIf="activeTab === 'amenities'" [parentForm]="amenitiesGroup"></app-amenities-tab>
+        <app-price-tab *ngIf="activeTab === 'price'" [parentForm]="priceGroup"></app-price-tab>
+         <!-- 
         <app-media-tab *ngIf="activeTab === 'media'" [parentForm]="propertyForm.get('media')"></app-media-tab>
         <app-publication-tab *ngIf="activeTab === 'publication'" [parentForm]="propertyForm.get('publication')"></app-publication-tab>
         <app-contacts-tab *ngIf="activeTab === 'contacts'" [parentForm]="propertyForm.get('contacts')"></app-contacts-tab>

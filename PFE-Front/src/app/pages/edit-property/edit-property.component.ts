@@ -66,7 +66,14 @@ export class EditPropertyComponent implements OnInit {
       Furnishing: ['']
       }),
       amenities: this.fb.group({}),
-      price: this.fb.group({}),
+      price: this.fb.group({
+        price: ['', Validators.required],
+        pricesqft: [''],
+        originalprice: [''],
+        hideprice: [false, ], 
+        charges: ['' ], 
+        servicecharge: [ ], 
+      }),
       media: this.fb.group({}),
       publication: this.fb.group({}),
       contacts: this.fb.group({})
