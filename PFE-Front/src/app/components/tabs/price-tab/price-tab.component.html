@@ -11,7 +11,9 @@
         <div class="form-row-body">
           <div class="form-list-view">
             <div class="input">
-              <label for="inputref" class="input_label">Price</label>
+              <label for="inputref" class="input_label">
+                {{ isRental ? 'Price per month' : 'Price' }}
+              </label>
               <div class="input_inner">
                 <input
                   type="number"
@@ -26,7 +28,7 @@
               <p class="input_hint mt-1"*ngIf="isInvalid('price')" class="error-message">Required</p>
             </div>
           </div>
-          <div class="grid">
+          <div class="grid" *ngIf="!isRental">
               <div class="input">
                   <label for="price/sqt" class="input_label">Price/m²</label>
                   <div class="input_inner">

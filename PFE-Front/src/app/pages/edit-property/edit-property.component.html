@@ -52,7 +52,7 @@
         <app-specification-tab *ngIf="activeTab === 'specification'" [parentForm]="specificationGroup"></app-specification-tab>
            
         <app-amenities-tab *ngIf="activeTab === 'amenities'" [parentForm]="amenitiesGroup"></app-amenities-tab>
-        <app-price-tab *ngIf="activeTab === 'price'" [parentForm]="priceGroup"></app-price-tab>
+        <app-price-tab *ngIf="activeTab === 'price'" [parentForm]="priceGroup" [dealType]="generalGroup.get('deal_type')?.value"></app-price-tab>
         <app-media-tab *ngIf="activeTab === 'media'" [parentForm]="mediaGroup"></app-media-tab>
                  <!-- 
 
