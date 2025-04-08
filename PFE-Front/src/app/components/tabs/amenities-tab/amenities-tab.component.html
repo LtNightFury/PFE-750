@@ -1,1 +1,263 @@
-<p>amenities-tab works!</p>
+<div class="tab-container" [formGroup]="parentForm">
+    
+    <div class="form-body">
+        <div class="form-row-view">
+            <div class="form-row-legend">
+                <h2 class="title-2">Building</h2>
+                <p class="desc text-body-secondary">These are amenities that clients typically look for in a property</p>
+            </div>
+            <div class="form-row-body">
+              <div class="form-list-view">
+               
+                <div class="amenities-list">
+                    <div *ngFor="let amenity of buildingAmenities" class="amenity-item">
+                      <div class="amenity-name fs-6 text">{{ amenity.name }}</div>
+                      <div class="amenity-controls">
+                        
+                        <button type="button" class="circle-button" 
+                        [class.selected]="isSelected(amenity.id, 'check')"(click)="toggleAmenity(amenity.id, 'check')"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-check" viewBox="0 0 16 16">
+                            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+                          </svg></span>
+        
+                        </button>
+                        
+
+                        <button type="button"  class="circle-button delete-button"  [class.selected]="isSelected(amenity.id, 'delete')" (click)="toggleAmenity(amenity.id, 'delete')">
+                            <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-del" viewBox="0 0 16 16">
+                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                              </svg></span>
+                        </button>
+                     
+                    </div>
+                    </div>
+
+
+                    
+                </div>
+
+                
+                
+              </div>
+              
+            </div>
+            
+        </div>
+        
+        <div class="form-row-view">
+          <div class="form-row-legend">
+              <h2 class="title-2">Service</h2>
+              <p class="desc text-body-secondary">Assistance given to residents</p>
+          </div>
+          <div class="form-row-body">
+            <div class="form-list-view">
+             
+              <div class="amenities-list">
+                  <div *ngFor="let amenity of serviceAmenities" class="amenity-item">
+                    <div class="amenity-name fs-6 text">{{ amenity.name }}</div>
+                    <div class="amenity-controls">
+                      
+                      <button type="button" class="circle-button" 
+                      [class.selected]="isSelected(amenity.id, 'check')"(click)="toggleAmenity(amenity.id, 'check')"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-check" viewBox="0 0 16 16">
+                          <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+                        </svg></span>
+      
+                      </button>
+                      
+
+                      <button type="button" class="circle-button delete-button"  [class.selected]="isSelected(amenity.id, 'delete')" (click)="toggleAmenity(amenity.id, 'delete')">
+                          <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-del" viewBox="0 0 16 16">
+                              <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                            </svg></span>
+                      </button>
+                   
+                  </div>
+                  </div>
+
+
+                  
+              </div>
+
+              
+              
+
+            </div>
+            
+          </div>
+          
+      </div>
+
+      <div class="form-row-view">
+        <div class="form-row-legend">
+            <h2 class="title-2">Rooms</h2>
+            <p class="desc text-body-secondary">Add all the rooms residents can use</p>
+        </div>
+        <div class="form-row-body">
+          <div class="form-list-view">
+           
+            <div class="amenities-list">
+                <div *ngFor="let amenity of roomAmenities" class="amenity-item">
+                  <div class="amenity-name fs-6 text">{{ amenity.name }}</div>
+                  <div class="amenity-controls">
+                    
+                    <button type="button" class="circle-button" 
+                    [class.selected]="isSelected(amenity.id, 'check')"(click)="toggleAmenity(amenity.id, 'check')"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-check" viewBox="0 0 16 16">
+                        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+                      </svg></span>
+    
+                    </button>
+                    
+
+                    <button type="button" class="circle-button delete-button"  [class.selected]="isSelected(amenity.id, 'delete')" (click)="toggleAmenity(amenity.id, 'delete')">
+                        <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-del" viewBox="0 0 16 16">
+                            <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                          </svg></span>
+                    </button>
+                 
+                </div>
+                </div>
+
+
+                
+            </div>
+
+            
+            
+
+          </div>
+          
+        </div>
+        
+    </div>
+
+    <div class="form-row-view">
+      <div class="form-row-legend">
+          <h2 class="title-2">Areas</h2>
+          <p class="desc text-body-secondary">Add all the areas residents can use</p>
+      </div>
+      <div class="form-row-body">
+        <div class="form-list-view">
+         
+          <div class="amenities-list">
+              <div *ngFor="let amenity of areaAmenities" class="amenity-item">
+                <div class="amenity-name fs-6 text">{{ amenity.name }}</div>
+                <div class="amenity-controls">
+                  
+                  <button type="button" class="circle-button" 
+                  [class.selected]="isSelected(amenity.id, 'check')"(click)="toggleAmenity(amenity.id, 'check')"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-check" viewBox="0 0 16 16">
+                      <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+                    </svg></span>
+  
+                  </button>
+                  
+
+                  <button type="button" class="circle-button delete-button"  [class.selected]="isSelected(amenity.id, 'delete')" (click)="toggleAmenity(amenity.id, 'delete')">
+                      <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-del" viewBox="0 0 16 16">
+                          <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                        </svg></span>
+                  </button>
+               
+              </div>
+              </div>
+
+
+              
+          </div>
+
+          
+          
+
+        </div>
+        
+      </div>
+      
+  </div>
+
+  <div class="form-row-view">
+    <div class="form-row-legend">
+        <h2 class="title-2">Wellness</h2>
+        <p class="desc text-body-secondary">Facilities to empower residents to focus on their physical and mental health</p>
+    </div>
+    <div class="form-row-body">
+      <div class="form-list-view">
+       
+        <div class="amenities-list">
+            <div *ngFor="let amenity of wellnessAmenities" class="amenity-item">
+              <div class="amenity-name fs-6 text">{{ amenity.name }}</div>
+              <div class="amenity-controls">
+                
+                <button type="button" class="circle-button" 
+                [class.selected]="isSelected(amenity.id, 'check')"(click)="toggleAmenity(amenity.id, 'check')"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-check" viewBox="0 0 16 16">
+                    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+                  </svg></span>
+
+                </button>
+                
+
+                <button type="button" class="circle-button delete-button"  [class.selected]="isSelected(amenity.id, 'delete')" (click)="toggleAmenity(amenity.id, 'delete')">
+                    <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-del" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                      </svg></span>
+                </button>
+             
+            </div>
+            </div>
+
+
+            
+        </div>
+
+        
+        
+
+      </div>
+      
+    </div>
+    
+  </div>
+  <div class="form-row-view">
+    <div class="form-row-legend">
+        <h2 class="title-2">Nearby</h2>
+        <p class="desc text-body-secondary">Point some location features
+
+        </p>
+    </div>
+    <div class="form-row-body">
+      <div class="form-list-view">
+       
+        <div class="amenities-list">
+            <div *ngFor="let amenity of nearbyAmenities" class="amenity-item">
+              <div class="amenity-name fs-6 text">{{ amenity.name }}</div>
+              <div class="amenity-controls">
+                
+                <button type="button" class="circle-button" 
+                [class.selected]="isSelected(amenity.id, 'check')"(click)="toggleAmenity(amenity.id, 'check')"><span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-check" viewBox="0 0 16 16">
+                    <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0"/>
+                  </svg></span>
+
+                </button>
+                
+
+                <button type="button" class="circle-button delete-button"  [class.selected]="isSelected(amenity.id, 'delete')" (click)="toggleAmenity(amenity.id, 'delete')">
+                    <span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-del" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                      </svg></span>
+                </button>
+             
+            </div>
+            </div>
+
+
+            
+        </div>
+
+        
+        
+
+      </div>
+      
+    </div>
+    
+</div>
+
+    </div>
+</div>
