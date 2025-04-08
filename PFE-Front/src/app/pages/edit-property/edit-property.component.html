@@ -54,11 +54,11 @@
         <app-amenities-tab *ngIf="activeTab === 'amenities'" [parentForm]="amenitiesGroup"></app-amenities-tab>
         <app-price-tab *ngIf="activeTab === 'price'" [parentForm]="priceGroup" [dealType]="generalGroup.get('deal_type')?.value"></app-price-tab>
         <app-media-tab *ngIf="activeTab === 'media'" [parentForm]="mediaGroup"></app-media-tab>
-                 <!-- 
+                 
 
-        <app-publication-tab *ngIf="activeTab === 'publication'" [parentForm]="propertyForm.get('publication')"></app-publication-tab>
-        <app-contacts-tab *ngIf="activeTab === 'contacts'" [parentForm]="propertyForm.get('contacts')"></app-contacts-tab>
-      </div> -->
+       
+        <app-contacts-tab *ngIf="activeTab === 'contacts'" [parentForm]="contactsGroup"></app-contacts-tab>
+    
        
     </form>
   </header>

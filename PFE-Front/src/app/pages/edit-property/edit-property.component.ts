@@ -20,7 +20,7 @@ export class EditPropertyComponent implements OnInit {
     { id: 'amenities', label: 'Amenities' },
     { id: 'price', label: 'Price' },
     { id: 'media', label: 'Media' },
-    { id: 'publication', label: 'Publication' },
+    
     { id: 'contacts', label: 'Contacts' }
   ];
   
@@ -81,8 +81,11 @@ export class EditPropertyComponent implements OnInit {
         videos: this.fb.array([]),
         virtualTours: this.fb.array([])
       }),
-      publication: this.fb.group({}),
-      contacts: this.fb.group({})
+      
+      contacts: this.fb.group({
+        email: ['', [Validators.required, Validators.email]],
+        phone: ['', Validators.required],
+      })
     });
   }
 
@@ -110,9 +113,7 @@ export class EditPropertyComponent implements OnInit {
     return this.propertyForm.get('media') as FormGroup;
   }
   
-  get publicationGroup(): FormGroup {
-    return this.propertyForm.get('publication') as FormGroup;
-  }
+ 
   
   get contactsGroup(): FormGroup {
     return this.propertyForm.get('contacts') as FormGroup;

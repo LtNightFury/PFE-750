@@ -1,1 +1,65 @@
-<p>contacts-tab works!</p>
+<div class="tab-container" [formGroup]="parentForm" >
+    <div class="form-body">
+      <div class="form-row-view">
+        <div class="form-row-legend">
+          <h2 class="title-2">email</h2>
+          <p class="desc text-body-secondary">
+            please enter your email address to receive notifications and updates
+          </p>
+        </div>
+        <div class="form-row-body">
+          <div class="form-list-view">
+            <div class="input">
+              <label for="inputref" class="input_label">
+               email
+              </label>
+              <div class="input_inner">
+                <input
+                  type="email"
+                  id="inputref"
+                  name="inputref"
+                  formControlName="email"
+                  placeholder="Enter your email"
+                  class="input_control"
+                />
+                
+              </div>
+              <p class="input_hint mt-1"*ngIf="isInvalid('email')" class="error-message">Required</p>
+            </div>
+          </div>
+          
+          
+        </div>
+      </div>
+      <div class="form-row-view">
+          <div class="form-row-legend">
+            <h2 class="title-2">Phone Number</h2>
+            <p class="desc text-body-secondary">
+                please enter your phone number to receive notifications and updates
+            </p>
+          </div>
+          <div class="form-row-body">
+            <div class="input">
+              <label for="Service" class="input_label">Phone Number</label>
+              <div class="input_inner">
+                <input
+                  type="number"
+                  id="Service"
+                  name="inputref"
+                  formControlName="phone"
+                  placeholder="Enter your phone number"
+                  class="input_control"
+                />
+                
+              </div>
+              <p class="input_hint mt-1"*ngIf="isInvalid('phone')" class="error-message">Required</p>
+              
+            </div>
+           
+            
+            
+          </div>
+        </div>
+    </div>
+</div>
+  

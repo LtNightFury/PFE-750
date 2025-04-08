@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-contacts-tab',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./contacts-tab.component.css']
 })
 export class ContactsTabComponent {
+    @Input() parentForm!: FormGroup;
+    isInvalid(controlName: string): boolean {
+      const control = this.parentForm.get(controlName);
+      return control ? control.invalid && (control.dirty || control.touched) : false;
+    }
+    
+  
 
 }
