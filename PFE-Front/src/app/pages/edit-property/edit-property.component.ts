@@ -75,11 +75,12 @@ export class EditPropertyComponent implements OnInit {
         servicecharge: [ ], 
       }),
       media: this.fb.group({
-        photos: [[]],
-        floorPlans: [[]],
-        documents: [[]],
+        photos: this.fb.array([]),
+        floorPlans: this.fb.array([]),
+        documents: this.fb.array([]),
         videos: this.fb.array([]),
         virtualTours: this.fb.array([])
+       
       }),
       
       contacts: this.fb.group({

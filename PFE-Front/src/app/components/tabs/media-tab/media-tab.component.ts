@@ -12,15 +12,6 @@ export class MediaTabComponent implements OnInit {
   @ViewChild('floorFileInput') floorFileInput!: ElementRef<HTMLInputElement>;
   @ViewChild('docFileInput') docFileInput!: ElementRef<HTMLInputElement>;
   
-  // storage for media previews
-  imagePreviews: string[] = [];
-  floorPreviews: string[] = [];
-  documentPreviews: string[] = [];
-  
-  // Data models for videos and virtual tours
-  videos: { title: string, url: string, description: string }[] = [];
-  virtualTours: { title: string, url: string, description: string }[] = [];
-  
   // UI state tracking
   isPhotoDragOver: boolean = false;
   isFloorDragOver: boolean = false;
@@ -29,34 +20,63 @@ export class MediaTabComponent implements OnInit {
   showFloorError: boolean = false;
   showDocError: boolean = false;
 
+  // Media previews
+  imagePreviews: string[] = [];
+  floorPreviews: string[] = [];
+  documentPreviews: string[] = [];
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
-    // Initialize the media form if it doesn't exist yet
-    if (!this.parentForm.get('media')) {
-      this.parentForm.addControl('media', this.fb.group({
-        photos: [[]],
-        floorPlans: [[]],
-        documents: [[]],
-        videos: this.fb.array([]),
-        virtualTours: this.fb.array([])
-      }));
+    // Initialize the media form structure if it doesn't exist
+    if (!this.parentForm.contains('photos')) {
+      this.parentForm.addControl('photos', this.fb.array([]));
     }
     
-    // Get the form controls
-    const mediaForm = this.parentForm.get('media') as FormGroup;
-    const videosArray = mediaForm.get('videos') as FormArray;
-    const virtualToursArray = mediaForm.get('virtualTours') as FormArray;
+    if (!this.parentForm.contains('floorPlans')) {
+      this.parentForm.addControl('floorPlans', this.fb.array([]));
+    }
     
-    // Initialize with any existing data from the form
-    if (mediaForm.value.photos?.length) this.imagePreviews = mediaForm.value.photos;
-    if (mediaForm.value.floorPlans?.length) this.floorPreviews = mediaForm.value.floorPlans;
-    if (mediaForm.value.documents?.length) this.documentPreviews = mediaForm.value.documents;
+    if (!this.parentForm.contains('documents')) {
+      this.parentForm.addControl('documents', this.fb.array([]));
+    }
     
-    // Update the form with our current values
-    this.updateFormValue('photos', this.imagePreviews);
-    this.updateFormValue('floorPlans', this.floorPreviews);
-    this.updateFormValue('documents', this.documentPreviews);
+    if (!this.parentForm.contains('videos')) {
+      this.parentForm.addControl('videos', this.fb.array([]));
+    }
+    
+    if (!this.parentForm.contains('virtualTours')) {
+      this.parentForm.addControl('virtualTours', this.fb.array([]));
+    }
+  }
+
+  // Form controls getters
+  get photosArray(): FormArray {
+    return this.parentForm.get('photos') as FormArray;
+  }
+  
+  get floorPlansArray(): FormArray {
+    return this.parentForm.get('floorPlans') as FormArray;
+  }
+  
+  get documentsArray(): FormArray {
+    return this.parentForm.get('documents') as FormArray;
+  }
+  
+  get videosArray(): FormArray {
+    return this.parentForm.get('videos') as FormArray;
+  }
+  
+  get virtualToursArray(): FormArray {
+    return this.parentForm.get('virtualTours') as FormArray;
+  }
+  
+  get videos(): any[] {
+    return this.videosArray.controls.map(control => control.value);
+  }
+  
+  get virtualTours(): any[] {
+    return this.virtualToursArray.controls.map(control => control.value);
   }
 
   // Photo section handlers
@@ -91,10 +111,12 @@ export class MediaTabComponent implements OnInit {
       if (this.isValidFile(file)) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          const preview = e.target?.result as string;
-          this.imagePreviews.push(preview);
-          // Update the form value
-          this.updateFormValue('photos', this.imagePreviews);
+          const base64Data = e.target?.result as string;
+          this.imagePreviews.push(base64Data);
+          this.photosArray.push(this.fb.control({
+            file: file,
+            preview: base64Data
+          }));
         };
         reader.readAsDataURL(file);
       }
@@ -105,8 +127,8 @@ export class MediaTabComponent implements OnInit {
 
   removePhoto(index: number) {
     this.imagePreviews.splice(index, 1);
+    this.photosArray.removeAt(index);
     this.showPhotoError = this.imagePreviews.length === 0;
-    this.updateFormValue('photos', this.imagePreviews);
   }
 
   // Floor plan section handlers
@@ -141,10 +163,12 @@ export class MediaTabComponent implements OnInit {
       if (this.isValidFile(file)) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          const preview = e.target?.result as string;
-          this.floorPreviews.push(preview);
-          // Update the form value
-          this.updateFormValue('floorPlans', this.floorPreviews);
+          const base64Data = e.target?.result as string;
+          this.floorPreviews.push(base64Data);
+          this.floorPlansArray.push(this.fb.control({
+            file: file,
+            preview: base64Data
+          }));
         };
         reader.readAsDataURL(file);
       }
@@ -155,8 +179,8 @@ export class MediaTabComponent implements OnInit {
 
   removeFloorPlan(index: number) {
     this.floorPreviews.splice(index, 1);
+    this.floorPlansArray.removeAt(index);
     this.showFloorError = this.floorPreviews.length === 0;
-    this.updateFormValue('floorPlans', this.floorPreviews);
   }
 
   // Document section handlers
@@ -191,10 +215,12 @@ export class MediaTabComponent implements OnInit {
       if (this.isValidFile(file)) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          const preview = e.target?.result as string;
-          this.documentPreviews.push(preview);
-          // Update the form value
-          this.updateFormValue('documents', this.documentPreviews);
+          const base64Data = e.target?.result as string;
+          this.documentPreviews.push(base64Data);
+          this.documentsArray.push(this.fb.control({
+            file: file,
+            preview: base64Data
+          }));
         };
         reader.readAsDataURL(file);
       }
@@ -205,93 +231,34 @@ export class MediaTabComponent implements OnInit {
 
   removeDocument(index: number) {
     this.documentPreviews.splice(index, 1);
+    this.documentsArray.removeAt(index);
     this.showDocError = this.documentPreviews.length === 0;
-    this.updateFormValue('documents', this.documentPreviews);
   }
 
   // Video methods
   addVideo() {
-    const newVideo = { title: '', url: '', description: '' };
-    this.videos.push(newVideo);
-    
-    // Add to form array
-    const videosArray = this.getVideosArray();
-    videosArray.push(this.createVideoFormGroup(newVideo));
+    this.videosArray.push(this.fb.group({
+      title: [''],
+      url: [''],
+      description: ['']
+    }));
   }
 
   removeVideo(index: number) {
-    this.videos.splice(index, 1);
-    
-    // Remove from form array
-    const videosArray = this.getVideosArray();
-    videosArray.removeAt(index);
+    this.videosArray.removeAt(index);
   }
 
   // Virtual tour methods
   addVirtualTour() {
-    const newTour = { title: '', url: '', description: '' };
-    this.virtualTours.push(newTour);
-    
-    // Add to form array
-    const toursArray = this.getVirtualToursArray();
-    toursArray.push(this.createTourFormGroup(newTour));
+    this.virtualToursArray.push(this.fb.group({
+      title: [''],
+      url: [''],
+      description: ['']
+    }));
   }
 
   removeVirtualTour(index: number) {
-    this.virtualTours.splice(index, 1);
-    
-    // Remove from form array
-    const toursArray = this.getVirtualToursArray();
-    toursArray.removeAt(index);
-  }
-
-  // Form utilities
-  getMediaForm(): FormGroup {
-    return this.parentForm.get('media') as FormGroup;
-  }
-
-  getVideosArray(): FormArray {
-    return this.getMediaForm().get('videos') as FormArray;
-  }
-
-  getVirtualToursArray(): FormArray {
-    return this.getMediaForm().get('virtualTours') as FormArray;
-  }
-
-  createVideoFormGroup(video: { title: string, url: string, description: string }) {
-    return this.fb.group({
-      title: [video.title],
-      url: [video.url],
-      description: [video.description]
-    });
-  }
-
-  createTourFormGroup(tour: { title: string, url: string, description: string }) {
-    return this.fb.group({
-      title: [tour.title],
-      url: [tour.url],
-      description: [tour.description]
-    });
-  }
-
-  // Update form values
-  updateFormValue(field: string, value: any) {
-    const mediaForm = this.getMediaForm();
-    const control = mediaForm.get(field);
-    if (control) {
-      control.setValue(value);
-    }
-  }
-
-  // Update form when ngModel changes
-  onVideoInputChange(index: number) {
-    const videoFormGroup = this.getVideosArray().at(index) as FormGroup;
-    videoFormGroup.patchValue(this.videos[index]);
-  }
-
-  onTourInputChange(index: number) {
-    const tourFormGroup = this.getVirtualToursArray().at(index) as FormGroup;
-    tourFormGroup.patchValue(this.virtualTours[index]);
+    this.virtualToursArray.removeAt(index);
   }
 
   // Utility function for all file uploads
