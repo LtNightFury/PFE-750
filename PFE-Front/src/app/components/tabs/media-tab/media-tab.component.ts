@@ -29,46 +29,128 @@ export class MediaTabComponent implements OnInit {
 
   ngOnInit() {
     // Initialize the media form structure if it doesn't exist
-    if (!this.parentForm.contains('photos')) {
-      this.parentForm.addControl('photos', this.fb.array([]));
-    }
+    this.initializeFormArrays();
     
-    if (!this.parentForm.contains('floorPlans')) {
-      this.parentForm.addControl('floorPlans', this.fb.array([]));
-    }
+    // Load existing previews from form data
+    this.loadExistingPreviews();
+  }
+
+  // Initialize form arrays if they don't exist
+  initializeFormArrays() {
+    // Check if we're dealing with a nested form or direct form
+    const mediaGroup = this.parentForm.get('media') as FormGroup;
     
-    if (!this.parentForm.contains('documents')) {
-      this.parentForm.addControl('documents', this.fb.array([]));
-    }
-    
-    if (!this.parentForm.contains('videos')) {
-      this.parentForm.addControl('videos', this.fb.array([]));
-    }
-    
-    if (!this.parentForm.contains('virtualTours')) {
-      this.parentForm.addControl('virtualTours', this.fb.array([]));
+    if (mediaGroup) {
+      // Initialize arrays within media group
+      if (!mediaGroup.contains('photos')) {
+        mediaGroup.addControl('photos', this.fb.array([]));
+      }
+      
+      if (!mediaGroup.contains('floorPlans')) {
+        mediaGroup.addControl('floorPlans', this.fb.array([]));
+      }
+      
+      if (!mediaGroup.contains('documents')) {
+        mediaGroup.addControl('documents', this.fb.array([]));
+      }
+      
+      if (!mediaGroup.contains('videos')) {
+        mediaGroup.addControl('videos', this.fb.array([]));
+      }
+      
+      if (!mediaGroup.contains('virtualTours')) {
+        mediaGroup.addControl('virtualTours', this.fb.array([]));
+      }
+    } else {
+      // Initialize arrays directly on the parent form
+      if (!this.parentForm.contains('photos')) {
+        this.parentForm.addControl('photos', this.fb.array([]));
+      }
+      
+      if (!this.parentForm.contains('floorPlans')) {
+        this.parentForm.addControl('floorPlans', this.fb.array([]));
+      }
+      
+      if (!this.parentForm.contains('documents')) {
+        this.parentForm.addControl('documents', this.fb.array([]));
+      }
+      
+      if (!this.parentForm.contains('videos')) {
+        this.parentForm.addControl('videos', this.fb.array([]));
+      }
+      
+      if (!this.parentForm.contains('virtualTours')) {
+        this.parentForm.addControl('virtualTours', this.fb.array([]));
+      }
     }
   }
 
-  // Form controls getters
+  // Load existing previews from form data
+  loadExistingPreviews() {
+    // Load photo previews
+    if (this.photosArray && this.photosArray.length) {
+      this.imagePreviews = this.photosArray.controls.map(control => {
+        const value = control.value;
+        return value.preview || '';
+      });
+    }
+    
+    // Load floor plan previews
+    if (this.floorPlansArray && this.floorPlansArray.length) {
+      this.floorPreviews = this.floorPlansArray.controls.map(control => {
+        const value = control.value;
+        return value.preview || '';
+      });
+    }
+    
+    // Load document previews
+    if (this.documentsArray && this.documentsArray.length) {
+      this.documentPreviews = this.documentsArray.controls.map(control => {
+        const value = control.value;
+        return value.preview || '';
+      });
+    }
+    
+    // Update error flags based on loaded data
+    this.showPhotoError = this.imagePreviews.length === 0;
+    this.showFloorError = this.floorPreviews.length === 0;
+    this.showDocError = this.documentPreviews.length === 0;
+  }
+
+  // Form controls getters that handle both direct and nested form structures
   get photosArray(): FormArray {
-    return this.parentForm.get('photos') as FormArray;
+    const mediaGroup = this.parentForm.get('media');
+    return mediaGroup ? 
+      (mediaGroup.get('photos') as FormArray) : 
+      (this.parentForm.get('photos') as FormArray);
   }
   
   get floorPlansArray(): FormArray {
-    return this.parentForm.get('floorPlans') as FormArray;
+    const mediaGroup = this.parentForm.get('media');
+    return mediaGroup ? 
+      (mediaGroup.get('floorPlans') as FormArray) : 
+      (this.parentForm.get('floorPlans') as FormArray);
   }
   
   get documentsArray(): FormArray {
-    return this.parentForm.get('documents') as FormArray;
+    const mediaGroup = this.parentForm.get('media');
+    return mediaGroup ? 
+      (mediaGroup.get('documents') as FormArray) : 
+      (this.parentForm.get('documents') as FormArray);
   }
   
   get videosArray(): FormArray {
-    return this.parentForm.get('videos') as FormArray;
+    const mediaGroup = this.parentForm.get('media');
+    return mediaGroup ? 
+      (mediaGroup.get('videos') as FormArray) : 
+      (this.parentForm.get('videos') as FormArray);
   }
   
   get virtualToursArray(): FormArray {
-    return this.parentForm.get('virtualTours') as FormArray;
+    const mediaGroup = this.parentForm.get('media');
+    return mediaGroup ? 
+      (mediaGroup.get('virtualTours') as FormArray) : 
+      (this.parentForm.get('virtualTours') as FormArray);
   }
   
   get videos(): any[] {
