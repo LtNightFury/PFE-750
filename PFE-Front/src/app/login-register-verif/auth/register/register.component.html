@@ -1,97 +1,91 @@
-<style>
-  @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
-</style>
-<div class="split left">
-  <div class="centered">
-    <div class="container">
-      <h1>Get Started Now</h1>
+<body>
+  <div class="split left">
+    <div class="centered">
+      <div class="container">
+        <h1>Get Started Now</h1>
 
-      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="name">name</label>
-          <input
-            type="text"
-            id="name"
-            formControlName="name"
-            placeholder="Enter your name"
-            [ngClass]="{'invalid-field': isFieldInvalid('name')}"
-          />
-        </div>
-        <div class="form-group">
-          <label for="email">Email address</label>
-          <input
-            type="email"
-            id="email"
-            formControlName="email"
-            placeholder="Enter your email"
-            [ngClass]="{'invalid-field': isFieldInvalid('email')}"
-          />
-        </div>
-
-        <div class="form-group">
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            "
-          >
-            <label for="password">Password</label>
-          </div>
-          <input 
-          type="password" 
-          id="password"
-          placeholder="password" 
-          formControlName="password"
-          [ngClass]="{'is-invalid': isFieldInvalid('password'), 'invalid-field': isFieldInvalid('password')}" 
-        />
-        <div *ngIf="isFieldInvalid('password')" class="invalid-feedback">
-          {{ getPasswordErrorMessage() }}
-        </div>
-        
-        </div>
-        <div class="form-group">
-            <div
-              style="
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-              "
-            >
-              <label for="password">Confirm Password</label>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              formControlName="name"
+              placeholder="Enter your name"
+              [ngClass]="{'invalid-field': isFieldInvalid('name')}"
+            />
+            <div class="error-container">
+              <div *ngIf="isFieldInvalid('name')" class="invalid-feedback">
+                Name is required
+              </div>
             </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              placeholder="Enter your email"
+              [ngClass]="{'invalid-field': isFieldInvalid('email')}"
+            />
+            <div class="error-container">
+              <div *ngIf="isFieldInvalid('email')" class="invalid-feedback">
+                Please enter a valid email
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
             <input 
-            type="password" 
-            id="conpassword"
-            placeholder="password" 
-            formControlName="confirmPassword"
-            [ngClass]="{ 'invalid-field': isFieldInvalid('confirmPassword')}"
-            
-            
-          />
-          <div class="pass" *ngIf="registerForm.errors?.['passwordsMismatch'] && registerForm.controls['confirmPassword'].touched">
-            Password do not match
+              type="password" 
+              id="password"
+              placeholder="Password" 
+              formControlName="password"
+              [ngClass]="{'invalid-field': isFieldInvalid('password')}"
+            />
+            <div class="error-container">
+              <div *ngIf="isFieldInvalid('password')" class="invalid-feedback">
+                {{ getPasswordErrorMessage() }}
+              </div>
+            </div>
           </div>
           
-          
+          <div class="form-group">
+            <label for="conpassword">Confirm Password</label>
+            <input 
+              type="password" 
+              id="conpassword"
+              placeholder="Confirm Password" 
+              formControlName="confirmPassword"
+              [ngClass]="{'invalid-field': isFieldInvalid('confirmPassword')}" 
+            />
+            <div class="error-container">
+              <div *ngIf="registerForm.errors?.['passwordsMismatch'] && registerForm.controls['confirmPassword'].touched" class="pass">
+                Passwords do not match
+              </div>
+            </div>
           </div>
 
-        <button type="submit" class="btn-login">Register</button>
-      </form>
+          <button type="submit" class="btn-register">Register</button>
+        </form>
 
-      <div class="divider">
-        <span class="divider-text">or</span>
-      </div>
+        <div class="divider">
+          <span class="divider-text">or</span>
+        </div>
 
-      <div class="signup-link">
-        have an account? <a routerLink="/login">login</a>
+        <div class="signup-link">
+          Have an account? <a routerLink="/login">Login</a>
+        </div>
       </div>
     </div>
   </div>
 
   <div class="split right">
     <div class="centered">
-      <img src="/assets/right.png" alt="" />
+      <img src="/assets/register.jpg" alt="Registration image" />
     </div>
   </div>
-</div>
+</body>
