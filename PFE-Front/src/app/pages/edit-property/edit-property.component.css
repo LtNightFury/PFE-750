@@ -6,7 +6,7 @@
 
 
 .btn_save{
-    background-color: #5F8B4C;
+    background-color: #69B99D;
     color: white;
     border: none;
     cursor: pointer;
@@ -48,6 +48,8 @@
       .form_tab_view {
       border-bottom: #DEDEDE 1px solid;
       
+      
+      
       }
       
       .header_title{
@@ -71,6 +73,8 @@
 
       .invalid-tab {
         border: 2px solid red !important;
+        
+        
         
       }
       

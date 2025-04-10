@@ -62,8 +62,8 @@
 }
 
 .radio_input:checked {
-    background-color: #00C775;
-    border-color: #00C775;
+    background-color: #69B99D;
+    border-color: #69B99D;
 }
 
 .radio_input:checked::before {

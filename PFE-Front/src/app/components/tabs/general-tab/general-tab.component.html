@@ -115,44 +115,35 @@
             </app-dropdown>
             <div *ngIf="isInvalid('PropertyCondition')" class="error-message">Status is required</div>
           </div>
+          
 
           <!-- Frequency field without dropdown -->
-          <div
-            class="select-status"
-            *ngIf="parentForm.get('deal_type')?.value === 'rent'"
-          >
-            <label for="frequency" class="input_label">Rental frequency</label>
-            <p class="input_hint mt-1">Required</p>
-            <div *ngIf="isInvalid('frequency')" class="error-message">
-              Rental frequency is required for rent properties
-            </div>
-          </div>
-        </div>
+         
         
         
         
 
-        <div class="input">
-          <label for="description" class="input_label">Description</label>
-          
-            <textarea
-            id="description"
-            formControlName="description"
-            class="form-control"
-            rows="5"
-            placeholder="Enter property description"
-          ></textarea>
         
-          <div *ngIf="isInvalid('description')" class="error-message">
-            Description is required
-          </div>
         
        
       
     </div>
     
+    <div class="input">
+      <label for="description" class="input_label">Description</label>
+      
+        <textarea
+        id="description"
+        formControlName="description"
+        class="form-control"
+        rows="5"
+        placeholder="Enter property description"
+      ></textarea>
     
-          <!-- Broker field without dropdown -->
+      <div *ngIf="isInvalid('description')" class="error-message">
+        Description is required
+      </div>
+          
           
          
     

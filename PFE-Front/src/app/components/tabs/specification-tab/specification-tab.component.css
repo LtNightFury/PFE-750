@@ -57,7 +57,7 @@
   }
   
   .bedroom-options button.selected {
-    background-color: #e6e6e6;
+    background-color: #69B99D;
     border-color: #999;
   }
   .input_hint{
@@ -121,7 +121,7 @@
 }
 .unit{
 
-    color: #918f90;
+    color: gray;
     margin-right: 0.5rem;
 
 }
@@ -143,8 +143,8 @@
 }
 
 .radio_input:checked {
-    background-color: #00C775;
-    border-color: #00C775;
+    background-color: #69B99D;
+    border-color: #69B99D;
 }
 
 .radio_input:checked::before {

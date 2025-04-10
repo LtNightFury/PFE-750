@@ -32,5 +32,7 @@ export class PriceTabComponent implements OnInit, OnChanges {
   get isRental(): boolean {
     return this.dealType === 'rent';
   }
+
+
   
 }

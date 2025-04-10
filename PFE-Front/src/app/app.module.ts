@@ -31,6 +31,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PropertyListComponent } from './pages/property-list/property-list.component';
+import { HomeComponent } from './pages/home/home.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { PropertyListComponent } from './pages/property-list/property-list.compo
     DropdownComponent,
     MapComponent,
     PropertyListComponent,
+    HomeComponent,
     
   ],
   imports: [

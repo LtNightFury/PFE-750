@@ -27,7 +27,6 @@ export class GeneralTabComponent implements OnInit {
   PropertyCondition= [
     { value: 'new', label: 'New' },
     { value: 'renovated', label: 'Renovated' },
-    { value: 'under_construction', label: 'Under Construction' },
     { value: 'Needs_Renovation', label: 'Needs Renovation' },
   ]
 
