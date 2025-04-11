@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Doctrine\ORM\EntityManagerInterface;
 use app\entity\General;
+use App\Entity\User;
 use App\Entity\Property;
 use App\Repository\GeneralRepository;
 use App\Repository\PropertyRepository;
@@ -36,6 +37,7 @@ class PropertyController extends AbstractController
     #[Route('/properties', name: 'property_create', methods: ['POST'])]
     public function create(Request $request,): JsonResponse
     {
+        $user = $this->getUser();
         
         $data = json_decode($request->getContent(), true);
 
@@ -43,7 +45,7 @@ class PropertyController extends AbstractController
         if (!$data) {
             return new JsonResponse(['error' => 'Invalid JSON'], Response::HTTP_BAD_REQUEST);
         }
-        $property = $this->propertyRepository->createProperty($data);
+        $property = $this->propertyRepository->createProperty($data,$user);
         return $this->json([
             'success' => true,
             'property' => $property->getId()
@@ -51,7 +53,7 @@ class PropertyController extends AbstractController
     }
 
     
-// In your controller
+
 #[Route('/properties/', name: 'property_get', methods: ['GET'])]
 public function listProperties(PropertyRepository $propertyRepository, SerializerInterface $serializer)
 {

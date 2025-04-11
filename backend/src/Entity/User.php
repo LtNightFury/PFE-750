@@ -7,6 +7,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -36,6 +38,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $name = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Property::class)]
+    private Collection $properties;
+
+
+    public function __construct()
+{
+        $this->properties = new ArrayCollection();
+}
+
     public function getName(): ?string
 {
     return $this->name;
@@ -138,4 +150,30 @@ public function setName(string $name): static
         
         return $this;
     }
+    public function getProperties(): Collection
+{
+    return $this->properties;
+}
+
+public function addProperty(Property $property): self
+{
+    if (!$this->properties->contains($property)) {
+        $this->properties[] = $property;
+        $property->setUser($this);
+    }
+
+    return $this;
+}
+
+public function removeProperty(Property $property): self
+{
+    if ($this->properties->removeElement($property)) {
+        if ($property->getUser() === $this) {
+            $property->setUser(null);
+        }
+    }
+
+    return $this;
+}
+   
 }

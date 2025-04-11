@@ -37,6 +37,10 @@ class Property
     #[ORM\JoinColumn(nullable: false)]
     private ?Contacts $contacts = null;
 
+    #[ORM\ManyToOne(inversedBy: 'properties')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -112,5 +116,15 @@ class Property
         $this->contacts = $contacts;
 
         return $this;
+    }
+    public function getUser(): ?User
+    {
+    return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+    $this->user = $user;
+    return $this;
     }
 }

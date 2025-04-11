@@ -61,7 +61,7 @@ class PropertyRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-public function createProperty($data): Property
+public function createProperty($data,$user): Property
 {
 
     
@@ -80,7 +80,7 @@ public function createProperty($data): Property
     $property->setPrice($price);
     $property->setAmenities($amenities);
     $property->setContacts($contacts);
-
+    $property->setUser($user);
     // optionally persist with entity manager
     $this->getEntityManager()->persist($property);
     $this->getEntityManager()->flush();
