@@ -5,6 +5,13 @@ namespace App\Repository;
 use App\Entity\Property;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\GeneralRepository;
+use App\Repository\LocationRepository;
+use App\Repository\specifcationRepository;
+use App\Repository\PriceRepository;
+use App\Repository\AmenitiesRepository;
+use App\Repository\ContactsRepository;
+
 
 /**
  * @extends ServiceEntityRepository<Property>
@@ -15,9 +22,18 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Property[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class PropertyRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
+{   
+    private $generalRepository;
+    public function __construct(ManagerRegistry $registry,GeneralRepository $generalRepository,LocationRepository $locationRepository,SpecificationRepository $SpecificationRepository,PriceRepository $PriceRepository,
+    AmenitiesRepository $amenitiesRepository,
+    ContactsRepository $contactsRepository)
     {
+        $this->generalRepository = $generalRepository;
+        $this->locationRepository = $locationRepository;
+        $this->SpecificationRepository = $SpecificationRepository;
+        $this->priceRepository = $PriceRepository;
+        $this->amenitiesRepository = $amenitiesRepository;
+        $this->contactsRepository = $contactsRepository;
         parent::__construct($registry, Property::class);
     }
 
@@ -45,4 +61,30 @@ class PropertyRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function createProperty($data): Property
+{
+
+    
+    $general = $this->generalRepository->addGeneral($data['general']);
+    $location = $this->locationRepository->addLocation($data['location']);
+    $specification = $this->SpecificationRepository->addSpecification($data['specification']);
+    $price = $this->priceRepository->addPrice($data['price']);
+    $amenities = $this->amenitiesRepository->addAmenities($data['amenities']['amenities']);
+    $contacts = $this->contactsRepository->addContact($data['contacts']);
+
+    
+    $property = new Property();
+    $property->setGeneralinfo($general);
+    $property->setLocation($location);
+    $property->setSpecification($specification);
+    $property->setPrice($price);
+    $property->setAmenities($amenities);
+    $property->setContacts($contacts);
+
+    // optionally persist with entity manager
+    $this->getEntityManager()->persist($property);
+    $this->getEntityManager()->flush();
+
+    return $property;
+}
 }
