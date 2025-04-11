@@ -35,6 +35,8 @@ import { HomeComponent } from './pages/home/home.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './login-register-verif/interceptors/jwt.interceptor';
 
 
 
@@ -79,10 +81,11 @@ import { MatButtonModule } from '@angular/material/button';
     MatSelectModule,
     MatIconModule,
     MatButtonModule,
+   
     
     
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
