@@ -32,6 +32,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PropertyListComponent } from './pages/property-list/property-list.component';
 import { HomeComponent } from './pages/home/home.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+
 
 
 @NgModule({
@@ -71,7 +75,11 @@ import { HomeComponent } from './pages/home/home.component';
     MatInputModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatSelectModule,
+    MatIconModule,
+    MatButtonModule,
+    
     
   ],
   providers: [],

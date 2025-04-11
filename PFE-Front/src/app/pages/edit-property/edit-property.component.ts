@@ -65,7 +65,9 @@ export class EditPropertyComponent implements OnInit {
       Renovationyear: [''],
       Furnishing: ['']
       }),
-      amenities: this.fb.group({}),
+      amenities: this.fb.group({
+        
+      }),
       price: this.fb.group({
         price: ['', Validators.required],
         pricesqft: [''],
@@ -129,6 +131,7 @@ export class EditPropertyComponent implements OnInit {
       this.isSubmitting = true;
       this.submitError = '';
       
+      
       console.log('Form submitted:', this.propertyForm.value);
       // Send data to Symfony backend
       this.http.post('/api/properties', this.propertyForm.value)
@@ -136,6 +139,7 @@ export class EditPropertyComponent implements OnInit {
           response => {
             this.isSubmitting = false;
             console.log('Property saved successfully', response);
+            
           },
           error => {
             this.isSubmitting = false;
