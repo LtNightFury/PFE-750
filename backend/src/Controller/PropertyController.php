@@ -68,5 +68,25 @@ public function listProperties(PropertyRepository $propertyRepository, Serialize
     // Return a JSON response directly
     return new JsonResponse($json, 200, [], true);
 }
+#[Route('/properties/{id}', name: 'property_get_by_id', methods: ['GET'])]
+public function getPropertyById($id, PropertyRepository $propertyRepository, SerializerInterface $serializer)
+{
+    $property = $propertyRepository->find($id);
+    
+    if (!$property) {
+        return new JsonResponse(['error' => 'Property not found'], Response::HTTP_NOT_FOUND);
+    }
+    
+    // Use Symfony's serializer with proper context to handle circular references
+    $json = $serializer->serialize($property, 'json', [
+        'circular_reference_handler' => function ($object) {
+            return $object->getId();
+        },
+        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__']
+    ]);
+    
+    // Return a JSON response directly
+    return new JsonResponse($json, 200, [], true);
    
+}
 }
