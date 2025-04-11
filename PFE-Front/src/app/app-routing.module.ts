@@ -6,6 +6,7 @@ import { ForgotPasswordComponent } from './login-register-verif/auth/forgot-pass
 import { VerifyEmailComponent } from './login-register-verif/auth/verify-email/verify-email.component';
 import { EditPropertyComponent } from './pages/edit-property/edit-property.component';
 import { ResetPasswordComponent } from './login-register-verif/auth/reset-password/reset-password.component';
+import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -14,8 +15,9 @@ const routes: Routes = [
   { path: 'verify-email/:token', component: VerifyEmailComponent },
   { path: 'edit', component: EditPropertyComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'home',  component: HomeComponent },
   //lena bech nhot el route ta3 el dashboard//
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 
 @NgModule({
