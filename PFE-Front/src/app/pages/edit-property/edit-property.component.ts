@@ -41,7 +41,7 @@ export class EditPropertyComponent implements OnInit {
         PropertyCondition: ['', Validators.required],
         propertyType: ['', Validators.required],
         
-        availabilityDate: [''],  // Only required if deal_type is 'rent'
+        availabilityDate: [],  // Only required if deal_type is 'rent'
          // Only required if deal_type is 'rent'
        
        
@@ -55,23 +55,23 @@ export class EditPropertyComponent implements OnInit {
 
       }),
       specification: this.fb.group({
-      bedrooms: ['', Validators.required],
-      bathrooms: ['', Validators.required],
-      parkingSpots: ['', Validators.required],
-      size: [''],
-      plotSize: [''],
-      builtUpArea: [''],
-      constructionYear: [''],
-      Renovationyear: [''],
-      Furnishing: ['']
+      bedrooms: [, Validators.required],
+      bathrooms: [, Validators.required],
+      parkingSpots: [, Validators.required],
+      size: [],
+      plotSize: [],
+      builtUpArea: [],
+      constructionYear: [],
+      Renovationyear: [],
+      Furnishing: []
       }),
       amenities: this.fb.group({}),
       price: this.fb.group({
-        price: ['', Validators.required],
-        pricesqft: [''],
-        originalprice: [''],
+        price: [, Validators.required],
+        pricesqft: [],
+        originalprice: [],
         hideprice: [false, ], 
-        charges: ['' ], 
+        charges: [ ], 
         servicecharge: [ ], 
       }),
       media: this.fb.group({
@@ -85,7 +85,7 @@ export class EditPropertyComponent implements OnInit {
       
       contacts: this.fb.group({
         email: ['', [Validators.required, Validators.email]],
-        phone: ['', Validators.required],
+        phone: [, Validators.required],
       })
     });
   }
@@ -131,7 +131,7 @@ export class EditPropertyComponent implements OnInit {
       
       console.log('Form submitted:', this.propertyForm.value);
       // Send data to Symfony backend
-      this.http.post('/api/properties', this.propertyForm.value)
+      this.http.post('http://backend.ddev.site/api/properties', this.propertyForm.value)
         .subscribe(
           response => {
             this.isSubmitting = false;
