@@ -2,12 +2,10 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use App\Repository\PropertyRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PropertyRepository::class)]
-#[ApiResource]
 class Property
 {
     #[ORM\Id]
@@ -15,232 +13,104 @@ class Property
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: "string", length: 255)]
-    private ?string $title = null;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?General $generalinfo = null;
 
-    #[ORM\Column(type: "string", length: 255)]
-    private ?string $type = null;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Location $location = null;
 
-    #[ORM\Column(type: "text")]
-    private ?string $description = null;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Specification $Specification = null;
 
-    #[ORM\Column(type: "float")]
-    private ?float $price = null;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Price $price = null;
 
-    #[ORM\Column(type: "string", length: 50)]
-    private ?string $size = null;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Amenities $Amenities = null;
 
-    #[ORM\Column(type: "string", length: 20)]
-    private ?string $status = null; // Rent or Sale
-
-    #[ORM\Column(type: "float")]
-    private ?float $latitude = null;
-
-    #[ORM\Column(type: "float")]
-    private ?float $longitude = null;
-
-    #[ORM\Column(type: "integer")]
-    private ?int $yearBuilt = null;
-
-    #[ORM\Column(type: "datetime", nullable: true)]
-    private ?\DateTimeInterface $isAvailableDate = null; // For rent only
-
-    #[ORM\Column(type: "json")]
-    private array $photos = [];
-
-    #[ORM\Column(type: "integer")]
-    private ?int $nbreRooms = null;
-
-    #[ORM\Column(type: "integer")]
-    private ?int $nbreBath = null;
-
-    #[ORM\Column(type: "integer")]
-    private ?int $nbreofParking = null;
-
-    #[ORM\Column(type: "json")]
-    private array $amenities = []; // Garage, Pool, Gym, etc.
-
-    #[ORM\Column(type: "string", length: 255, nullable: true)]
-    private ?string $videoTour = null; // Link to YouTube video
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Contacts $contacts = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getGeneralinfo(): ?General
     {
-        return $this->title;
+        return $this->generalinfo;
     }
 
-    public function setTitle(string $title): self
+    public function setGeneralinfo(General $generalinfo): static
     {
-        $this->title = $title;
+        $this->generalinfo = $generalinfo;
+
         return $this;
     }
 
-    public function getType(): ?string
+    public function getLocation(): ?Location
     {
-        return $this->type;
+        return $this->location;
     }
 
-    public function setType(string $type): self
+    public function setLocation(Location $location): static
     {
-        $this->type = $type;
+        $this->location = $location;
+
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getSpecification(): ?Specification
     {
-        return $this->description;
+        return $this->Specification;
     }
 
-    public function setDescription(string $description): self
+    public function setSpecification(Specification $Specification): static
     {
-        $this->description = $description;
+        $this->Specification = $Specification;
+
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getPrice(): ?Price
     {
         return $this->price;
     }
 
-    public function setPrice(float $price): self
+    public function setPrice(Price $price): static
     {
         $this->price = $price;
+
         return $this;
     }
 
-    public function getSize(): ?string
+    public function getAmenities(): ?Amenities
     {
-        return $this->size;
+        return $this->Amenities;
     }
 
-    public function setSize(string $size): self
+    public function setAmenities(Amenities $Amenities): static
     {
-        $this->size = $size;
+        $this->Amenities = $Amenities;
+
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getContacts(): ?Contacts
     {
-        return $this->status;
+        return $this->contacts;
     }
 
-    public function setStatus(string $status): self
+    public function setContacts(Contacts $contacts): static
     {
-        $this->status = $status;
-        return $this;
-    }
+        $this->contacts = $contacts;
 
-    public function getLatitude(): ?float
-    {
-        return $this->latitude;
-    }
-
-    public function setLatitude(float $latitude): self
-    {
-        $this->latitude = $latitude;
-        return $this;
-    }
-
-    public function getLongitude(): ?float
-    {
-        return $this->longitude;
-    }
-
-    public function setLongitude(float $longitude): self
-    {
-        $this->longitude = $longitude;
-        return $this;
-    }
-
-    public function getYearBuilt(): ?int
-    {
-        return $this->yearBuilt;
-    }
-
-    public function setYearBuilt(int $yearBuilt): self
-    {
-        $this->yearBuilt = $yearBuilt;
-        return $this;
-    }
-
-    public function getIsAvailableDate(): ?\DateTimeInterface
-    {
-        return $this->isAvailableDate;
-    }
-
-    public function setIsAvailableDate(?\DateTimeInterface $isAvailableDate): self
-    {
-        $this->isAvailableDate = $isAvailableDate;
-        return $this;
-    }
-
-    public function getPhotos(): ?array
-    {
-        return $this->photos;
-    }
-
-    public function setPhotos(array $photos): self
-    {
-        $this->photos = $photos;
-        return $this;
-    }
-
-    public function getNbreRooms(): ?int
-    {
-        return $this->nbreRooms;
-    }
-
-    public function setNbreRooms(int $nbreRooms): self
-    {
-        $this->nbreRooms = $nbreRooms;
-        return $this;
-    }
-
-    public function getNbreBath(): ?int
-    {
-        return $this->nbreBath;
-    }
-
-    public function setNbreBath(int $nbreBath): self
-    {
-        $this->nbreBath = $nbreBath;
-        return $this;
-    }
-
-    public function getNbreofParking(): ?int
-    {
-        return $this->nbreofParking;
-    }
-
-    public function setNbreofParking(int $nbreofParking): self
-    {
-        $this->nbreofParking = $nbreofParking;
-        return $this;
-    }
-
-    public function getAmenities(): ?array
-    {
-        return $this->amenities;
-    }
-
-    public function setAmenities(array $amenities): self
-    {
-        $this->amenities = $amenities;
-        return $this;
-    }
-
-    public function getVideoTour(): ?string
-    {
-        return $this->videoTour;
-    }
-
-    public function setVideoTour(?string $videoTour): self
-    {
-        $this->videoTour = $videoTour;
         return $this;
     }
 }
