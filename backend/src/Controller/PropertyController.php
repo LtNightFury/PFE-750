@@ -12,6 +12,7 @@ use app\entity\General;
 use App\Entity\Property;
 use App\Repository\GeneralRepository;
 use App\Repository\PropertyRepository;
+use Symfony\Component\Serializer\SerializerInterface;
 #[Route('/api', name: 'api_')]
 class PropertyController extends AbstractController
 {
@@ -19,7 +20,8 @@ class PropertyController extends AbstractController
     private $generalRepository;
     public function __construct(
         GeneralRepository $generalRepository,
-        PropertyRepository $propertyRepository
+        PropertyRepository $propertyRepository,
+        
     ) {
         $this->generalRepository = $generalRepository;
         $this->propertyRepository = $propertyRepository;
@@ -47,4 +49,24 @@ class PropertyController extends AbstractController
             'property' => $property->getId()
         ]);
     }
+
+    
+// In your controller
+#[Route('/properties/', name: 'property_get', methods: ['GET'])]
+public function listProperties(PropertyRepository $propertyRepository, SerializerInterface $serializer)
+{
+    $properties = $propertyRepository->findAll();
+    
+    // Use Symfony's serializer with proper context to handle circular references
+    $json = $serializer->serialize($properties, 'json', [
+        'circular_reference_handler' => function ($object) {
+            return $object->getId();
+        },
+        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__']
+    ]);
+    
+    // Return a JSON response directly
+    return new JsonResponse($json, 200, [], true);
+}
+   
 }
