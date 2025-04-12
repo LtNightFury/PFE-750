@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250411183012 extends AbstractMigration
+final class Version20250412164312 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,13 +21,10 @@ final class Version20250411183012 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE property ADD user_id INT NOT NULL
+            ALTER TABLE property ADD CONSTRAINT FK_8BF21CDEEA9FDD75 FOREIGN KEY (media_id) REFERENCES media (id)
         SQL);
         $this->addSql(<<<'SQL'
-            ALTER TABLE property ADD CONSTRAINT FK_8BF21CDEA76ED395 FOREIGN KEY (user_id) REFERENCES `user` (id)
-        SQL);
-        $this->addSql(<<<'SQL'
-            CREATE INDEX IDX_8BF21CDEA76ED395 ON property (user_id)
+            CREATE UNIQUE INDEX UNIQ_8BF21CDEEA9FDD75 ON property (media_id)
         SQL);
     }
 
@@ -35,13 +32,10 @@ final class Version20250411183012 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE property DROP FOREIGN KEY FK_8BF21CDEA76ED395
+            ALTER TABLE property DROP FOREIGN KEY FK_8BF21CDEEA9FDD75
         SQL);
         $this->addSql(<<<'SQL'
-            DROP INDEX IDX_8BF21CDEA76ED395 ON property
-        SQL);
-        $this->addSql(<<<'SQL'
-            ALTER TABLE property DROP user_id
+            DROP INDEX UNIQ_8BF21CDEEA9FDD75 ON property
         SQL);
     }
 }

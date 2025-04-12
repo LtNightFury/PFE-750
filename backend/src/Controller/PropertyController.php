@@ -35,22 +35,30 @@ class PropertyController extends AbstractController
         ]);
     }
     #[Route('/properties', name: 'property_create', methods: ['POST'])]
-    public function create(Request $request,): JsonResponse
-    {
-        $user = $this->getUser();
-        
-        $data = json_decode($request->getContent(), true);
-
-
-        if (!$data) {
-            return new JsonResponse(['error' => 'Invalid JSON'], Response::HTTP_BAD_REQUEST);
-        }
-        $property = $this->propertyRepository->createProperty($data,$user);
-        return $this->json([
-            'success' => true,
-            'property' => $property->getId()
-        ]);
+public function create(Request $request): JsonResponse
+{
+    $user = $this->getUser();
+    
+    // Get JSON data
+    $data = json_decode($request->get('data'), true);
+    
+    if (!$data) {
+        return new JsonResponse(['error' => 'Invalid JSON'], Response::HTTP_BAD_REQUEST);
     }
+    
+    // Handle file uploads if they exist
+    $photos = $request->files->get('photos');
+    if ($photos) {
+        $data['photos'] = $photos;
+    }
+    
+    $property = $this->propertyRepository->createProperty($data, $user);
+    
+    return $this->json([
+        'success' => true,
+        'property' => $property->getId()
+    ]);
+}
 
     
 

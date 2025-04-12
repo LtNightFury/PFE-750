@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -130,11 +130,30 @@ export class EditPropertyComponent implements OnInit {
     if (this.propertyForm.valid) {
       this.isSubmitting = true;
       this.submitError = '';
+      const formData = new FormData();
+      const nonMediaData = { ...this.propertyForm.value };
+      delete nonMediaData.media;
+      formData.append('data', JSON.stringify(nonMediaData));
+      console.log('Non-media data:', nonMediaData);
+
+      // Append media files to FormData
+      const mediaGroup = this.propertyForm.get('media') as FormGroup;
+      (mediaGroup.get('photos') as FormArray).controls.forEach((control: any, index: number) => {
+        formData.append(`photos[${index}]`, control.value.file);
+      });
+      (mediaGroup.get('floorPlans') as FormArray).controls.forEach((control: any, index: number) => {
+        formData.append(`floorPlans[${index}]`, control.value.file);
+      });
+      (mediaGroup.get('documents') as FormArray).controls.forEach((control: any, index: number) => {
+        formData.append(`documents[${index}]`, control.value.file);
+      });
       
       
-      console.log('Form submitted:', this.propertyForm.value);
+      for (const [key, value] of (formData as any).entries()) {
+        console.log(key, value);
+      }
       // Send data to Symfony backend
-      this.http.post('http://backend.ddev.site/api/properties', this.propertyForm.value)
+      this.http.post('http://backend.ddev.site/api/properties', formData)
         .subscribe(
           response => {
             this.isSubmitting = false;

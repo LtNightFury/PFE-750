@@ -1,8 +1,18 @@
+# config/packages/vich_uploader.yaml
+
 vich_uploader:
     db_driver: orm
 
-    #mappings:
-    #    products:
-    #        uri_prefix: /images/products
-    #        upload_destination: '%kernel.project_dir%/public/images/products'
-    #        namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+    metadata:
+        type: attribute
+
+    mappings:    
+        Photos:
+            uri_prefix: /uploads/photos  # URL for photos
+            upload_destination: '%kernel.project_dir%/public/uploads/photos'  # Local directory for photos
+            namer: Vich\UploaderBundle\Naming\UniqidNamer  # Automatically generate unique names for photos
+
+        floorplans:
+            uri_prefix: /uploads/floorplans  # URL for floorplans
+            upload_destination: '%kernel.project_dir%/public/uploads/floorplans'  # Local directory for floorplans
+            namer: Vich\UploaderBundle\Naming\SmartFileNameGenerator  # Automatically generate unique names for floorplans

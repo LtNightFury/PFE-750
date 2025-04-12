@@ -41,6 +41,10 @@ class Property
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Media $Media = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -126,5 +130,17 @@ class Property
     {
     $this->user = $user;
     return $this;
+    }
+
+    public function getMedia(): ?Media
+    {
+        return $this->Media;
+    }
+
+    public function setMedia(Media $Media): static
+    {
+        $this->Media = $Media;
+
+        return $this;
     }
 }
