@@ -36,6 +36,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './login-register-verif/interceptors/jwt.interceptor';
 import { PropertyFilterComponent } from './components/property-filter/property-filter.component';
+import { PropertyCardComponent } from './components/property-card/property-card.component';
+
 
 
 
@@ -63,6 +65,8 @@ import { PropertyFilterComponent } from './components/property-filter/property-f
     PropertyListComponent,
     HomeComponent,
     PropertyFilterComponent,
+    PropertyCardComponent,
+    
     
   ],
   imports: [

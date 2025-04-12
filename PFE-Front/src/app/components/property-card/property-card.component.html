@@ -1,0 +1,22 @@
+
+<div class="property-card">
+    <!--suposé tji l'image lena mel media ama its not working-->
+    <img src="/assets/login.jpg" alt="{{ property.generalinfo.title }}" class="property-image">
+  
+    <div class="property-content">
+      <h3 class="property-title">{{ property.generalinfo.title }}</h3>
+      <p class="property-location">{{ property.location.city | titlecase }}, {{ property.location.country | uppercase }}</p>
+  
+      <div class="property-details">
+        <p class="property-price" *ngIf="!property.price.hideprice">{{ property.price.price | currency:'TND' }}</p>
+        <p class="property-price" *ngIf="property.price.hideprice">Price on request</p>
+  
+        <p class="property-area">
+          <span>{{ property.Specification.size || 'N/A' }}m²</span> Living Area
+        </p>
+      </div>
+  
+      <a [routerLink]="['/property', property.id]" class="inquiry-btn">View Details</a>
+    </div>
+  </div>
+  
