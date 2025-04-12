@@ -1,0 +1,47 @@
+<p>property-filter works!</p>
+<div class="filter-container">
+    <h3>Filter Properties</h3>
+  <div class="test"></div>
+    <!-- Property Type -->
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Type</mat-label>
+      <mat-select [(ngModel)]="type" (selectionChange)="applyFilters()">
+        <mat-option value="">All</mat-option>
+        <mat-option value="house">House</mat-option>
+        <mat-option value="apartment">Apartment</mat-option>
+        <mat-option value="villa">Villa</mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <!-- City -->
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>City</mat-label>
+      <input matInput [(ngModel)]="city" (input)="applyFilters()" placeholder="e.g. Tunis">
+    </mat-form-field>
+  
+    <!-- Price Range -->
+    <div class="price-range">
+      <mat-form-field appearance="outline" class="price-input">
+        <mat-label>Min Price</mat-label>
+        <input matInput type="number" [(ngModel)]="minPrice" (input)="applyFilters()">
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline" class="price-input">
+        <mat-label>Max Price</mat-label>
+        <input matInput type="number" [(ngModel)]="maxPrice" (input)="applyFilters()">
+      </mat-form-field>
+    </div>
+  
+    <!-- Search -->
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Search</mat-label>
+      <input matInput [(ngModel)]="search" (input)="applyFilters()" placeholder="Keyword or title">
+    </mat-form-field>
+  
+    <!-- Buttons -->
+    <div class="filter-buttons">
+      <button mat-raised-button color="primary" (click)="applyFilters()">Apply</button>
+      <button mat-button (click)="resetFilters()">Reset</button>
+    </div>
+  </div>
+  

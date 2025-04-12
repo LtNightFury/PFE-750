@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login-register-verif/auth/login/login.component';
@@ -17,7 +16,6 @@ import { HeaderComponent } from './layout/header/header.component';
 import { GeneralTabComponent } from './components/tabs/general-tab/general-tab.component';
 import { LocationTabComponent } from './components/tabs/location-tab/location-tab.component';
 import { SpecificationTabComponent } from './components/tabs/specification-tab/specification-tab.component';
-
 import { PriceTabComponent } from './components/tabs/price-tab/price-tab.component';
 import { MediaTabComponent } from './components/tabs/media-tab/media-tab.component';
 import { PublicationTabComponent } from './components/tabs/publication-tab/publication-tab.component';
@@ -37,6 +35,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './login-register-verif/interceptors/jwt.interceptor';
+import { PropertyFilterComponent } from './components/property-filter/property-filter.component';
 
 
 
@@ -63,6 +62,7 @@ import { JwtInterceptor } from './login-register-verif/interceptors/jwt.intercep
     MapComponent,
     PropertyListComponent,
     HomeComponent,
+    PropertyFilterComponent,
     
   ],
   imports: [
