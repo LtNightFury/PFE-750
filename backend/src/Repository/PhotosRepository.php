@@ -46,22 +46,5 @@ class PhotosRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-public function createPhotos(array $photoFiles): array
-    {
-        $entityManager = $this->getEntityManager();
-        $photos = [];
 
-        foreach ($photoFiles as $photoFile) {
-            $photo = new Photos();
-            $photo->setImageFile($photoFile); 
-            // Persist each photo
-            $entityManager->persist($photo);
-            $photos[] = $photo;
-        }
-
-        // Flush the changes to the database
-        $entityManager->flush();
-
-        return $photos;
-    }
 }

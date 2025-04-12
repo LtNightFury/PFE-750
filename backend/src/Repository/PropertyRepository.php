@@ -35,6 +35,7 @@ class PropertyRepository extends ServiceEntityRepository
     private $contactsRepository;
     private $MediaRepository;
     private $photosRepository;
+    
     public function __construct(ManagerRegistry $registry,GeneralRepository $generalRepository,LocationRepository $locationRepository,SpecificationRepository $SpecificationRepository,PriceRepository $PriceRepository,
     AmenitiesRepository $amenitiesRepository,
     ContactsRepository $contactsRepository,
@@ -87,7 +88,7 @@ public function createProperty($data,$user): Property
     $price = $this->priceRepository->addPrice($data['price']);
     $amenities = $this->amenitiesRepository->addAmenities($data['amenities']['amenities']);
     $contacts = $this->contactsRepository->addContact($data['contacts']);
-    $media = $this->MediaRepository->createMediaWithPhotos($data['photos']);
+    $media = $this->MediaRepository->createMediaWithPhotos($data['mediaFiles']);
     
 
     

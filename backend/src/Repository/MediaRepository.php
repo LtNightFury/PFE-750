@@ -6,7 +6,8 @@ use App\Entity\Media;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Photos;
-
+use App\Entity\FloorPlans;
+use App\Entity\Documents;
 /**
  * @extends ServiceEntityRepository<Media>
  *
@@ -47,26 +48,42 @@ class MediaRepository extends ServiceEntityRepository
 //        ;
 //    }
     // In MediaRepository
-    public function createMediaWithPhotos(array $photoFiles): Media
+        public function createMediaWithPhotos(array $mediaFiles): Media
     {
         $entityManager = $this->getEntityManager();
-        
-        // Create new Media entity
+
         $media = new Media();
         $entityManager->persist($media);
-        
-        // Create and associate photos
-        foreach ($photoFiles as $photoFile) {
-            $photo = new Photos();
-            $photo->setImageFile($photoFile);  // This will trigger setting updatedAt
-            $photo->setMedia($media);
-            
-            $media->addPhoto($photo);
-            $entityManager->persist($photo);
+
+        if (!empty($mediaFiles['photos'])) {
+            foreach ($mediaFiles['photos'] as $photoFile) {
+                $photo = new Photos();
+                $photo->setImageFile($photoFile);
+                $photo->setMedia($media);
+                $media->addPhoto($photo); // Make sure this method exists in Media entity
+                $entityManager->persist($photo);
+            }
         }
-        
-        // Note: We're NOT flushing here, as that will be done in the property repository
-        
+
+        if (!empty($mediaFiles['floorPlans'])) {
+            foreach ($mediaFiles['floorPlans'] as $floorplanFile) {
+                $floorplans = new FloorPlans(); // Make sure the class name is correct
+                $floorplans->setImageFile($floorplanFile);
+                $floorplans->setMedia($media);
+                $media->addFloorPlan($floorplans); // Make sure this method exists in Media entity
+                $entityManager->persist($floorplans);
+            }
+        }
+        if (!empty($mediaFiles['documents'])) {
+            foreach ($mediaFiles['documents'] as $documentfile) {
+                $document = new Documents(); // Make sure the class name is correct
+                $document->setImageFile($documentfile);
+                $document->setMedia($media);
+                $media->addDocument($document); // Make sure this method exists in Media entity
+                $entityManager->persist($document);
+            }
+        }
+
         return $media;
     }
 

@@ -13,6 +13,7 @@ use App\Entity\User;
 use App\Entity\Property;
 use App\Repository\GeneralRepository;
 use App\Repository\PropertyRepository;
+
 use Symfony\Component\Serializer\SerializerInterface;
 #[Route('/api', name: 'api_')]
 class PropertyController extends AbstractController
@@ -41,16 +42,30 @@ public function create(Request $request): JsonResponse
     
     // Get JSON data
     $data = json_decode($request->get('data'), true);
+
     
-    if (!$data) {
-        return new JsonResponse(['error' => 'Invalid JSON'], Response::HTTP_BAD_REQUEST);
-    }
-    
-    // Handle file uploads if they exist
+    $mediaFiles = [];
+
     $photos = $request->files->get('photos');
     if ($photos) {
-        $data['photos'] = $photos;
+        $mediaFiles['photos'] = $photos;
     }
+
+    $floorplans = $request->files->get('floorPlans');
+    if ($floorplans) {
+        $mediaFiles['floorPlans'] = $floorplans;
+    }
+    $document = $request->files->get('documents');
+    if ($document) {
+        $mediaFiles['documents'] = $document;
+    }
+
+
+    if (!empty($mediaFiles)) {
+        $data['mediaFiles'] = $mediaFiles;
+    }
+
+
     
     $property = $this->propertyRepository->createProperty($data, $user);
     
@@ -72,7 +87,7 @@ public function listProperties(PropertyRepository $propertyRepository, Serialize
         'circular_reference_handler' => function ($object) {
             return $object->getId();
         },
-        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__']
+        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__','user']
     ]);
     
     // Return a JSON response directly
@@ -92,7 +107,7 @@ public function getPropertyById($id, PropertyRepository $propertyRepository, Ser
         'circular_reference_handler' => function ($object) {
             return $object->getId();
         },
-        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__']
+        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__','user']
     ]);
     
     // Return a JSON response directly

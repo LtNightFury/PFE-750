@@ -2,21 +2,21 @@
 
 namespace App\Entity;
 
-use App\Repository\PhotosRepository;
+use App\Repository\DocumentsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
 
-#[ORM\Entity(repositoryClass: PhotosRepository::class)]
+#[ORM\Entity(repositoryClass: DocumentsRepository::class)]
 #[Vich\Uploadable]
-class Photos
+class Documents
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[Vich\UploadableField(mapping: 'Photos', fileNameProperty: 'imageName', size: 'imageSize')]
+    #[Vich\UploadableField(mapping: 'Documents', fileNameProperty: 'imageName', size: 'imageSize')]
     private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
@@ -28,10 +28,10 @@ class Photos
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'photos')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'documents')]
     private ?Media $media = null;
 
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -51,7 +51,7 @@ class Photos
     {
         
             return $this->imageName 
-                ? '/uploads/photos/' . $this->imageName
+                ? '/uploads/documents/' . $this->imageName
                 : null;
         
     }
