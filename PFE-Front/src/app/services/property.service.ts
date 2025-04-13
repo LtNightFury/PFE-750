@@ -1,16 +1,37 @@
 import { Injectable } from '@angular/core';
 import { Property } from '../models/property.model';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PropertyService {
 
-  private apiUrl = 'http://localhost:8000/api/properties';  // Replace with your Symfony API endpoint
+  private apiUrl = 'http://backend.ddev.site/api/properties/';  // Replace with your Symfony API endpoint
 
   constructor(private http: HttpClient) {}
+
+
+  //TEMPORARY 5ATER KHALIL YB3TH FIHOM TEXT
+  getPropertiesFromTextFile(): Observable<Property[]> {
+    return this.http.get('assets/properties.txt', { responseType: 'text' })
+      .pipe(
+        map(text => JSON.parse(text)), // Parse the raw text into JSON
+        map((properties: any[]) => {
+          // Set a main image for each property if one exists
+          return properties.map(property => {
+            if (property?.Media?.photos?.length > 0) {
+              property.mainImage = 'http://localhost:8000' + property.Media.photos[0].imageName;
+            } else {
+              property.mainImage = ''; // fallback image
+            }
+            return property;
+          });
+        })
+      );
+  }
+  //TOUFA LENA EL METHODE
 
   // Get all properties
   getAllProperties(): Observable<Property[]> {

@@ -1,37 +1,18 @@
 <app-header></app-header>
-<app-property-filter (filtersChanged)="onFiltersChanged($event)"></app-property-filter>
+<app-property-filter (filterChanged)="onFiltersChanged($event)"></app-property-filter>
 <p>property-list works!</p>
 
-<!-- property-list.component.html 
-
-
-<div class="property-list">
+<!-- property-list.component.html -->
+<div class="properties-container">
+<div class="properties-grid">
   <app-property-card 
     *ngFor="let property of filteredProperties" 
     [property]="property">
-  </app-property-card>
+    </app-property-card>
+  </div>
 </div>
 
 
-
-
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-    <div *ngFor="let prop of properties" class="bg-white shadow rounded-xl p-4">
-      <h2 class="text-xl font-bold mb-2">{{ prop.generalinfo.title }}</h2>
-      <p class="text-sm text-gray-600 mb-2">{{ prop.generalinfo.description }}</p>
-  
-      <div class="text-sm">
-        <p><strong>Type:</strong> {{ prop.generalinfo.propertyType }}</p>
-        <p><strong>Condition:</strong> {{ prop.generalinfo.propertyCondition }}</p>
-        <p><strong>Deal:</strong> {{ prop.generalinfo.dealType }}</p>
-        <p><strong>Location:</strong> {{ prop.location.city }}, {{ prop.location.country }}</p>
-        <p><strong>Price:</strong> {{ prop.price.price | currency:'TND' }}</p>
-        <p><strong>Bedrooms:</strong> {{ prop.Specification.bedrooms }}</p>
-        <p><strong>Bathrooms:</strong> {{ prop.Specification.bathrooms }}</p>
-      </div>
-    </div>
-  </div>
-   IT ENDS HERE FIXME from the back-end-->
    
 
 

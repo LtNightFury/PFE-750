@@ -18,20 +18,43 @@ export class PropertyFilterComponent {
 
 
   // Visual representations for the UI
-  lookingFor: string = 'Residence in tunisia';
-  selectedLocation: string = 'Tunisia';
-  priceRangeDisplay: string = '$10000 - $50000';
+  lookingFor: string = 'Residence in Tunis';
+  selectedLocation: string = 'Tunis';
+  priceRangeDisplay: string = '10000 - 50000 TND';
   
   // Options for dropdowns
   dealTypes: string[] = ['Rent', 'Sale'];
   propertyTypes: string[] = ['Apartment', 'House', 'Villa', 'Commercial', 'Studio'];
-  locations: string[] = ['Tunisia', 'Malaysia', 'Singapore', 'Thailand'];
+  locations: string[] = ['Ariana',
+  'Beja',
+  'Ben Arous',
+  'Bizerte',
+  'Gabes',
+  'Gafsa',
+  'Jendouba',
+  'Kairouan',
+  'Kasserine',
+  'Kebili',
+  'Kef',
+  'Mahdia',
+  'Manouba',
+  'Medenine',
+  'Monastir',
+  'Nabeul',
+  'Sfax',
+  'Sidi Bouzid',
+  'Siliana',
+  'Sousse',
+  'Tataouine',
+  'Tozeur',
+  'Tunis',
+  'Zaghouan'];
   priceRanges: { display: string, min: number, max: number | null }[] = [
-    { display: '$10000 - $50000', min: 10000, max: 50000 },
-    { display: '$50000 - $100000', min: 50000, max: 100000 },
-    { display: '$100000 - $250000', min: 100000, max: 250000 },
-    { display: '$250000 - $500000', min: 250000, max: 500000 },
-    { display: '$500000+', min: 500000, max: null }
+    { display: '10000 - 50000 TND', min: 10000, max: 50000 },
+    { display: '50000 - 100000 TND', min: 50000, max: 100000 },
+    { display: '100000 - 250000 TND', min: 100000, max: 250000 },
+    { display: '250000 - 500000 TND', min: 250000, max: 500000 },
+    { display: '500000+', min: 500000, max: null }
   ];
 
   /**
@@ -51,8 +74,8 @@ export class PropertyFilterComponent {
     
     // Set the city filter based on location
     // In a real app, you might want more sophisticated logic here
-    if (location === 'Indonesia') {
-      this.city = 'Yogyakarta';
+    if (location === 'Tunis') {
+      this.city = 'Tunis';
     } else {
       this.city = location;
     }

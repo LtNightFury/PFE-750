@@ -6,6 +6,7 @@ export interface Property {
     price: Price;
     Amenities: Amenities;
     contacts: Contacts;
+    Media: Media;
   }
   
   export interface GeneralInfo {
@@ -79,7 +80,21 @@ export interface Property {
     nearbySchools: boolean;
     nearbyShopping: boolean;
   }
+  export interface MediaItem {
+    id: number;
+    imageFile: File | null;
+    imageName: string;
+    imageSize: number;
+    updatedAt: string;
+  }
   
+  export interface Media {
+    id: number;
+    photos: MediaItem[];
+    floorPlans: MediaItem[];
+    documents: MediaItem[];
+  }
+
   export interface Contacts {
     id: number;
     email: string;

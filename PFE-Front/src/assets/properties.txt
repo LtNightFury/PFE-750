@@ -1,0 +1,218 @@
+[
+    {
+        "id": 21,
+        "generalinfo": {
+            "id": 37,
+            "dealType": "sale",
+            "title": "45654654564",
+            "description": "fjksdvhsdfvjs",
+            "propertyCondition": "renovated",
+            "propertyType": "apartment",
+            "availabilityDate": null
+        },
+        "location": {
+            "id": 37,
+            "latitude": 10.182205109873,
+            "longitude": 36.78474791891,
+            "country": "tunisia",
+            "city": "gabes"
+        },
+        "Specification": {
+            "id": 37,
+            "bedrooms": "1",
+            "bathrooms": "1",
+            "parkingSpots": "0",
+            "size": null,
+            "plotSize": null,
+            "builtUpArea": null,
+            "constructionYear": null,
+            "renovationyear": null,
+            "furnishing": null
+        },
+        "price": {
+            "id": 37,
+            "price": "45654654564",
+            "pricesqft": null,
+            "originalprice": null,
+            "hideprice": false,
+            "charges": null,
+            "servicecharge": null
+        },
+        "Amenities": {
+            "id": 37,
+            "centralAC": false,
+            "parking": false,
+            "elevator": false,
+            "petsAllowed": false,
+            "conciergeService": false,
+            "securityService": false,
+            "lobbyInBuilding": false,
+            "maidsRoom": false,
+            "studyRoom": false,
+            "balcony": false,
+            "walkInCloset": false,
+            "childrensPlayArea": false,
+            "garden": false,
+            "barbecueArea": false,
+            "jacuzzi": false,
+            "sauna": false,
+            "sharedGym": false,
+            "privateGym": false,
+            "sharedPool": false,
+            "privatePool": false,
+            "spa": false,
+            "viewOfWater": false,
+            "viewOfLandmark": false,
+            "nearbyHospitals": false,
+            "nearbyPublicTransport": false,
+            "nearbySchools": false,
+            "nearbyShopping": false
+        },
+        "contacts": {
+            "id": 37,
+            "email": "med@email.com",
+            "phone": "45654654564"
+        },
+        "Media": {
+            "id": 19,
+            "photos": [
+                {
+                    "id": 20,
+                    "imageFile": null,
+                    "imageName": "/uploads/photos/67faf238dd401932020095.jpg",
+                    "imageSize": 194091,
+                    "media": 19,
+                    "updatedAt": "2025-04-12T23:07:36+00:00"
+                }
+            ],
+            "floorPlans": [
+                {
+                    "id": 3,
+                    "media": 19,
+                    "imageFile": null,
+                    "imageName": "/uploads/photos/67faf238dddfa970932347.jpg",
+                    "imageSize": 110791,
+                    "updatedAt": "2025-04-12T23:07:36+00:00"
+                }
+            ],
+            "documents": [
+                {
+                    "id": 3,
+                    "imageFile": null,
+                    "imageName": "/uploads/documents/67faf238de3f6663801309.jpg",
+                    "imageSize": 1010646,
+                    "media": 19,
+                    "updatedAt": "2025-04-12T23:07:36+00:00"
+                }
+            ]
+        }
+    },
+    {
+        "id": 22,
+        "generalinfo": {
+            "id": 38,
+            "dealType": "sale",
+            "title": "dar el fan",
+            "description": "fjksdvhsdfvjs",
+            "propertyCondition": "renovated",
+            "propertyType": "apartment",
+            "availabilityDate": null
+        },
+        "location": {
+            "id": 38,
+            "latitude": 10.182205109873,
+            "longitude": 36.78474791891,
+            "country": "tunisia",
+            "city": "gabes"
+        },
+        "Specification": {
+            "id": 38,
+            "bedrooms": "1",
+            "bathrooms": "1",
+            "parkingSpots": "0",
+            "size": null,
+            "plotSize": null,
+            "builtUpArea": null,
+            "constructionYear": null,
+            "renovationyear": null,
+            "furnishing": null
+        },
+        "price": {
+            "id": 38,
+            "price": "45654654564",
+            "pricesqft": null,
+            "originalprice": null,
+            "hideprice": false,
+            "charges": null,
+            "servicecharge": null
+        },
+        "Amenities": {
+            "id": 38,
+            "centralAC": false,
+            "parking": false,
+            "elevator": false,
+            "petsAllowed": false,
+            "conciergeService": false,
+            "securityService": false,
+            "lobbyInBuilding": false,
+            "maidsRoom": false,
+            "studyRoom": false,
+            "balcony": false,
+            "walkInCloset": false,
+            "childrensPlayArea": false,
+            "garden": false,
+            "barbecueArea": false,
+            "jacuzzi": false,
+            "sauna": false,
+            "sharedGym": false,
+            "privateGym": false,
+            "sharedPool": false,
+            "privatePool": false,
+            "spa": false,
+            "viewOfWater": false,
+            "viewOfLandmark": false,
+            "nearbyHospitals": false,
+            "nearbyPublicTransport": false,
+            "nearbySchools": false,
+            "nearbyShopping": false
+        },
+        "contacts": {
+            "id": 38,
+            "email": "med@email.com",
+            "phone": "45654654564"
+        },
+        "Media": {
+            "id": 20,
+            "photos": [
+                {
+                    "id": 21,
+                    "imageFile": null,
+                    "imageName": "/uploads/photos/67faf34730a7a906345577.jpg",
+                    "imageSize": 194091,
+                    "media": 20,
+                    "updatedAt": "2025-04-12T23:12:07+00:00"
+                }
+            ],
+            "floorPlans": [
+                {
+                    "id": 4,
+                    "media": 20,
+                    "imageFile": null,
+                    "imageName": "/uploads/photos/67faf3473140c849698750.jpg",
+                    "imageSize": 110791,
+                    "updatedAt": "2025-04-12T23:12:07+00:00"
+                }
+            ],
+            "documents": [
+                {
+                    "id": 4,
+                    "imageFile": null,
+                    "imageName": "/uploads/documents/67faf34731bfc696822710.jpg",
+                    "imageSize": 1010646,
+                    "media": 20,
+                    "updatedAt": "2025-04-12T23:12:07+00:00"
+                }
+            ]
+        }
+    }
+]

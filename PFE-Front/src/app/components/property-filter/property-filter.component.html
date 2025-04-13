@@ -5,24 +5,26 @@
     <div class="filter-group">
       <label>Looking For</label>
       <div class="input-icon-wrapper">
-        <input type="text" [(ngModel)]="lookingFor" class="form-control" readonly>
+        <input type="text" [(ngModel)]="lookingFor" class="form-control modern-input" readonly>
       </div>
     </div>
 
     <!-- Type -->
     <div class="filter-group">
       <label>Type</label>
-      <div class="select-wrapper">
-        <select [(ngModel)]="type" (change)="onTypeChange(type)" class="form-control">
+      <div class="select-wrapper modern-select-wrapper">
+        <select [(ngModel)]="type" (change)="onTypeChange(type)" class="form-control modern-select">
           <option value="">Any</option>
           <option *ngFor="let propType of propertyTypes" [value]="propType">{{ propType }}</option>
         </select>
       </div>
     </div>
+    
+    <!-- Deal Type -->
     <div class="filter-group">
       <label>Deal Type</label>
-      <div class="select-wrapper">
-        <select [(ngModel)]="dealType" (change)="applyFilters()" class="form-control">
+      <div class="select-wrapper modern-select-wrapper">
+        <select [(ngModel)]="dealType" (change)="applyFilters()" class="form-control modern-select">
           <option value="">Any</option>
           <option *ngFor="let dt of dealTypes" [value]="dt">{{ dt }}</option>
         </select>
@@ -32,8 +34,8 @@
     <!-- Price -->
     <div class="filter-group">
       <label>Price</label>
-      <div class="select-wrapper">
-        <select [(ngModel)]="priceRangeDisplay" (change)="onPriceRangeChange(priceRangeDisplay)" class="form-control">
+      <div class="select-wrapper modern-select-wrapper">
+        <select [(ngModel)]="priceRangeDisplay" (change)="onPriceRangeChange(priceRangeDisplay)" class="form-control modern-select">
           <option *ngFor="let range of priceRanges" [value]="range.display">{{ range.display }}</option>
         </select>
       </div>
@@ -42,9 +44,9 @@
     <!-- Location -->
     <div class="filter-group">
       <label>Location</label>
-      <div class="input-icon-wrapper">
+      <div class="input-icon-wrapper modern-select-wrapper">
         <i class="fa-solid fa-location-dot icon-left"></i>
-        <select [(ngModel)]="selectedLocation" (change)="onLocationChange(selectedLocation)" class="form-control icon-input">
+        <select [(ngModel)]="selectedLocation" (change)="onLocationChange(selectedLocation)" class="form-control modern-select icon-input">
           <option *ngFor="let loc of locations" [value]="loc">{{ loc }}</option>
         </select>
       </div>
@@ -53,14 +55,14 @@
     <!-- Search -->
     <div class="filter-group wide">
       <label>Find Specific Property</label>
-      <div class="search-input-container">
+      <div class="search-input-container modern-search">
         <input 
           type="text" 
           [(ngModel)]="search" 
           (input)="onSearchChange(search)" 
           placeholder="Ex. hunian apart"
-          class="form-control">
-        <button class="search-button">
+          class="form-control modern-input">
+        <button class="search-button modern-search-button">
           <i class="fas fa-search"></i>
         </button>
       </div>
@@ -69,7 +71,7 @@
     <!-- Filter Button -->
     <div class="filter-group action-button">
       <label>&nbsp;</label>
-      <button class="filter-button" (click)="applyFilters()">
+      <button class="filter-button modern-filter-button" (click)="applyFilters()">
         <i class="fas fa-sliders-h"></i> Filter
       </button>
     </div>

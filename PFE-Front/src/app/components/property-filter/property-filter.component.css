@@ -1,84 +1,150 @@
 .filter-container {
-    padding: 1rem;
+    padding: 1.5rem;
     background: #fff;
+    border-radius: 12px;
     
-    border-bottom: 1px solid #ccc;
-  }
-  
-  .filter-row {
+    margin-bottom: 1.5rem;
+}
+
+.filter-row {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 1.25rem;
+    border-bottom: #4DB299 1px solid;
+    padding-bottom: 1.25rem;
     align-items: flex-end;
-  }
-  
-  .filter-group {
+}
+
+.filter-group {
     display: flex;
     flex-direction: column;
     flex: 1;
     min-width: 160px;
-  }
-  
-  .filter-group.wide {
+}
+
+.filter-group.wide {
     flex: 2;
-  }
-  
-  .input-icon-wrapper {
+}
+
+/* Modern Input Styles */
+.modern-input {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    width: 100%;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
+}
+
+.modern-input:focus {
+    outline: none;
+    border-color: #4DB299;
+    box-shadow: 0 0 0 3px #4DB299;
+    background-color: #fff;
+}
+
+/* Modern Select Styles */
+.modern-select-wrapper {
     position: relative;
+}
+
+.modern-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
+    font-size: 0.95rem;
+    width: 100%;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1rem;
+}
+
+.modern-select:focus {
+    outline: none;
+    border-color: #4DB299;
     
-  }
-  
-  .icon-left {
+    background-color: #fff;
+}
+
+
+.icon-left {
     position: absolute;
     top: 50%;
-    right: 1rem;
+    right: 2.5rem;
     transform: translateY(-50%);
-    
     font-size: 1rem;
-  }
-  
-  .icon-input {
-    padding-left: 2rem;
-  }
-  
-  .search-input-container {
+    color: #4DB299;
+    
+    z-index: 2;
+    pointer-events: none;
+}
+
+
+.modern-search {
+    position: relative;
     display: flex;
     align-items: center;
-    position: relative;
-  }
-  
-  .search-button {
-    border: none;
-    background: none;
+}
+
+.modern-search-button {
     position: absolute;
-    right: 10px;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: #4DB299;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.5rem;
+    transition: color 0.2s;
+}
+
+.modern-search-button:hover {
+    color: #4DB299;
+}
+
+/* Modern Filter Button */
+.modern-filter-button {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    background-color: #4DB299;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.modern-filter-button:hover {
+    background-color: #0e8b6c;
+    transform: translateY(-1px);
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: #444;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .filter-group {
+        min-width: 100%;
+    }
     
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  .filter-button {
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    background-color: #f1f1f1;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.3s;
-  }
-  
-  .filter-button:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .form-control {
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
-    padding: 0.5rem 0.75rem;
-    font-size: 1rem;
-    width: 100%;
-  }
-  label {
-    font-weight: 600;
-    margin-bottom: 0.3rem;
-  }
+    .filter-group.wide {
+        flex: 1 0 100%;
+    }
+}
