@@ -8,39 +8,38 @@ import { map, Observable } from 'rxjs';
 })
 export class PropertyService {
 
-  private apiUrl = 'http://backend.ddev.site/api/properties/';  // Replace with your Symfony API endpoint
+  private apiUrl = 'http://backend.ddev.site/api/properties/';  // Symfony API endpoint
 
   constructor(private http: HttpClient) {}
 
-
-  //TEMPORARY 5ATER KHALIL YB3TH FIHOM TEXT
-  getPropertiesFromTextFile(): Observable<Property[]> {
-    return this.http.get('assets/properties.txt', { responseType: 'text' })
-      .pipe(
-        map(text => JSON.parse(text)), // Parse the raw text into JSON
-        map((properties: any[]) => {
-          // Set a main image for each property if one exists
-          return properties.map(property => {
-            if (property?.Media?.photos?.length > 0) {
-              property.mainImage = 'http://localhost:8000' + property.Media.photos[0].imageName;
-            } else {
-              property.mainImage = ''; // fallback image
-            }
-            return property;
-          });
-        })
-      );
-  }
-  //TOUFA LENA EL METHODE
-
-  // Get all properties
+  // ✅ Get all properties from backend and set mainImage path
   getAllProperties(): Observable<Property[]> {
-    return this.http.get<Property[]>(this.apiUrl);
+    return this.http.get<Property[]>(this.apiUrl).pipe(
+      map((properties: any[]) => {
+        return properties.map(property => {
+          if (property?.Media?.photos?.length > 0) {
+            property.mainImage = 'http://backend.ddev.site' + property.Media.photos[0].imageName;
+          } else {
+            property.mainImage = '/assets/default.jpg'; // fallback
+          }
+          return property;
+        });
+      })
+    );
   }
 
-  // Get a single property by ID
+  // ✅ Get a single property by ID (you can do the same for this if needed)
   getPropertyById(id: number): Observable<Property> {
-    return this.http.get<Property>(`${this.apiUrl}/${id}`);
+    return this.http.get<Property>(`${this.apiUrl}/${id}`).pipe(
+      map((property: any) => {
+        if (property?.Media?.photos?.length > 0) {
+          property.mainImage = 'http://backend.ddev.site' + property.Media.photos[0].imageName;
+        } else {
+          property.mainImage = '/assets/default.jpg';
+        }
+        return property;
+      })
+    );
   }
 
   // Add a new property

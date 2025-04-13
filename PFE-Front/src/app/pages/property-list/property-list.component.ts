@@ -15,28 +15,10 @@ export class PropertyListComponent implements OnInit {
   constructor(private propertyService: PropertyService) {}
 
   ngOnInit() {
-    // Fetch properties from the API first
+    // ✅ Fetch properties from the Symfony backend only
     this.propertyService.getAllProperties().subscribe(apiData => {
-      // Update properties from the API if available
       this.allProperties = apiData;
       this.filteredProperties = apiData;
-
-      // Optionally fetch properties from the text file
-      this.propertyService.getPropertiesFromTextFile().subscribe(textFileData => {
-        // Update properties from text file only if API data is not available or update with new properties
-        if (!this.allProperties || this.allProperties.length === 0) {
-          this.allProperties = textFileData;
-          this.filteredProperties = textFileData;
-        }
-      });
-    });
-
-    // If no API data was fetched, fall back to fetching from the text file
-    this.propertyService.getPropertiesFromTextFile().subscribe(textFileData => {
-      if (!this.allProperties || this.allProperties.length === 0) {
-        this.allProperties = textFileData;
-        this.filteredProperties = textFileData;
-      }
     });
   }
 
@@ -48,7 +30,7 @@ export class PropertyListComponent implements OnInit {
       const matchesMinPrice = filters.minPrice ? +prop.price.price >= filters.minPrice : true;
       const matchesMaxPrice = filters.maxPrice ? +prop.price.price <= filters.maxPrice : true;
       const matchesSearch = filters.search ? prop.generalinfo.title.toLowerCase().includes(filters.search.toLowerCase()) : true;
-  
+
       return matchesDealType && matchesType && matchesCity && matchesMinPrice && matchesMaxPrice && matchesSearch;
     });
   }
