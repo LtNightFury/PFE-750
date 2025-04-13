@@ -80,19 +80,20 @@ public function create(Request $request): JsonResponse
 #[Route('/properties/', name: 'property_get', methods: ['GET'])]
 public function listProperties(PropertyRepository $propertyRepository, SerializerInterface $serializer)
 {
-    $properties = $propertyRepository->findAll();
-    
-    // Use Symfony's serializer with proper context to handle circular references
+    // Only fetch properties where approval = 'approved'
+    $properties = $propertyRepository->findBy(['approval' => 'approved']);
+
+    // Serialize with circular reference handler
     $json = $serializer->serialize($properties, 'json', [
         'circular_reference_handler' => function ($object) {
             return $object->getId();
         },
-        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__','user']
+        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__','user','approval']
     ]);
-    
-    // Return a JSON response directly
+
     return new JsonResponse($json, 200, [], true);
 }
+
 #[Route('/properties/{id}', name: 'property_get_by_id', methods: ['GET'])]
 public function getPropertyById($id, PropertyRepository $propertyRepository, SerializerInterface $serializer)
 {
@@ -114,4 +115,42 @@ public function getPropertyById($id, PropertyRepository $propertyRepository, Ser
     return new JsonResponse($json, 200, [], true);
    
 }
+#[Route('/properties/{id}/approval', name: 'property_approval_update', methods: ['PATCH'])]
+public function updateApprovalStatus(
+    int $id,
+    Request $request,
+    PropertyRepository $propertyRepository,
+    EntityManagerInterface $em
+): JsonResponse {
+    $user = $this->getUser();
+
+    // Check if user is an admin
+    if (!$user || !in_array('ROLE_ADMIN', $user->getRoles())) {
+        return new JsonResponse(['error' => 'Access denied'], Response::HTTP_FORBIDDEN);
+    }
+
+    $property = $propertyRepository->find($id);
+
+    if (!$property) {
+        return new JsonResponse(['error' => 'Property not found'], Response::HTTP_NOT_FOUND);
+    }
+
+    $data = json_decode($request->getContent(), true);
+    $newStatus = $data['approval'] ?? null;
+
+    if (!$newStatus) {
+        return new JsonResponse(['error' => 'No approval status provided'], Response::HTTP_BAD_REQUEST);
+    }
+
+    // Only allow changing if current status is "pending"
+    if ($property->getApproval() !== 'pending') {
+        return new JsonResponse(['error' => 'Only pending properties can be updated'], Response::HTTP_CONFLICT);
+    }
+
+    $property->setApproval($newStatus);
+    $em->flush();
+
+    return new JsonResponse(['success' => true, 'newApproval' => $newStatus], Response::HTTP_OK);
+}
+
 }

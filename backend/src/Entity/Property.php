@@ -45,6 +45,10 @@ class Property
     #[ORM\JoinColumn(nullable: false)]
     private ?Media $Media = null;
 
+    #[ORM\Column(length: 255, options: ['default' => 'pending'])]
+    private ?string $approval = 'pending';
+    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -140,6 +144,18 @@ class Property
     public function setMedia(Media $Media): static
     {
         $this->Media = $Media;
+
+        return $this;
+    }
+
+    public function getApproval(): ?string
+    {
+        return $this->approval;
+    }
+
+    public function setApproval(string $approval): static
+    {
+        $this->approval = $approval;
 
         return $this;
     }
