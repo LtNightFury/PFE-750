@@ -19,9 +19,9 @@ export class DropdownComponent implements ControlValueAccessor {
   @Input() selectedValue: string | null = null;
   @Output() optionSelected = new EventEmitter<string>();
   @Input() customClass: string = '';
+  @Input() disabled: boolean = false;
 
   isOpen: boolean = false;
-  disabled: boolean = false;
 
   // ControlValueAccessor implementation
   private onChange = (_: any) => {};

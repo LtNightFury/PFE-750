@@ -65,13 +65,27 @@
             <div class="select-status">
               <label for="city" class="input_label">State</label>
               <app-dropdown
-              [options]="cityOptions"
+              [options]="stateOptions"
               [placeholder]="'Select a city'"
-              [selectedValue]="selectedCity"
-              (optionSelected)="onCitySelected($event)">
+              [selectedValue]="selectedState"
+              (optionSelected)="onStateSelected($event)">
             </app-dropdown>
               <p class="input_hint mt-1" *ngIf="isInvalid('city')" class="error-message">Required</p>
             </div>
+            <!-- subcity -->
+            <div class="select-status">
+              <label for="city" class="input_label">State</label>
+              <app-dropdown 
+    [options]="subcityOptions"
+    [selectedValue]="selectedSubcity"
+    placeholder="Select Subcity"
+    [disabled]="!parentForm.get('state')?.value" 
+    (optionSelected)="onSubcitySelected($event)">
+  </app-dropdown>
+            
+              <p class="input_hint mt-1" *ngIf="isInvalid('city')" class="error-message">Required</p>
+            </div>
+            
           </div>
          
         </div>

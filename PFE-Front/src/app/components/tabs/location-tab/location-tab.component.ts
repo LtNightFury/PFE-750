@@ -24,7 +24,7 @@ export class LocationTabComponent implements OnInit, OnDestroy {
     tunisia: 'Tunisia',
   };
 
-  city = {
+  state = {
     ariana: 'Ariana',
     beja: 'Béja',
     ben_arous: 'Ben Arous',
@@ -50,8 +50,34 @@ export class LocationTabComponent implements OnInit, OnDestroy {
     tunis: 'Tunis',
     zaghouan: 'Zaghouan'
   };
+  subcities: { [key: string]: string[] } = {
+    ariana: ['Ariana Ville', 'La Soukra', 'Raoued', 'Ettadhamen', 'Kalaat el-Andalous'],
+    beja: ['Béja Nord', 'Béja Sud', 'Testour', 'Nefza', 'Téboursouk'],
+    ben_arous: ['Ben Arous', 'Rades', 'Hammam Lif', 'Ezzahra', 'Mégrine'],
+    bizerte: ['Bizerte Nord', 'Bizerte Sud', 'Menzel Bourguiba', 'Ras Jebel', 'Mateur'],
+    gabes: ['Gabès Ville', 'Gabès Sud', 'El Hamma', 'Matmata', 'Mareth'],
+    gafsa: ['Gafsa Nord', 'Gafsa Sud', 'El Ksar', 'Métlaoui', 'Redeyef'],
+    jendouba: ['Jendouba Nord', 'Jendouba Sud', 'Ghardimaou', 'Tabarka', 'Fernana'],
+    kairouan: ['Kairouan Nord', 'Kairouan Sud', 'Chebika', 'Sbikha', 'Haffouz'],
+    kasserine: ['Kasserine Nord', 'Kasserine Sud', 'Sbeitla', 'Feriana', 'Fériana'],
+    kebili: ['Kebili Nord', 'Kebili Sud', 'Douz', 'Souk Lahad'],
+    la_manouba: ['Manouba', 'Denden', 'Oued Ellil', 'Douar Hicher', 'Tebourba'],
+    le_kef: ['Le Kef Est', 'Le Kef Ouest', 'Nebeur', 'Tajerouine', 'Kalaat Senan'],
+    mahdia: ['Mahdia Ville', 'Ksour Essef', 'El Jem', 'Chebba', 'Bou Merdes'],
+    medenine: ['Medenine Nord', 'Medenine Sud', 'Houmt Souk', 'Midoun', 'Ben Gardane'],
+    monastir: ['Monastir Ville', 'Ksar Hellal', 'Sahline', 'Jemmel', 'Bekalta'],
+    nabeul: ['Nabeul Ville', 'Hammamet', 'Dar Chaabane', 'Korba', 'Kelibia'],
+    sfax: ['Sfax Ville', 'Sakiet Ezzit', 'Sakiet Eddaier', 'Thyna', 'El Ain'],
+    sidi_bouzid: ['Sidi Bouzid Est', 'Sidi Bouzid Ouest', 'Menzel Bouzaiene', 'Regueb', 'Jilma'],
+    siliana: ['Siliana Nord', 'Siliana Sud', 'Kesra', 'Makthar', 'Bourouis'],
+    sousse: ['Sousse Ville', 'Kalaa Kebira', 'Hammam Sousse', 'Msaken', 'Sidi Bou Ali'],
+    tataouine: ['Tataouine Nord', 'Tataouine Sud', 'Ghomrassen', 'Smar', 'Bir Lahmar'],
+    tozeur: ['Tozeur Ville', 'Nefta', 'Degache', 'Tameghza'],
+    tunis: ['Tunis Centre', 'La Marsa', 'Le Bardo', 'El Menzah', 'Carthage'],
+    zaghouan: ['Zaghouan Ville', 'Zriba', 'Nadhour', 'El Fahs', 'Bir Mcherga']
+  };
 
-  cityOptions = Object.entries(this.city).map(([key, label]) => ({
+  stateOptions = Object.entries(this.state).map(([key, label]) => ({
     value: key,
     label: label
   }));
@@ -61,14 +87,13 @@ export class LocationTabComponent implements OnInit, OnDestroy {
     label: label
   }));
 
-  selectedCity: string | null = null;
+  selectedState: string | null = null;
   selectedCountry: string | null = null;
+  subcityOptions: { value: string; label: string }[] = [];
+
 
   ngOnInit(): void {
-    // Initialize values from the parent form
     this.initializeFormValues();
-    
-    // Subscribe to form control changes
     this.subscribeToFormChanges();
   }
 
@@ -77,62 +102,57 @@ export class LocationTabComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Clean up subscriptions
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
   private initializeFormValues(): void {
-    // Get initial values from parent form
     this.latitude = this.parentForm.get('latitude')?.value || 0;
     this.longitude = this.parentForm.get('longitude')?.value || 0;
     this.selectedCountry = this.parentForm.get('country')?.value || null;
-    this.selectedCity = this.parentForm.get('city')?.value || null;
-    
-    // Mark for change detection
+    this.selectedState = this.parentForm.get('state')?.value || null;
     this.cdr.markForCheck();
   }
 
   private subscribeToFormChanges(): void {
-    // Subscribe to country changes
     const countrySub = this.parentForm.get('country')?.valueChanges.subscribe(value => {
       this.selectedCountry = value;
       this.cdr.markForCheck();
     });
-    
-    if (countrySub) {
-      this.subscriptions.push(countrySub);
-    }
-
-    // Subscribe to city changes
-    const citySub = this.parentForm.get('city')?.valueChanges.subscribe(value => {
-      this.selectedCity = value;
+  
+    if (countrySub) this.subscriptions.push(countrySub);
+  
+    const stateSub = this.parentForm.get('state')?.valueChanges.subscribe(stateValue => {
+      this.selectedState = stateValue;
+      // Handle subcity options based on selected state
+      if (stateValue && this.subcities[stateValue]) {
+        this.subcityOptions = this.subcities[stateValue].map(sub => ({
+          value: sub,
+          label: sub
+        }));
+        this.parentForm.get('subcity')?.enable(); // Enable subcity dropdown
+      } else {
+        this.subcityOptions = [];
+        this.parentForm.get('subcity')?.reset(); // Clear selection
+        this.parentForm.get('subcity')?.disable(); // Disable subcity dropdown
+      }
       this.cdr.markForCheck();
     });
-    
-    if (citySub) {
-      this.subscriptions.push(citySub);
-    }
-
-    // Subscribe to latitude changes
+  
+    if (stateSub) this.subscriptions.push(stateSub);
+  
     const latSub = this.parentForm.get('latitude')?.valueChanges.subscribe(value => {
       this.latitude = value || 0;
       this.cdr.markForCheck();
     });
-    
-    if (latSub) {
-      this.subscriptions.push(latSub);
-    }
-
-    // Subscribe to longitude changes
+    if (latSub) this.subscriptions.push(latSub);
+  
     const lngSub = this.parentForm.get('longitude')?.valueChanges.subscribe(value => {
       this.longitude = value || 0;
       this.cdr.markForCheck();
     });
-    
-    if (lngSub) {
-      this.subscriptions.push(lngSub);
-    }
+    if (lngSub) this.subscriptions.push(lngSub);
   }
+  
 
   onPositionSelected(coordinates: [number, number]) {
     this.selectedPosition = coordinates;
@@ -143,17 +163,26 @@ export class LocationTabComponent implements OnInit, OnDestroy {
     this.cdr.markForCheck();
   }
 
-  onCitySelected(cityKey: string) {
-    this.selectedCity = cityKey;
-    this.parentForm.get('city')?.setValue(cityKey);
-    this.cdr.markForCheck();
-  }
   
+
   onCountrySelected(countryKey: string) {
     this.selectedCountry = countryKey;
     this.parentForm.get('country')?.setValue(countryKey);
     this.cdr.markForCheck();
   }
+  selectedSubcity: string | null = null;
+
+  onStateSelected(stateKey: string) {
+    this.selectedState = stateKey;
+    this.parentForm.get('state')?.setValue(stateKey);
+    this.parentForm.get('subcity')?.reset();
+
+    this.cdr.markForCheck();
+  }  
+  onSubcitySelected(subcity: string) {
+    this.parentForm.get('subcity')?.setValue(subcity);
+  }
+  
 
   isInvalid(controlName: string): boolean {
     const control = this.parentForm.get(controlName);

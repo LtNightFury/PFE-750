@@ -50,7 +50,8 @@ export class EditPropertyComponent implements OnInit {
         latitude: ['', Validators.required],
         longitude: ['', Validators.required],
         country: ['', Validators.required],
-        city: ['', Validators.required],
+        state: ['', Validators.required],
+        subcity: ['', Validators.required],
 
 
       }),
