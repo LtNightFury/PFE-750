@@ -24,7 +24,7 @@ export interface Property {
     latitude: number;
     longitude: number;
     country: string;
-    state: string;
+    city: string;
     subcity: string;
   }
   

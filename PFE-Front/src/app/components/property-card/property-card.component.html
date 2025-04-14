@@ -10,8 +10,8 @@
   
     <div class="property-content">
       <h3 class="property-title">{{ property.generalinfo.title }}</h3>
-      <p class="property-location">{{ property.location.city | titlecase }}, {{ property.location.country | uppercase }}</p>
-  
+      <p class="property-location">{{ property.location.city | titlecase }}, {{ property.location.subcity}}</p>
+      
       <div class="property-details">
         <p class="property-price" *ngIf="!property.price.hideprice">{{ property.price.price | currency:'TND' }}</p>
         <p class="property-price" *ngIf="property.price.hideprice">Price on request</p>
