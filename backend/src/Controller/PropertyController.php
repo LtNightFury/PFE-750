@@ -152,5 +152,47 @@ public function updateApprovalStatus(
 
     return new JsonResponse(['success' => true, 'newApproval' => $newStatus], Response::HTTP_OK);
 }
+#[Route('/api/properties/{id}/book', name: 'book_property', methods: ['POST'])]
+public function bookProperty(Request $request, Property $property, EntityManagerInterface $em): JsonResponse {
+    $data = json_decode($request->getContent(), true);
+    
+    $booking = new Booking();
+    $booking->setProperty($property);
+    $booking->setUser($this->getUser()); // Authenticated user
+    $booking->setStartDate(new \DateTime($data['start']));
+    $booking->setEndDate(new \DateTime($data['end']));
+    $booking->setStatus('pending');
+
+    $em->persist($booking);
+    $em->flush();
+
+    return $this->json(['message' => 'Booking request submitted!'], 201);
+}
+#[Route('/api/bookings/{id}/approval', name: 'approve_booking', methods: ['POST'])]
+public function approveBooking(
+    Booking $booking,
+    Request $request,
+    EntityManagerInterface $em
+): JsonResponse {
+    $data = json_decode($request->getContent(), true);
+    $status = $data['approval']; // expected: 'approved' or 'rejected'
+
+    if (!in_array($status, ['approved', 'rejected'])) {
+        return $this->json(['error' => 'Invalid approval status'], 400);
+    }
+
+    $user = $this->getUser();
+    $propertyOwner = $booking->getProperty()->getUser();
+
+    if ($user !== $propertyOwner) {
+        return $this->json(['error' => 'Unauthorized. You do not own this property.'], 403);
+    }
+
+    $booking->setApproval($status);
+    $em->flush();
+
+    return $this->json(['message' => "Booking $status"]);
+}
+
 
 }

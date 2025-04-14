@@ -59,7 +59,7 @@ class LocationRepository extends ServiceEntityRepository
         $location = new Location();
         $location->setLatitude($locationData['latitude']);
         $location->setLongitude($locationData['longitude']);
-        $location->setCity($locationData['city']);
+        $location->setCity($locationData['state']);
         $location->setCountry($locationData['country']);
         $location->setSubcity($locationData['subcity']);
         

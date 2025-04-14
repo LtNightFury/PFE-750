@@ -42,10 +42,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Property::class)]
     private Collection $properties;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Booking::class, orphanRemoval: true)]
+    private Collection $bookings;
+
 
     public function __construct()
 {
         $this->properties = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
 }
 
     public function getName(): ?string
@@ -170,6 +174,36 @@ public function removeProperty(Property $property): self
     if ($this->properties->removeElement($property)) {
         if ($property->getUser() === $this) {
             $property->setUser(null);
+        }
+    }
+
+    return $this;
+}
+
+/**
+ * @return Collection<int, Booking>
+ */
+public function getBookings(): Collection
+{
+    return $this->bookings;
+}
+
+public function addBooking(Booking $booking): static
+{
+    if (!$this->bookings->contains($booking)) {
+        $this->bookings->add($booking);
+        $booking->setUser($this);
+    }
+
+    return $this;
+}
+
+public function removeBooking(Booking $booking): static
+{
+    if ($this->bookings->removeElement($booking)) {
+        // set the owning side to null (unless already changed)
+        if ($booking->getUser() === $this) {
+            $booking->setUser(null);
         }
     }
 
