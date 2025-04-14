@@ -31,10 +31,6 @@ export class PropertyService {
     return this.http.get<Property>(`${this.apiUrl}${id}`);
   }
   
-  
-  // ✅ Get a single property by ID (you can do the same for this if needed)
- 
-
   // Add a new property
   addProperty(property: Property): Observable<Property> {
     return this.http.post<Property>(this.apiUrl, property);
