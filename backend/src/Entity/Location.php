@@ -25,6 +25,9 @@ class Location
     #[ORM\Column(length: 255)]
     private ?string $city = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $subcity = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class Location
     public function setCity(string $city): static
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getSubcity(): ?string
+    {
+        return $this->subcity;
+    }
+
+    public function setSubcity(string $subcity): static
+    {
+        $this->subcity = $subcity;
 
         return $this;
     }

@@ -61,6 +61,7 @@ class LocationRepository extends ServiceEntityRepository
         $location->setLongitude($locationData['longitude']);
         $location->setCity($locationData['city']);
         $location->setCountry($locationData['country']);
+        $location->setSubcity($locationData['subcity']);
         
         // optionally persist with entity manager
         $entityManager->persist($location);
