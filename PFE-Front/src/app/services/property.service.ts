@@ -28,8 +28,9 @@ export class PropertyService {
     );
   }
   getPropertyById(id: number): Observable<Property> {
-    return this.http.get<Property>(`${this.apiUrl}/properties/${id}`);
+    return this.http.get<Property>(`${this.apiUrl}${id}`);
   }
+  
   
   // ✅ Get a single property by ID (you can do the same for this if needed)
  

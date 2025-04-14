@@ -8,6 +8,7 @@ import { EditPropertyComponent } from './pages/edit-property/edit-property.compo
 import { ResetPasswordComponent } from './login-register-verif/auth/reset-password/reset-password.component';
 import { HomeComponent } from './pages/home/home.component';
 import { PropertyListComponent } from './pages/property-list/property-list.component';
+import { PropertyDetailComponent } from './pages/property-detail/property-detail.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -18,6 +19,10 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'home',  component: HomeComponent },
   { path: 'property-list', component: PropertyListComponent },
+  {
+    path: 'property/:id', component: PropertyDetailComponent
+  },
+  
   //lena bech nhot el route ta3 el dashboard//
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ];

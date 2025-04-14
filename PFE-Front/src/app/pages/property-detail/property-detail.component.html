@@ -1,0 +1,45 @@
+
+<div *ngIf="isLoading">Loading...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<div *ngIf="property && !isLoading">
+  <h2>{{ property.generalinfo.title }}</h2>
+  <p>{{ property.generalinfo.description }}</p>
+  <p><strong>Deal Type:</strong> {{ property.generalinfo.dealType }}</p>
+  <p><strong>Type:</strong> {{ property.generalinfo.propertyType }}</p>
+
+  <h3>Location</h3>
+  <p>{{ property.location.city }}, {{ property.location.country }}</p>
+  <p>Latitude: {{ property.location.latitude }}</p>
+  <p>Longitude: {{ property.location.longitude }}</p>
+
+  <h3>Specification</h3>
+  <ul>
+    <li>Bedrooms: {{ property.Specification.bedrooms }}</li>
+    <li>Bathrooms: {{ property.Specification.bathrooms }}</li>
+    <li>Size: {{ property.Specification.size }} m²</li>
+    <!-- Add more as needed -->
+  </ul>
+
+  <h3>Price</h3>
+  <p>{{ property.price.price }} TND</p>
+  <p *ngIf="property.price.charges">Charges: {{ property.price.charges }}</p>
+
+  <h3>Amenities</h3>
+  <ul>
+    <li *ngIf="property.Amenities.centralAC">Central AC</li>
+    <li *ngIf="property.Amenities.parking">Parking</li>
+    <!-- Loop or list more amenities as needed -->
+  </ul>
+
+  <h3>Media</h3>
+  <div *ngIf="property.Media.photos?.length">
+    <div *ngFor="let photo of property.Media.photos">
+      <img [src]="'http://backend.ddev.site/uploads/' + photo.imageName" alt="Property Photo" width="200" />
+    </div>
+  </div>
+
+  <h3>Contact</h3>
+  <p>Email: {{ property.contacts.email }}</p>
+  <p>Phone: {{ property.contacts.phone }}</p>
+</div>

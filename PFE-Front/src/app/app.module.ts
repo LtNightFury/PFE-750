@@ -37,6 +37,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from './login-register-verif/interceptors/jwt.interceptor';
 import { PropertyFilterComponent } from './components/property-filter/property-filter.component';
 import { PropertyCardComponent } from './components/property-card/property-card.component';
+import { PropertyDetailComponent } from './pages/property-detail/property-detail.component';
 
 
 
@@ -66,6 +67,7 @@ import { PropertyCardComponent } from './components/property-card/property-card.
     HomeComponent,
     PropertyFilterComponent,
     PropertyCardComponent,
+    PropertyDetailComponent,
     
     
   ],
