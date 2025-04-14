@@ -27,20 +27,12 @@ export class PropertyService {
       })
     );
   }
-
-  // ✅ Get a single property by ID (you can do the same for this if needed)
   getPropertyById(id: number): Observable<Property> {
-    return this.http.get<Property>(`${this.apiUrl}/${id}`).pipe(
-      map((property: any) => {
-        if (property?.Media?.photos?.length > 0) {
-          property.mainImage = 'http://backend.ddev.site' + property.Media.photos[0].imageName;
-        } else {
-          property.mainImage = '/assets/default.jpg';
-        }
-        return property;
-      })
-    );
+    return this.http.get<Property>(`${this.apiUrl}/properties/${id}`);
   }
+  
+  // ✅ Get a single property by ID (you can do the same for this if needed)
+ 
 
   // Add a new property
   addProperty(property: Property): Observable<Property> {

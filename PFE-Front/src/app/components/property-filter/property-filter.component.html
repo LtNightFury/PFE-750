@@ -15,7 +15,7 @@
       <div class="select-wrapper modern-select-wrapper">
         <select [(ngModel)]="type" (change)="onTypeChange(type)" class="form-control modern-select">
           <option value="">Any</option>
-          <option *ngFor="let propType of propertyTypes" [value]="propType">{{ propType }}</option>
+          <option *ngFor="let propType of propertyTypes" [value]="propType">{{ propType |titlecase}}</option>
         </select>
       </div>
     </div>
@@ -71,8 +71,8 @@
     <!-- Filter Button -->
     <div class="filter-group action-button">
       <label>&nbsp;</label>
-      <button class="filter-button modern-filter-button" (click)="applyFilters()">
-        <i class="fas fa-sliders-h"></i> Filter
+      <button class="filter-button modern-filter-button" (click)="resetFilters()">
+        <i class="fas fa-sliders-h"></i> Reset Filter
       </button>
     </div>
   </div>

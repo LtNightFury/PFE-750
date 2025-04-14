@@ -24,7 +24,7 @@ export class PropertyFilterComponent {
   
   // Options for dropdowns
   dealTypes: string[] = ['Rent', 'Sale'];
-  propertyTypes: string[] = ['Apartment', 'House', 'Villa', 'Commercial', 'Studio'];
+  propertyTypes: string[] = ['apartment', 'house', 'villa', 'studio'];
   locations: string[] = ['Ariana',
   'Beja',
   'Ben Arous',
@@ -142,11 +142,12 @@ export class PropertyFilterComponent {
     this.minPrice = null;
     this.maxPrice = null;
     this.search = '';
+    this.dealType = '';
     
     // Reset UI elements
-    this.lookingFor = 'Residence in Yogyakarta';
-    this.selectedLocation = 'Indonesia';
-    this.priceRangeDisplay = '$10000 - $50000';
+    this.lookingFor = 'Residence in Tunis';
+    this.selectedLocation = 'Tunis';
+    this.priceRangeDisplay = '10000 - 50000 TND';
     
     this.applyFilters();
   }
