@@ -13,6 +13,9 @@ use App\Entity\User;
 use App\Entity\Property;
 use App\Repository\GeneralRepository;
 use App\Repository\PropertyRepository;
+use App\Entity\Booking;
+use App\Repository\BookingRepository;
+
 
 use Symfony\Component\Serializer\SerializerInterface;
 #[Route('/api', name: 'api_')]
@@ -152,27 +155,41 @@ public function updateApprovalStatus(
 
     return new JsonResponse(['success' => true, 'newApproval' => $newStatus], Response::HTTP_OK);
 }
-#[Route('/api/properties/{id}/book', name: 'book_property', methods: ['POST'])]
-public function bookProperty(Request $request, Property $property, EntityManagerInterface $em): JsonResponse {
+#[Route('/properties/{id}/book', name: 'book_property', methods: ['POST'])]
+public function bookProperty(
+    int $id,
+    Request $request,
+    EntityManagerInterface $em,
+    \App\Repository\PropertyRepository $propertyRepository
+): JsonResponse {
     $data = json_decode($request->getContent(), true);
     
+
+    $property = $propertyRepository->find($id);
+    if (!$property) {
+        return $this->json(['error' => 'Property not found'], 404);
+    }
+
     $booking = new Booking();
     $booking->setProperty($property);
-    $booking->setUser($this->getUser()); // Authenticated user
+    $booking->setUser($this->getUser());
     $booking->setStartDate(new \DateTime($data['start']));
     $booking->setEndDate(new \DateTime($data['end']));
-    $booking->setStatus('pending');
+    
 
     $em->persist($booking);
     $em->flush();
 
     return $this->json(['message' => 'Booking request submitted!'], 201);
 }
-#[Route('/api/bookings/{id}/approval', name: 'approve_booking', methods: ['POST'])]
+
+#[Route('/bookings/{id}/approval', name: 'approve_booking', methods: ['POST'])]
 public function approveBooking(
-    Booking $booking,
+    int $id,
+    BookingRepository $bookingRepository,
+   
     Request $request,
-    EntityManagerInterface $em
+    EntityManagerInterface $em,
 ): JsonResponse {
     $data = json_decode($request->getContent(), true);
     $status = $data['approval']; // expected: 'approved' or 'rejected'
@@ -180,6 +197,7 @@ public function approveBooking(
     if (!in_array($status, ['approved', 'rejected'])) {
         return $this->json(['error' => 'Invalid approval status'], 400);
     }
+    $booking = $bookingRepository->find($id);
 
     $user = $this->getUser();
     $propertyOwner = $booking->getProperty()->getUser();
@@ -193,6 +211,94 @@ public function approveBooking(
 
     return $this->json(['message' => "Booking $status"]);
 }
+#[Route('/properties/{id}', name: 'property_update', methods: ['PUT', 'PATCH'])]
+public function update(int $id, Request $request): JsonResponse
+{
+    // Ensure the user is authenticated
+    $user = $this->getUser();
+    
+    if (!$user) {
+        return new JsonResponse(['error' => 'Authentication required'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    // Retrieve the property
+    $property = $this->propertyRepository->find($id);
+    
+    if (!$property) {
+        return new JsonResponse(['error' => 'Property not found'], Response::HTTP_NOT_FOUND);
+    }
+    
+    // Get JSON data from the request body
+    $data = json_decode($request->getContent(), true); // Use getContent for the raw body
+    
+    if (!$data) {
+        return new JsonResponse(['error' => 'Invalid JSON data'], Response::HTTP_BAD_REQUEST);
+    }
+    
+    $mediaFiles = [];
+    
+    // Handle file uploads (photos, floorplans, documents)
+    $photos = $request->files->get('photos');
+    if ($photos) {
+        $mediaFiles['photos'] = $photos;
+    }
+    
+    $floorplans = $request->files->get('floorPlans');
+    if ($floorplans) {
+        $mediaFiles['floorPlans'] = $floorplans;
+    }
+    
+    $documents = $request->files->get('documents');
+    if ($documents) {
+        $mediaFiles['documents'] = $documents;
+    }
+    
+    // If there are media files, add them to the data array
+    if (!empty($mediaFiles)) {
+        $data['mediaFiles'] = $mediaFiles;
+    }
+    
+    try {
+        // Call the update method on the property repository
+        $property = $this->propertyRepository->updateProperty($property, $data, $user);
+        
+        return $this->json([
+            'success' => true,
+            'property' => $property->getId()
+        ]);
+    } catch (\Exception $e) {
+        // Return an error response with exception message
+        return $this->json([
+            'success' => false,
+            'message' => $e->getMessage()
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+}
+#[Route('/properties/{id}', name: 'property_delete', methods: ['DELETE'])]
+public function delete(int $id, EntityManagerInterface $em): JsonResponse
+{
+    $user = $this->getUser();
+    
+    if (!$user) {
+        return new JsonResponse(['error' => 'Authentication required'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    $property = $this->propertyRepository->find($id);
+
+    if (!$property) {
+        return new JsonResponse(['error' => 'Property not found'], Response::HTTP_NOT_FOUND);
+    }
+
+    if ($property->getUser() !== $user) {
+        return new JsonResponse(['error' => 'Unauthorized to delete this property'], Response::HTTP_FORBIDDEN);
+    }
+
+    $em->remove($property);
+    $em->flush();
+
+    return new JsonResponse(['success' => true, 'message' => 'Property deleted successfully']);
+}
+
 
 
 }

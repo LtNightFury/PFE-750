@@ -86,5 +86,44 @@ class MediaRepository extends ServiceEntityRepository
 
         return $media;
     }
+    public function updateMedia(Media $media, array $mediaFiles): Media
+{
+    $entityManager = $this->getEntityManager();
+
+    // Handle photos
+    if (!empty($mediaFiles['photos'])) {
+        foreach ($mediaFiles['photos'] as $photoFile) {
+            $photo = new Photos();
+            $photo->setImageFile($photoFile);
+            $photo->setMedia($media);
+            $media->addPhoto($photo); 
+            $entityManager->persist($photo);
+        }
+    }
+
+    // Handle floor plans
+    if (!empty($mediaFiles['floorPlans'])) {
+        foreach ($mediaFiles['floorPlans'] as $floorplanFile) {
+            $floorplans = new FloorPlans();
+            $floorplans->setImageFile($floorplanFile);
+            $floorplans->setMedia($media);
+            $media->addFloorPlan($floorplans);
+            $entityManager->persist($floorplans);
+        }
+    }
+
+    // Handle documents
+    if (!empty($mediaFiles['documents'])) {
+        foreach ($mediaFiles['documents'] as $documentfile) {
+            $document = new Documents();
+            $document->setImageFile($documentfile);
+            $document->setMedia($media);
+            $media->addDocument($document);
+            $entityManager->persist($document);
+        }
+    }
+
+    return $media;
+}
 
 }

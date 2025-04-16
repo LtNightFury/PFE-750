@@ -75,5 +75,51 @@ class SpecificationRepository extends ServiceEntityRepository
         
         return $specification;
     }
+    public function updateSpecification(Specification $specification, $specData): Specification
+{
+    // Convert to array if object
+    if (is_object($specData)) {
+        $specData = json_decode(json_encode($specData), true);
+    }
+
+    if (isset($specData['bedrooms'])) {
+        $specification->setBedrooms((string) $specData['bedrooms']);
+    }
+
+    if (isset($specData['bathrooms'])) {
+        $specification->setBathrooms((string) $specData['bathrooms']);
+    }
+
+    if (isset($specData['parkingSpots'])) {
+        $specification->setParkingSpots((string) $specData['parkingSpots']);
+    }
+
+    if (isset($specData['size'])) {
+        $specification->setSize($specData['size'] !== null ? (string) $specData['size'] : null);
+    }
+
+    if (isset($specData['plotSize'])) {
+        $specification->setPlotSize($specData['plotSize'] !== null ? (string) $specData['plotSize'] : null);
+    }
+
+    if (isset($specData['builtUpArea'])) {
+        $specification->setBuiltUpArea($specData['builtUpArea'] !== null ? (string) $specData['builtUpArea'] : null);
+    }
+
+    if (isset($specData['constructionYear'])) {
+        $specification->setConstructionYear($specData['constructionYear'] !== null ? (int) $specData['constructionYear'] : null);
+    }
+
+    if (isset($specData['Renovationyear'])) {
+        $specification->setRenovationyear($specData['Renovationyear'] !== null ? (int) $specData['Renovationyear'] : null);
+    }
+
+    if (isset($specData['Furnishing'])) {
+        $specification->setFurnishing($specData['Furnishing'] !== null ? (string) $specData['Furnishing'] : null);
+    }
+
+    return $specification;
+}
+
 
 }

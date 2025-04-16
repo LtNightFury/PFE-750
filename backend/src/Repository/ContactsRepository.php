@@ -66,4 +66,22 @@ class ContactsRepository extends ServiceEntityRepository
         
         return $contact;
     }
+    public function updateContacts(Contacts $contacts, $data): Contacts
+{
+    // Ensure $data is an array
+    if (is_object($data)) {
+        $data = json_decode(json_encode($data), true);
+    }
+
+    if (isset($data['email'])) {
+        $contacts->setEmail($data['email']);
+    }
+
+    if (isset($data['phone'])) {
+        $contacts->setPhone($data['phone']);
+    }
+
+    return $contacts;
+}
+
 }
