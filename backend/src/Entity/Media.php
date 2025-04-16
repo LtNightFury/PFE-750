@@ -15,13 +15,13 @@ class Media
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'media', targetEntity: Photos::class)]
+    #[ORM\OneToMany(mappedBy: 'media', targetEntity: Photos::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $photos;
 
-    #[ORM\OneToMany(mappedBy: 'media', targetEntity: FloorPlans::class)]
+    #[ORM\OneToMany(mappedBy: 'media', targetEntity: FloorPlans::class,cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $floorPlans;
 
-    #[ORM\OneToMany(mappedBy: 'media', targetEntity: Documents::class)]
+    #[ORM\OneToMany(mappedBy: 'media', targetEntity: Documents::class,cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $documents;
 
     public function __construct()

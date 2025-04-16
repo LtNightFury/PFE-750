@@ -256,6 +256,31 @@ public function update(int $id, Request $request): JsonResponse
         ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
+#[Route('/properties/{id}', name: 'property_delete', methods: ['DELETE'])]
+public function delete(int $id, EntityManagerInterface $em): JsonResponse
+{
+    $user = $this->getUser();
+    
+    if (!$user) {
+        return new JsonResponse(['error' => 'Authentication required'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    $property = $this->propertyRepository->find($id);
+
+    if (!$property) {
+        return new JsonResponse(['error' => 'Property not found'], Response::HTTP_NOT_FOUND);
+    }
+
+    if ($property->getUser() !== $user) {
+        return new JsonResponse(['error' => 'Unauthorized to delete this property'], Response::HTTP_FORBIDDEN);
+    }
+
+    $em->remove($property);
+    $em->flush();
+
+    return new JsonResponse(['success' => true, 'message' => 'Property deleted successfully']);
+}
+
 
 
 }

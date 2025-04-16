@@ -29,6 +29,7 @@ class FloorPlans
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'floorPlans')]
+    #[ORM\JoinColumn(nullable: false,onDelete: 'CASCADE')]
     private ?Media $media = null;
 
     public function getId(): ?int

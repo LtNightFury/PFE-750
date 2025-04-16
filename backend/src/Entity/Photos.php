@@ -29,7 +29,7 @@ class Photos
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'photos')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false,onDelete: 'CASCADE')]
     private ?Media $media = null;
 
     public function getId(): ?int
