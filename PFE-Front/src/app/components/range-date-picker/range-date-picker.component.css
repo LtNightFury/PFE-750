@@ -1,0 +1,45 @@
+.calendar {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 1rem;
+  }
+  
+  .header {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+  }
+  
+  .cell {
+    padding: 0.5rem;
+    background: #f9f9f9;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  
+  .cell:hover {
+    background: #e0f7fa;
+  }
+  
+  .cell.selected {
+    background: #00796b;
+    color: white;
+  }
+  
+  .cell.unavailable {
+    background: #ccc;
+    pointer-events: none;
+    color: #666;
+  }
+  
