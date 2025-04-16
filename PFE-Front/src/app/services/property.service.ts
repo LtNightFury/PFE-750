@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Property } from '../models/property.model';
+import { Booking, Property } from '../models/property.model';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 
@@ -29,6 +29,10 @@ export class PropertyService {
   }
   getPropertyById(id: number): Observable<Property> {
     return this.http.get<Property>(`${this.apiUrl}${id}`);
+  }
+  addBooking(propertyId: number, booking: Booking): Observable<Booking> {
+    return this.http.post<Booking>(`http://backend.ddev.site/api/properties/${propertyId}/book`, booking);
+    
   }
   
   // Add a new property

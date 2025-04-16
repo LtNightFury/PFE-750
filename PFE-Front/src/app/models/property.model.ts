@@ -7,6 +7,7 @@ export interface Property {
     Amenities: Amenities;
     contacts: Contacts;
     Media: Media;
+    bookings: Booking[];
   }
   
   export interface GeneralInfo {
@@ -100,5 +101,12 @@ export interface Property {
     id: number;
     email: string;
     phone: string;
+  }
+  export interface Booking {
+    id?: number; // ⬅️ Make it optional
+    startDate: string;
+    endDate: string;
+    property: number;
+    approval?: string;
   }
   
