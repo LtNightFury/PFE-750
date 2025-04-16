@@ -48,12 +48,12 @@ class Booking
         return $this;
     }
 
-    public function getEndDate(): ?string
+    public function getEndDate(): ?\DateTimeInterface
     {
         return $this->endDate;
     }
 
-    public function setEndDate(string $endDate): static
+    public function setEndDate(\DateTimeInterface $endDate): static
     {
         $this->endDate = $endDate;
 

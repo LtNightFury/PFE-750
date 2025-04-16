@@ -29,6 +29,7 @@ class Documents
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'documents')]
+    #[ORM\JoinColumn(nullable: false,onDelete: 'CASCADE')]
     private ?Media $media = null;
 
     
