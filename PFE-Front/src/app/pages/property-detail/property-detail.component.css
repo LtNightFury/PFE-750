@@ -1,147 +1,151 @@
 .detail-container {
-    display: flex;
-    gap: 1rem;
-    padding: .5rem;
-    margin: 1rem;
-    margin-top: 0rem;
-    padding-top: 0.5rem;;
-    
-    border-radius: 1rem;
-    
-   
-    
-    
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  border-radius: 1rem;
+  flex-wrap: nowrap;
+}
+
+.left-side {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.right-side {
+  flex: 1;
+  background-color: #f3f3f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  min-width: 300px;
+}
+
+.carousel-inner {
+  border-radius: 0.5rem;
+}
+
+.carousel-img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.detail-header {
+  padding-top: 1rem;
+  margin-bottom: 20px;
+}
+
+.details {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.mini-left,
+.mini-right {
+  flex: 1;
+}
+
+.details ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.details li {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 12px;
+  gap: 10px;
+}
+
+.details li .icon {
+  font-size: 1.3rem;
+  color: green;
+}
+
+.details li .text {
+  font-size: 1rem;
+  color: #555;
+}
+
+.map-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  background: #ccc;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444;
+  font-size: 18px;
+}
+
+.amenities-section h6 {
+  margin-bottom: 0.5rem;
+}
+
+.amenities-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.amenities-list li {
+  background-color: #f0f0f0;
+  color: green;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1F2744;
+  margin-bottom: 1rem;
+}
+
+.details p {
+  font-size: 1.1rem;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .detail-container {
+    flex-direction: column;
   }
-  .carousel-inner{
-    border-radius: 0.5rem;
-   
-  }
-  
-  .left-side {
-    flex: 1.5;
-  }
-  
+
+  .left-side,
   .right-side {
-    flex: 1;
-    background-color: #f3f3f3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.5rem;
+    flex: unset;
+    width: 100%;
   }
-  
+
   .carousel-img {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
-    border-radius: 10px;
-  }.detail-header{
-    padding-top: 1rem;
-    margin-bottom: 20px;
-  }
-   
-  .details {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 8px;
-  }
-  .mini-left{
-    grid-row: span 3 / span 3;
-  }
-  .mini-right{
-    grid-row: span 3 / span 3;
+    height: 250px;
   }
 
-  h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #1F2744;
-    margin-bottom: 1rem;
-  }
-  
-  .details p {
-    font-size: 1.1rem;
-    color: #666;
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-  }
-  
-  .details ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .details li {
-    display: flex;
-    align-items: center;
-    font-size: 1rem;
-    color: #555;
-    margin-bottom: 12px;
-    gap: 10px;
-  }
-  
-  /* Icons for amenities */
-  .details li .icon {
-    font-size: 1.3rem;
-    color: green;
-  }
-  
-  .details li .text {
-    font-size: 1rem;
-    color: #555;
-  }
-  
   .map-placeholder {
-    width: 100%;
-    height: 400px;
-    background: #ccc;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #444;
-    font-size: 18px;
-  }
-  
-
-
-  .amenities-list li {
-    background-color: #f0f0f0;
-    color: green;
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    font-size: 0.95rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    height: 250px;
   }
 
-  .amenities-list{
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+  .details {
+    flex-direction: column;
   }
-
-  
-  @media (max-width: 768px) {
-    .detail-container {
-      flex-direction: column;
-      padding: 1rem;
-    }
-  
-    .left-side, .right-side {
-      flex: 1;
-    }
-  
-    .carousel-item img {
-      height: 250px; /* Adjust for smaller screens */
-    }
-  
-    .map-placeholder {
-      height: 250px; /* Adjust for smaller screens */
-    }
-  }
+}

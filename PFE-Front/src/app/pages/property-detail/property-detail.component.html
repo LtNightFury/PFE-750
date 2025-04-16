@@ -1,11 +1,13 @@
 <app-header></app-header>
+
 <div class="detail-container">
+  <!-- LEFT SIDE -->
   <div class="left-side">
     <!-- Carousel for Images -->
     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
         <div class="carousel-item" *ngFor="let img of allImages; let i = index" [class.active]="i === 0">
-          <img [src]="img" class="d-block w-100" alt="Property Image">
+          <img [src]="img" class="d-block w-100 carousel-img" alt="Property Image">
         </div>
       </div>
       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
@@ -19,128 +21,46 @@
     </div>
 
     <!-- Property Details -->
-     <div class="detail-header">
-    <h2>{{ property.generalinfo.title }}</h2>
-    <p>{{ property.generalinfo.description }}</p>
-  </div>
-    <div class="details">
-      
-      <div class="mini-left">
-      <ul>
-        <li><i class="fas fa-home icon"></i><span class="text">{{ property.generalinfo.propertyType }}</span></li>
-        <li><i class="fa-solid fa-hammer icon"></i><span class="text">{{ property.generalinfo.propertyCondition }}</span></li>
-        <li><i class="fas fa-bed icon"></i><span class="text">{{ property.Specification.bedrooms }} Bedrooms</span></li>
-        <li><i class="fas fa-bath icon"></i><span class="text">{{ property.Specification.bathrooms }} Bathrooms</span></li>
-        <li><i class="fas fa-tag icon"></i><span class="text">{{ property.price.price }} TND</span></li>
-        <!-- Add more amenities as needed -->
-      </ul>
-      
+    <div class="detail-header">
+      <h2>{{ property.generalinfo.title }}</h2>
+      <p>{{ property.generalinfo.description }}</p>
     </div>
-    <div class="mini-right">
-      <h6><i class="fas fa-handshake"></i> Deal Type: {{ property.generalinfo.dealType | titlecase }}</h6>
-      <div class="amenities-section" *ngIf="property.Amenities">
-        <h6><i class="fas fa-check-circle"></i> Amenities</h6>
-      
-        <ul class="amenities-list">
-      
-          <li *ngIf="property.Amenities.centralAC">
-            <i class="fas fa-snowflake"></i> Central A/C
-          </li>
-          <li *ngIf="property.Amenities.parking">
-            <i class="fas fa-car"></i> Parking
-          </li>
-          <li *ngIf="property.Amenities.elevator">
-            <i class="fas fa-elevator"></i> Elevator
-          </li>
-          <li *ngIf="property.Amenities.petsAllowed">
-            <i class="fas fa-paw"></i> Pets Allowed
-          </li>
-          <li *ngIf="property.Amenities.conciergeService">
-            <i class="fas fa-bell-concierge"></i> Concierge
-          </li>
-          <li *ngIf="property.Amenities.securityService">
-            <i class="fas fa-shield-alt"></i> Security
-          </li>
-          <li *ngIf="property.Amenities.lobbyInBuilding">
-            <i class="fas fa-building"></i> Lobby
-          </li>
-          <li *ngIf="property.Amenities.maidsRoom">
-            <i class="fas fa-broom"></i> Maid's Room
-          </li>
-          <li *ngIf="property.Amenities.studyRoom">
-            <i class="fas fa-book-reader"></i> Study Room
-          </li>
-          <li *ngIf="property.Amenities.balcony">
-            <i class="fas fa-umbrella-beach"></i> Balcony
-          </li>
-          <li *ngIf="property.Amenities.walkInCloset">
-            <i class="fas fa-tshirt"></i> Walk-in Closet
-          </li>
-          <li *ngIf="property.Amenities.childrensPlayArea">
-            <i class="fas fa-baby"></i> Children's Play Area
-          </li>
-          <li *ngIf="property.Amenities.garden">
-            <i class="fas fa-seedling"></i> Garden
-          </li>
-          <li *ngIf="property.Amenities.barbecueArea">
-            <i class="fas fa-drumstick-bite"></i> Barbecue Area
-          </li>
-          <li *ngIf="property.Amenities.jacuzzi">
-            <i class="fas fa-hot-tub"></i> Jacuzzi
-          </li>
-          <li *ngIf="property.Amenities.sauna">
-            <i class="fas fa-water"></i> Sauna
-          </li>
-          <li *ngIf="property.Amenities.sharedGym">
-            <i class="fas fa-dumbbell"></i> Shared Gym
-          </li>
-          <li *ngIf="property.Amenities.privateGym">
-            <i class="fas fa-dumbbell"></i> Private Gym
-          </li>
-          <li *ngIf="property.Amenities.sharedPool">
-            <i class="fas fa-swimming-pool"></i> Shared Pool
-          </li>
-          <li *ngIf="property.Amenities.privatePool">
-            <i class="fas fa-swimming-pool"></i> Private Pool
-          </li>
-          <li *ngIf="property.Amenities.spa">
-            <i class="fas fa-spa"></i> Spa
-          </li>
-          <li *ngIf="property.Amenities.viewOfWater">
-            <i class="fas fa-water"></i> View of Water
-          </li>
-          <li *ngIf="property.Amenities.viewOfLandmark">
-            <i class="fas fa-monument"></i> View of Landmark
-          </li>
-          <li *ngIf="property.Amenities.nearbyHospitals">
-            <i class="fas fa-hospital"></i> Nearby Hospitals
-          </li>
-          <li *ngIf="property.Amenities.nearbyPublicTransport">
-            <i class="fas fa-bus"></i> Public Transport
-          </li>
-          <li *ngIf="property.Amenities.nearbySchools">
-            <i class="fas fa-school"></i> Nearby Schools
-          </li>
-          <li *ngIf="property.Amenities.nearbyShopping">
-            <i class="fas fa-shopping-cart"></i> Nearby Shopping
-          </li>
-      
+
+    <div class="details">
+      <div class="mini-left">
+        <ul>
+          <li><i class="fas fa-home icon"></i><span class="text">{{ property.generalinfo.propertyType }}</span></li>
+          <li><i class="fa-solid fa-hammer icon"></i><span class="text">{{ property.generalinfo.propertyCondition }}</span></li>
+          <li><i class="fas fa-bed icon"></i><span class="text">{{ property.Specification.bedrooms }} Bedrooms</span></li>
+          <li><i class="fas fa-bath icon"></i><span class="text">{{ property.Specification.bathrooms }} Bathrooms</span></li>
+          <li><i class="fas fa-tag icon"></i><span class="text">{{ property.price.price }} TND</span></li>
         </ul>
       </div>
-      <app-range-date-picker
-  *ngIf="property.generalinfo.dealType === 'sale'"
-  [bookings]="property.bookings"
-  (dateRangeSelected)="onDateRangeSelected($event)">
-</app-range-date-picker>
 
-      
+      <div class="mini-right">
+        <h6><i class="fas fa-handshake"></i> Deal Type: {{ property.generalinfo.dealType | titlecase }}</h6>
 
-    </div>
-    </div>
-    
+        <div class="amenities-section" *ngIf="property.Amenities">
+          <h6><i class="fas fa-check-circle"></i> Amenities</h6>
+          <ul class="amenities-list">
+            <li *ngIf="property.Amenities.centralAC"><i class="fas fa-snowflake"></i> Central A/C</li>
+            <li *ngIf="property.Amenities.parking"><i class="fas fa-car"></i> Parking</li>
+            <li *ngIf="property.Amenities.elevator"><i class="fas fa-elevator"></i> Elevator</li>
+            <li *ngIf="property.Amenities.petsAllowed"><i class="fas fa-paw"></i> Pets Allowed</li>
+            <!-- Add more amenities as needed -->
+          </ul>
+        </div>
 
+        <app-range-date-picker
+          *ngIf="property.generalinfo.dealType === 'rent'"
+          [bookings]="property.bookings"
+          (dateRangeSelected)="onDateRangeSelected($event)">
+        </app-range-date-picker>
+      </div>
+    </div>  </div>
+
+  <!-- RIGHT SIDE -->
   <div class="right-side">
-    <!-- Map Placeholder -->
     <div class="map-placeholder">
       Map will go here 🗺️
     </div>
