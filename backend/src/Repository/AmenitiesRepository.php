@@ -90,4 +90,32 @@ public function addAmenities($amenitiesData): Amenities
     
     return $amenities;
 }
+public function updateAmenities(Amenities $amenities, $data): Amenities
+{
+    // Convert to array if needed
+    if (is_object($data)) {
+        $data = json_decode(json_encode($data), true);
+    }
+
+    $fields = [
+        'centralAC', 'parking', 'elevator', 'petsAllowed', 'conciergeService',
+        'securityService', 'lobbyInBuilding', 'maidsRoom', 'studyRoom',
+        'balcony', 'walkInCloset', 'childrensPlayArea', 'garden',
+        'barbecueArea', 'jacuzzi', 'sauna', 'sharedGym', 'privateGym',
+        'sharedPool', 'privatePool', 'spa', 'viewOfWater', 'viewOfLandmark',
+        'nearbyHospitals', 'nearbyPublicTransport', 'nearbySchools', 'nearbyShopping'
+    ];
+
+    foreach ($fields as $field) {
+        if (array_key_exists($field, $data)) {
+            $setter = 'set' . ucfirst($field);
+            if (method_exists($amenities, $setter)) {
+                $amenities->$setter((bool) $data[$field]);
+            }
+        }
+    }
+
+    return $amenities;
+}
+
 }

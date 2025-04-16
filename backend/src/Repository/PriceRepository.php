@@ -72,4 +72,38 @@ class PriceRepository extends ServiceEntityRepository
         
         return $price;
     }
+    public function updatePrice(Price $priceEntity, $priceData): Price
+{
+    // Convert to array if object
+    if (is_object($priceData)) {
+        $priceData = json_decode(json_encode($priceData), true);
+    }
+
+    if (isset($priceData['price'])) {
+        $priceEntity->setPrice((string) $priceData['price']);
+    }
+
+    if (isset($priceData['pricesqft'])) {
+        $priceEntity->setPricesqft($priceData['pricesqft'] !== null ? (string) $priceData['pricesqft'] : null);
+    }
+
+    if (isset($priceData['originalprice'])) {
+        $priceEntity->setOriginalprice($priceData['originalprice'] !== null ? (string) $priceData['originalprice'] : null);
+    }
+
+    if (isset($priceData['hideprice'])) {
+        $priceEntity->setHideprice((bool) $priceData['hideprice']);
+    }
+
+    if (isset($priceData['charges'])) {
+        $priceEntity->setCharges($priceData['charges']);
+    }
+
+    if (isset($priceData['servicecharge'])) {
+        $priceEntity->setServicecharge($priceData['servicecharge'] !== null ? (string) $priceData['servicecharge'] : null);
+    }
+
+    return $priceEntity;
+}
+
 }

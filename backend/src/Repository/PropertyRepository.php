@@ -108,6 +108,48 @@ public function createProperty($data,$user): Property
 
     return $property;
 }
+public function updateProperty(Property $property, $data, $user): Property
+{
+    // Check if the user is the owner of the property
+    if ($property->getUser() !== $user) {
+        throw new \Exception('You are not authorized to update this property');
+    }
+    
+    // Update related entities if they exist in the data
+    if (isset($data['general'])) {
+        $this->generalRepository->updateGeneral($property->getGeneralinfo(), $data['general']);
+    }
+    
+    if (isset($data['location'])) {
+        $this->locationRepository->updateLocation($property->getLocation(), $data['location']);
+    }
+    
+    if (isset($data['specification'])) {
+        $this->SpecificationRepository->updateSpecification($property->getSpecification(), $data['specification']);
+    }
+    
+    if (isset($data['price'])) {
+        $this->priceRepository->updatePrice($property->getPrice(), $data['price']);
+    }
+    
+    if (isset($data['amenities']) && isset($data['amenities']['amenities'])) {
+        $this->amenitiesRepository->updateAmenities($property->getAmenities(), $data['amenities']['amenities']);
+    }
+    
+    if (isset($data['contacts'])) {
+        $this->contactsRepository->updateContacts($property->getContacts(), $data['contacts']);
+    }
+    
+    // Handle media files updates if they exist
+    if (isset($data['mediaFiles'])) {
+        $this->MediaRepository->updateMedia($property->getMedia(), $data['mediaFiles']);
+    }
+    
+    // No need to persist the property itself as we're just updating its related entities
+    $this->getEntityManager()->flush();
+    
+    return $property;
+}
 
 
 }
