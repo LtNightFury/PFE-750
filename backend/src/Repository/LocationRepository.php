@@ -69,4 +69,34 @@ class LocationRepository extends ServiceEntityRepository
 
         return $location;
     }
+    public function updateLocation(Location $location, $locationData): Location
+{
+    // Convert to array if object
+    if (is_object($locationData)) {
+        $locationData = json_decode(json_encode($locationData), true);
+    }
+
+    if (isset($locationData['latitude'])) {
+        $location->setLatitude((float) $locationData['latitude']);
+    }
+
+    if (isset($locationData['longitude'])) {
+        $location->setLongitude((float) $locationData['longitude']);
+    }
+
+    if (isset($locationData['country'])) {
+        $location->setCountry((string) $locationData['country']);
+    }
+
+    if (isset($locationData['city'])) {
+        $location->setCity((string) $locationData['city']);
+    }
+
+    if (isset($locationData['subcity'])) {
+        $location->setSubcity((string) $locationData['subcity']);
+    }
+
+    return $location;
+}
+
 }

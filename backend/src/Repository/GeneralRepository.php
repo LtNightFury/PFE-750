@@ -93,4 +93,42 @@ public function addGeneral($generalData): General
         
         return $general;
     }
+    public function updateGeneral(General $general, $generalData): General
+{
+    // Convert to array if object
+    if (is_object($generalData)) {
+        $generalData = json_decode(json_encode($generalData), true);
+    }
+    
+    // Update the properties according to your JSON structure
+    if (isset($generalData['deal_type'])) {
+        $general->setDealType($generalData['deal_type']);
+    }
+    
+    if (isset($generalData['title'])) {
+        $general->setTitle($generalData['title']);
+    }
+    
+    if (isset($generalData['description'])) {
+        $general->setDescription($generalData['description']);
+    }
+    
+    // Note the capital P in PropertyCondition matches your entity's field name
+    if (isset($generalData['PropertyCondition'])) {
+        $general->setPropertyCondition($generalData['PropertyCondition']);
+    }
+    
+    if (isset($generalData['propertyType'])) {
+        $general->setPropertyType($generalData['propertyType']);
+    }
+    
+    if (isset($generalData['availabilityDate'])) {
+        $general->setAvailabilityDate($generalData['availabilityDate']);
+    }
+    
+    // No need to persist here since the entity is already managed by Doctrine
+    // The flush will be called in the main updateProperty method
+    
+    return $general;
+}
 }
