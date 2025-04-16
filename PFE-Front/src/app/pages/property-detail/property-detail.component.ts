@@ -46,6 +46,7 @@ export class PropertyDetailComponent {
       endDate: range.end.toISOString().split('T')[0],
       property: this.property.id // Optional, backend may already infer this
     };
+    console.log('Selected date range:', booking);
   
     this.propertyService.addBooking(this.property.id, booking).subscribe({
       next: (response) => {

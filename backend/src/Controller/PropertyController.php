@@ -173,8 +173,8 @@ public function bookProperty(
     $booking = new Booking();
     $booking->setProperty($property);
     $booking->setUser($this->getUser());
-    $booking->setStartDate(new \DateTime($data['start']));
-    $booking->setEndDate(new \DateTime($data['end']));
+    $booking->setStartDate(new \DateTime($data['startDate']));
+    $booking->setEndDate(new \DateTime($data['endDate']));
     
 
     $em->persist($booking);
