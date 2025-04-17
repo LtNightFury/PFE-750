@@ -71,7 +71,7 @@ export class Map2Component implements  OnChanges, AfterViewInit {
 
     // Create the map
     this.map = L.map('map', {
-      center: [lat, lng],
+      center: [lng, lat],
       zoom: 13
     });
 
