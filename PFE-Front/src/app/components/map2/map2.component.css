@@ -1,0 +1,31 @@
+/* property-map.component.css */
+.map-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #map {
+    height: 1200px;
+    width: 100%;
+    min-height: 900px;
+    border-radius: 8px;
+    z-index: 0;
+  }
+  
+  .map-coordinates {
+    margin-top: 10px;
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  
+  .map-coordinates div {
+    margin-bottom: 5px;
+  }
+  
+  .map-coordinates i {
+    color: #3498db;
+    margin-right: 8px;
+  }

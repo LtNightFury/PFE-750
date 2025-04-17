@@ -1,0 +1,49 @@
+<!-- date-range-picker.component.html -->
+<div class="date-range-picker">
+  <div class="calendar-container">
+    <div class="calendar-header">
+      <button (click)="prevMonth()" class="nav-btn">&lt;</button>
+      <div class="current-month">
+        {{ monthNames[currentMonth] }} {{ currentYear }}
+      </div>
+      <button (click)="nextMonth()" class="nav-btn">&gt;</button>
+    </div>
+
+    <div class="calendar">
+      <div class="weekdays">
+        <div class="weekday">Sun</div>
+        <div class="weekday">Mon</div>
+        <div class="weekday">Tue</div>
+        <div class="weekday">Wed</div>
+        <div class="weekday">Thu</div>
+        <div class="weekday">Fri</div>
+        <div class="weekday">Sat</div>
+      </div>
+
+      <div class="calendar-days">
+        <div *ngFor="let day of calendarDays" 
+            class="day" 
+            [class.other-month]="!day.isCurrentMonth"
+            [class.booked]="day.isBooked"
+            [class.today]="day.isToday"
+            [class.selected]="isStartDate(day.date) || isEndDate(day.date)"
+            [class.in-range]="isInRange(day.date)"
+            [class.start-date]="isStartDate(day.date)"
+            [class.end-date]="isEndDate(day.date)"
+            (click)="!day.isBooked && selectDate(day.date)"
+            (mouseenter)="handleHover(day.date)">
+          {{ day.day }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="selected-range" *ngIf="startDate">
+    <span *ngIf="startDate && !endDate">
+      Selected start: {{ startDate | date:'mediumDate' }}
+    </span>
+    <span *ngIf="startDate && endDate">
+      {{ startDate | date:'mediumDate' }} - {{ endDate | date:'mediumDate' }}
+    </span>
+  </div>
+</div>
