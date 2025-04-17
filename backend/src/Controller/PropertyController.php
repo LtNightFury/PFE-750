@@ -25,7 +25,7 @@ class PropertyController extends AbstractController
     private $generalRepository;
     public function __construct(
         GeneralRepository $generalRepository,
-        PropertyRepository $propertyRepository,
+        PropertyRepository $propertyRepository
         
     ) {
         $this->generalRepository = $generalRepository;
@@ -80,7 +80,7 @@ public function create(Request $request): JsonResponse
 
     
 
-#[Route('/properties/', name: 'property_get', methods: ['GET'])]
+#[Route('/properties', name: 'property_get', methods: ['GET'])]
 public function listProperties(PropertyRepository $propertyRepository, SerializerInterface $serializer)
 {
     // Only fetch properties where approval = 'approved'
@@ -118,99 +118,10 @@ public function getPropertyById($id, PropertyRepository $propertyRepository, Ser
     return new JsonResponse($json, 200, [], true);
    
 }
-#[Route('/properties/{id}/approval', name: 'property_approval_update', methods: ['PATCH'])]
-public function updateApprovalStatus(
-    int $id,
-    Request $request,
-    PropertyRepository $propertyRepository,
-    EntityManagerInterface $em
-): JsonResponse {
-    $user = $this->getUser();
 
-    // Check if user is an admin
-    if (!$user || !in_array('ROLE_ADMIN', $user->getRoles())) {
-        return new JsonResponse(['error' => 'Access denied'], Response::HTTP_FORBIDDEN);
-    }
 
-    $property = $propertyRepository->find($id);
 
-    if (!$property) {
-        return new JsonResponse(['error' => 'Property not found'], Response::HTTP_NOT_FOUND);
-    }
 
-    $data = json_decode($request->getContent(), true);
-    $newStatus = $data['approval'] ?? null;
-
-    if (!$newStatus) {
-        return new JsonResponse(['error' => 'No approval status provided'], Response::HTTP_BAD_REQUEST);
-    }
-
-    // Only allow changing if current status is "pending"
-    if ($property->getApproval() !== 'pending') {
-        return new JsonResponse(['error' => 'Only pending properties can be updated'], Response::HTTP_CONFLICT);
-    }
-
-    $property->setApproval($newStatus);
-    $em->flush();
-
-    return new JsonResponse(['success' => true, 'newApproval' => $newStatus], Response::HTTP_OK);
-}
-#[Route('/properties/{id}/book', name: 'book_property', methods: ['POST'])]
-public function bookProperty(
-    int $id,
-    Request $request,
-    EntityManagerInterface $em,
-    \App\Repository\PropertyRepository $propertyRepository
-): JsonResponse {
-    $data = json_decode($request->getContent(), true);
-    
-
-    $property = $propertyRepository->find($id);
-    if (!$property) {
-        return $this->json(['error' => 'Property not found'], 404);
-    }
-
-    $booking = new Booking();
-    $booking->setProperty($property);
-    $booking->setUser($this->getUser());
-    $booking->setStartDate(new \DateTime($data['startDate']));
-    $booking->setEndDate(new \DateTime($data['endDate']));
-    
-
-    $em->persist($booking);
-    $em->flush();
-
-    return $this->json(['message' => 'Booking request submitted!'], 201);
-}
-
-#[Route('/bookings/{id}/approval', name: 'approve_booking', methods: ['POST'])]
-public function approveBooking(
-    int $id,
-    BookingRepository $bookingRepository,
-   
-    Request $request,
-    EntityManagerInterface $em,
-): JsonResponse {
-    $data = json_decode($request->getContent(), true);
-    $status = $data['approval']; // expected: 'approved' or 'rejected'
-
-    if (!in_array($status, ['approved', 'rejected'])) {
-        return $this->json(['error' => 'Invalid approval status'], 400);
-    }
-    $booking = $bookingRepository->find($id);
-
-    $user = $this->getUser();
-    $propertyOwner = $booking->getProperty()->getUser();
-
-    if ($user !== $propertyOwner) {
-        return $this->json(['error' => 'Unauthorized. You do not own this property.'], 403);
-    }
-
-    $booking->setApproval($status);
-    $em->flush();
-
-    return $this->json(['message' => "Booking $status"]);
-}
 #[Route('/properties/{id}', name: 'property_update', methods: ['PUT', 'PATCH'])]
 public function update(int $id, Request $request): JsonResponse
 {

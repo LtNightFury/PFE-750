@@ -115,7 +115,7 @@ public function register(Request $request): JsonResponse
         
         // Send email with reset link
         // In a real application, you would create a frontend URL with the token
-        $resetUrl = 'localhost:4200/reset-password' . $token;
+        $resetUrl = 'localhost:4200/reset-password/' . $token;
         
         $email = (new Email())
             ->from('noreply@yourapp.com')
