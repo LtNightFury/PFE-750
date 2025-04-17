@@ -1,18 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Booking, Property } from 'src/app/models/property.model';
 import { PropertyService } from 'src/app/services/property.service';
+import { DateRangePickerComponent } from 'src/app/components/date-range-picker/date-range-picker.component';
 
 @Component({
   selector: 'app-property-detail',
   templateUrl: './property-detail.component.html',
   styleUrls: ['./property-detail.component.css']
 })
-export class PropertyDetailComponent {
+export class PropertyDetailComponent implements OnInit {
+  @ViewChild(DateRangePickerComponent)
+  dateRangePicker!: DateRangePickerComponent;
+  
   property!: Property;
   allImages: string[] = [];
   isLoading = true;
   error: string | null = null;
+  bookings: { startDate: Date; endDate: Date }[] = [];
+  
+  // Store selected dates
+  selectedDateRange: { startDate: Date | null; endDate: Date | null } = {
+    startDate: null,
+    endDate: null
+  };
 
   constructor(
     private route: ActivatedRoute,
@@ -30,7 +41,6 @@ export class PropertyDetailComponent {
         const photos = data.Media.photos.map(p => baseUrl + p.imageName);
         const floorPlans = data.Media.floorPlans.map(p => baseUrl + p.imageName);
         
-
         this.allImages = [...photos, ...floorPlans]; // Combine all images
         this.isLoading = false;
       },
@@ -40,27 +50,54 @@ export class PropertyDetailComponent {
       }
     });
   }
-  onDateRangeSelected(range: { start: Date, end: Date }) {
+
+  // Update to just store the date range
+  onDateRangeChange(range: { startDate: Date | null; endDate: Date | null }): void {
+    this.selectedDateRange = range;
+  }
+
+  // Method to handle form submission with all data
+  submitBooking(): void {
+    // Validate that we have a complete date range
+    if (!this.selectedDateRange.startDate || !this.selectedDateRange.endDate) {
+      console.error('Please select a complete date range');
+      return;
+    }
+
+    // Format dates for API request
     const booking: Booking = {
-      startDate: range.start.toISOString().split('T')[0],
-      endDate: range.end.toISOString().split('T')[0],
-      property: this.property.id // Optional, backend may already infer this
+      startDate: this.selectedDateRange.startDate.toISOString(),
+      endDate: this.selectedDateRange.endDate.toISOString(),
+      property: this.property.id
+      // Add any other data you need here
     };
-    console.log('Selected date range:', booking);
-  
+
+    // Call the service to add the booking
     this.propertyService.addBooking(this.property.id, booking).subscribe({
       next: (response) => {
-        alert('Booking successful! 🏡');
+        // Add the new booking to the local list
+        this.property.bookings.push(response);
+        console.log('Booking successful!', response);
         
-        // Refresh calendar or give feedback
+        // Reset the selected range
+        this.selectedDateRange = { startDate: null, endDate: null };
+        
+        // You might want to show a success message
       },
-      error: (err) => {
-        console.error(err);
-        alert('Booking failed.');
+      error: (error) => {
+        console.error('Booking failed', error);
+        // Show error message
       }
     });
   }
-  
-  
+
+
+
+//map lena 
+
+
+
+
+
 
 }

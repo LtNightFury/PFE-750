@@ -38,7 +38,8 @@ import { JwtInterceptor } from './login-register-verif/interceptors/jwt.intercep
 import { PropertyFilterComponent } from './components/property-filter/property-filter.component';
 import { PropertyCardComponent } from './components/property-card/property-card.component';
 import { PropertyDetailComponent } from './pages/property-detail/property-detail.component';
-import { RangeDatePickerComponent } from './components/range-date-picker/range-date-picker.component';
+import { DateRangePickerComponent } from './components/date-range-picker/date-range-picker.component';
+import { Map2Component } from './components/map2/map2.component';
 
 
 
@@ -69,10 +70,10 @@ import { RangeDatePickerComponent } from './components/range-date-picker/range-d
     PropertyFilterComponent,
     PropertyCardComponent,
     PropertyDetailComponent,
-    RangeDatePickerComponent,
+    DateRangePickerComponent,
+    Map2Component,
     
-    
-  ],
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
