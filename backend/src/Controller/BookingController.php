@@ -12,6 +12,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Booking;
 use App\Repository\PropertyRepository;
 use Symfony\Component\Serializer\SerializerInterface;
+use App\Entity\Contract;
+use App\Repository\ContractRepository;
 
 #[Route('api/booking', name: 'app_booking')]
 class BookingController extends AbstractController
@@ -21,13 +23,17 @@ class BookingController extends AbstractController
     private SerializerInterface $serializer;
     private PropertyRepository $propertyRepository;
     
-    public function __construct(BookingRepository $bookingRepository, EntityManagerInterface $entityManager, \App\Repository\PropertyRepository $propertyRepository, SerializerInterface $serializer
+    private EntityManagerInterface $entityManager;
+    private ContractRepository $contractRepository;
+    public function __construct(BookingRepository $bookingRepository, EntityManagerInterface $entityManager, PropertyRepository $propertyRepository, SerializerInterface $serializer,  ContractRepository $contractRepository 
     )
+    
     
     {
         $this->bookingRepository = $bookingRepository;
-      
+        $this->entityManager = $entityManager;
         $this->serializer = $serializer;
+        $this->contractRepository = $contractRepository;
         $this->propertyRepository = $propertyRepository;
     }
 
@@ -64,6 +70,11 @@ public function approveBooking(
 
     $booking->setApproval($status);
     $em->flush();
+    if ($status === 'approved') {
+        $contract = $this->contractRepository->createFromBooking($booking);
+        $em->persist($contract);
+        $em->flush();
+    }
 
     return $this->json(['message' => "Booking $status"]);
 }
