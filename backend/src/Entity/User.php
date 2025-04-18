@@ -45,11 +45,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Booking::class, orphanRemoval: true)]
     private Collection $bookings;
 
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Contract::class)]
+    private Collection $contracts;
+
 
     public function __construct()
 {
         $this->properties = new ArrayCollection();
         $this->bookings = new ArrayCollection();
+        $this->contracts = new ArrayCollection();
 }
 
     public function getName(): ?string
@@ -204,6 +208,36 @@ public function removeBooking(Booking $booking): static
         // set the owning side to null (unless already changed)
         if ($booking->getUser() === $this) {
             $booking->setUser(null);
+        }
+    }
+
+    return $this;
+}
+
+/**
+ * @return Collection<int, Contract>
+ */
+public function getContracts(): Collection
+{
+    return $this->contracts;
+}
+
+public function addContract(Contract $contract): static
+{
+    if (!$this->contracts->contains($contract)) {
+        $this->contracts->add($contract);
+        $contract->setOwner($this);
+    }
+
+    return $this;
+}
+
+public function removeContract(Contract $contract): static
+{
+    if ($this->contracts->removeElement($contract)) {
+        // set the owning side to null (unless already changed)
+        if ($contract->getOwner() === $this) {
+            $contract->setOwner(null);
         }
     }
 

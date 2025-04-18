@@ -31,6 +31,9 @@ class Booking
     #[ORM\Column(length: 255)]
     private ?string $approval = 'pending';
 
+    #[ORM\OneToOne(mappedBy: 'booking', cascade: ['persist', 'remove'])]
+    private ?Contract $contract = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +95,28 @@ class Booking
     public function setApproval(string $approval): static
     {
         $this->approval = $approval;
+
+        return $this;
+    }
+
+    public function getContract(): ?Contract
+    {
+        return $this->contract;
+    }
+
+    public function setContract(?Contract $contract): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($contract === null && $this->contract !== null) {
+            $this->contract->setBooking(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($contract !== null && $contract->getBooking() !== $this) {
+            $contract->setBooking($this);
+        }
+
+        $this->contract = $contract;
 
         return $this;
     }
