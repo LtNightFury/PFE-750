@@ -210,3 +210,18 @@
   color: #495057;
   border: 1px solid #e9ecef;
 }
+.past-date {
+  background-color: #f1f1f1;
+  color: #b0b0b0;
+  cursor: not-allowed;
+  position: relative;
+}
+
+.past-date::after {
+  content: '';
+  position: absolute;
+  width: 80%;
+  height: 2px;
+  background-color: #c0c0c0;
+  transform: rotate(45deg);
+}

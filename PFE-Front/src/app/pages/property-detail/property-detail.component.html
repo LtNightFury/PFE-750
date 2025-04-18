@@ -142,7 +142,8 @@
 
       </div>
       <div class="mini-right">
-          <h5>Owner details:</h5>      
+          <h5>Owner details:</h5>
+          <h6>{{ property.userName }}</h6>      
     </div>
     <div class="calender-mini">
       <div *ngIf="property.generalinfo.dealType === 'rent'">
@@ -178,7 +179,7 @@
   <!-- RIGHT SIDE map here  -->
   <div class="right-side">
     <div class="map-container" *ngIf="!isLoading && property && property.location">
-      <h3>Property Location</h3>
+      
       <app-map2
         [latitude]="property.location.latitude"
         [longitude]="property.location.longitude"

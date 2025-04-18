@@ -8,6 +8,7 @@ export interface Property {
     contacts: Contacts;
     Media: Media;
     bookings: Booking[];
+    userName: string;
   }
   
   export interface GeneralInfo {

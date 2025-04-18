@@ -9,15 +9,27 @@
             <ul class="nav-links">
                 <li><a [routerLink]="['/home']" routerLinkActive="active">Home</a></li>
                 <li><a [routerLink]="['/property-list']" routerLinkActive="active">Property</a></li>
-                <li><a [routerLink]="['/about']" routerLinkActive="active">About</a></li>
+                <li><a [routerLink]="['/about-us']" routerLinkActive="active">About</a></li>
                 <li><a [routerLink]="['/service']" routerLinkActive="active">Service</a></li>
                 <li><a [routerLink]="['/contact']" routerLinkActive="active">Contact</a></li>
               </ul>
             
-            <div class="auth-buttons">
+            <div class="auth-buttons" *ngIf="!isLoggedIn">
                 <a routerLink="/register" class="sign-in">Sign in</a>
                 <button type="button" routerLink="/login" class="login-btn">Login</button>
             </div>
+
+            <!-- Display User Avatar and Dropdown when Logged In -->
+    <div class="user-avatar" *ngIf="isLoggedIn">
+        <img [src]="currentUser?.avatarUrl" alt="User Avatar" class="avatar" />
+        <div class="dropdown">
+          <button class="dropdown-btn">{{ currentUser?.name }}</button>
+          <div class="dropdown-content">
+            <a routerLink="/profile">Profile</a>
+            <a (click)="logout()">Logout</a>
+          </div>
+        </div>
+      </div>
         </nav>
     </body>
 

@@ -1,0 +1,119 @@
+:root {
+    --primary: #4DB299;
+    --text: #333;
+    --bg-light: #f4f8f9;
+    --white: #fff;
+  }
+  
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text);
+  }
+  
+  /* Hero Section */
+  .about-hero {
+    background: linear-gradient(135deg, #4DB299 0%, #3c9f80 100%);
+    color: var(--white);
+    text-align: center;
+    padding: 80px 20px;
+  }
+  
+  .about-hero h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+  
+  .about-hero p {
+    font-size: 20px;
+    opacity: 0.9;
+  }
+  
+  /* About Content */
+  .about-content {
+    padding: 60px 20px;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+  }
+  
+  .about-text h2 {
+    font-size: 28px;
+    color: var(--primary);
+    margin-top: 30px;
+  }
+  
+  .about-text p {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-top: 10px;
+  }
+  
+  .about-text ul {
+    margin-top: 20px;
+    padding-left: 20px;
+  }
+  
+  .about-text li {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .about-image img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Stats Section */
+  .about-stats {
+    background-color: var(--white);
+    padding: 60px 20px;
+  }
+  
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 30px;
+    text-align: center;
+  }
+  
+  .stat-box {
+    padding: 20px;
+    background-color: var(--bg-light);
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .stat-box:hover {
+    transform: translateY(-5px);
+  }
+  
+  .stat-box h3 {
+    font-size: 36px;
+    color: var(--primary);
+  }
+  
+  .stat-box p {
+    margin-top: 10px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  
+    .about-hero h1 {
+      font-size: 36px;
+    }
+  }
+  
