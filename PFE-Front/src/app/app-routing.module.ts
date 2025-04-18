@@ -9,6 +9,9 @@ import { ResetPasswordComponent } from './login-register-verif/auth/reset-passwo
 import { HomeComponent } from './pages/home/home.component';
 import { PropertyListComponent } from './pages/property-list/property-list.component';
 import { PropertyDetailComponent } from './pages/property-detail/property-detail.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
+import { ServiceComponent } from './components/service/service.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -19,9 +22,10 @@ const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'home',  component: HomeComponent },
   { path: 'property-list', component: PropertyListComponent },
-  {
-    path: 'property/:id', component: PropertyDetailComponent
-  },
+  { path: 'property/:id', component: PropertyDetailComponent},
+  { path: 'contact', component: ContactComponent },
+  { path: 'about-us',component:AboutUsComponent},
+  { path: 'service', component:ServiceComponent},
   
   //lena bech nhot el route ta3 el dashboard//
   { path: '', redirectTo: '/home', pathMatch: 'full' }

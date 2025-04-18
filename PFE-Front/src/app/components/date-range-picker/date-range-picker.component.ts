@@ -59,7 +59,8 @@ export class DateRangePickerComponent implements OnInit {
           day,
           isCurrentMonth: false,
           isBooked: this.isDayBooked(date),
-          isToday: this.isToday(date)
+          isToday: this.isToday(date),
+          isPast: this.isPastDate(date)
         });
       }
     }
@@ -72,24 +73,26 @@ export class DateRangePickerComponent implements OnInit {
         day,
         isCurrentMonth: true,
         isBooked: this.isDayBooked(date),
-        isToday: this.isToday(date)
+        isToday: this.isToday(date),
+        isPast: this.isPastDate(date)
       });
     }
     
     // Next month days to complete the last week
     const lastDayOfWeek = lastDay.getDay();
-  if (lastDayOfWeek !== 6) { // If not Saturday
-    for (let i = 1; i <= 6 - lastDayOfWeek; i++) {
-      const date = new Date(this.currentYear, this.currentMonth + 1, i);
-      this.calendarDays.push({
-        date,
-        day: i,
-        isCurrentMonth: false,
-        isBooked: this.isDayBooked(date),
-        isToday: this.isToday(date)
-      });
+    if (lastDayOfWeek !== 6) { // If not Saturday
+      for (let i = 1; i <= 6 - lastDayOfWeek; i++) {
+        const date = new Date(this.currentYear, this.currentMonth + 1, i);
+        this.calendarDays.push({
+          date,
+          day: i,
+          isCurrentMonth: false,
+          isBooked: this.isDayBooked(date),
+          isToday: this.isToday(date),
+          isPast: this.isPastDate(date)
+        });
+      }
     }
-  }
   }
 
   isDayBooked(date: Date): boolean {
@@ -98,6 +101,12 @@ export class DateRangePickerComponent implements OnInit {
       const endDate = new Date(booking.endDate);
       return date >= startDate && date <= endDate;
     });
+  }
+
+  isPastDate(date: Date): boolean {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset time to start of day for accurate comparison
+    return date < today;
   }
 
   prevMonth(): void {
@@ -121,8 +130,8 @@ export class DateRangePickerComponent implements OnInit {
   }
 
   selectDate(date: Date): void {
-    if (this.isDayBooked(date)) {
-      return; // Don't allow selection of booked dates
+    if (this.isDayBooked(date) || this.isPastDate(date)) {
+      return; // Don't allow selection of booked dates or past dates
     }
 
     if (!this.startDate || (this.startDate && this.endDate)) {
@@ -179,6 +188,7 @@ export class DateRangePickerComponent implements OnInit {
     if (this.endDate) return date >= this.startDate && date <= this.endDate;
     return this.hoveredDate ? date >= this.startDate && date <= this.hoveredDate : false;
   }
+  
   isStartDate(date: Date): boolean {
     if (!this.startDate) return false;
     return date.getTime() === this.startDate.getTime();
@@ -222,6 +232,7 @@ export class DateRangePickerComponent implements OnInit {
       // Show message that the selected range contains booked dates
     }
   }
+
   // Add a method to get the current selection
   getCurrentSelection(): { startDate: Date | null; endDate: Date | null } {
     return {

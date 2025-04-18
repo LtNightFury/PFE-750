@@ -31,7 +31,7 @@ export class PropertyService {
     return this.http.get<Property>(`${this.apiUrl}${id}`);
   }
   addBooking(propertyId: number, booking: Booking): Observable<Booking> {
-    return this.http.post<Booking>(`http://backend.ddev.site/api/properties/${propertyId}/book`, booking);
+    return this.http.post<Booking>(`http://backend.ddev.site/api/booking/properties/${propertyId}/book`, booking);
     
   }
   

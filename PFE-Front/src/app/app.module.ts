@@ -40,6 +40,9 @@ import { PropertyCardComponent } from './components/property-card/property-card.
 import { PropertyDetailComponent } from './pages/property-detail/property-detail.component';
 import { DateRangePickerComponent } from './components/date-range-picker/date-range-picker.component';
 import { Map2Component } from './components/map2/map2.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { AboutUsComponent } from './components/about-us/about-us.component';
+import { ServiceComponent } from './components/service/service.component';
 
 
 
@@ -72,6 +75,9 @@ import { Map2Component } from './components/map2/map2.component';
     PropertyDetailComponent,
     DateRangePickerComponent,
     Map2Component,
+    ContactComponent,
+    AboutUsComponent,
+    ServiceComponent,
     
     ],
   imports: [

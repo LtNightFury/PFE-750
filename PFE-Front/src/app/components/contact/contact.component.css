@@ -1,0 +1,177 @@
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Body */
+body {
+  background-color: #f4f8f9;
+  color: #333;
+}
+
+/* Header */
+app-header {
+  margin-bottom: 40px;
+}
+
+/* Contact Area */
+.contact-area {
+  padding: 60px 0;
+  background-color: #fff;
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+/* Section Title */
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+}
+
+/* Contact Form */
+.contact-form {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.form-input {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  font-size: 16px;
+  color: #333;
+}
+
+.input-items {
+  display: flex;
+  align-items: center;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-top: 5px;
+}
+
+.input-items input,
+.input-items textarea {
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+  flex: 1;
+  border-radius: 5px;
+}
+
+.input-items input:focus,
+.input-items textarea:focus {
+  border-color: #4DB299;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+button {
+  background-color: #4DB299;
+  color: #fff;
+  padding: 12px 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #3c9f80;
+}
+
+/* Contact Information */
+.contact-info {
+  background-color: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.info {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 30px;
+}
+
+.single-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.info-icon {
+  font-size: 20px;
+  margin-right: 15px;
+  color: #4DB299;
+}
+
+.info-content .text {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Social Icons */
+.social {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 15px;
+}
+
+.social li a {
+  font-size: 20px;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.social li a:hover {
+  color: #4DB299;
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+  .contact-form {
+      padding: 30px;
+  }
+
+  .contact-info {
+      margin-top: 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .section-title .title {
+      font-size: 24px;
+  }
+
+  .contact-form {
+      padding: 20px;
+  }
+}
