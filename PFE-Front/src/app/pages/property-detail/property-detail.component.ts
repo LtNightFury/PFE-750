@@ -18,6 +18,8 @@ export class PropertyDetailComponent implements OnInit {
   isLoading = true;
   error: string | null = null;
   bookings: { startDate: Date; endDate: Date }[] = [];
+  selectedImageIndex = 0;
+showFullGallery = false;
   
   // Store selected dates
   selectedDateRange: { startDate: Date | null; endDate: Date | null } = {
@@ -89,12 +91,32 @@ export class PropertyDetailComponent implements OnInit {
         // Show error message
       }
     });
+
+
+
+
   }
 
+//el gallary lena 
+selectImage(index: number): void {
+  this.selectedImageIndex = index;
+}
 
+openFullGallery(): void {
+  this.showFullGallery = true;
+}
 
-//map lena 
+closeFullGallery(): void {
+  this.showFullGallery = false;
+}
 
+nextImage(): void {
+  this.selectedImageIndex = (this.selectedImageIndex + 1) % this.allImages.length;
+}
+
+prevImage(): void {
+  this.selectedImageIndex = (this.selectedImageIndex - 1 + this.allImages.length) % this.allImages.length;
+}
 
 
 
