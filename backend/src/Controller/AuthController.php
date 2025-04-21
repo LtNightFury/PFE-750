@@ -72,7 +72,7 @@ public function register(Request $request): JsonResponse
         }
     
     
-    $user->setPhoneNumber($data['phonenumber']); // Set default profile image or handle it later
+    $user->setPhoneNumber($data['phoneNumber']); // Set default profile image or handle it later
     
     // Add the name field
     if (isset($data['name'])) {
@@ -211,8 +211,8 @@ public function register(Request $request): JsonResponse
             $user->setName($request->request->get('name'));
         }
         
-        if ($request->request->has('phonenumber')) {
-            $user->setPhoneNumber($request->request->get('phonenumber'));
+        if ($request->request->has('phoneNumber')) {
+            $user->setPhoneNumber($request->request->get('phoneNumber'));
         }
     
         // Handle file upload if provided
