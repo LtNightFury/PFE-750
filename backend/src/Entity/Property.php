@@ -54,9 +54,13 @@ class Property
     #[ORM\OneToMany(mappedBy: 'property', targetEntity: Booking::class, orphanRemoval: true)]
     private Collection $bookings;
 
+    #[ORM\OneToMany(mappedBy: 'property', targetEntity: Appointment::class)]
+    private Collection $appointments;
+
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
+        $this->appointments = new ArrayCollection();
     }
     
 
@@ -204,5 +208,35 @@ class Property
     public function getUserName(): ?string
     {
         return $this->user ? $this->user->getName() : null;
+    }
+
+    /**
+     * @return Collection<int, Appointment>
+     */
+    public function getAppointments(): Collection
+    {
+        return $this->appointments;
+    }
+
+    public function addAppointment(Appointment $appointment): static
+    {
+        if (!$this->appointments->contains($appointment)) {
+            $this->appointments->add($appointment);
+            $appointment->setProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAppointment(Appointment $appointment): static
+    {
+        if ($this->appointments->removeElement($appointment)) {
+            // set the owning side to null (unless already changed)
+            if ($appointment->getProperty() === $this) {
+                $appointment->setProperty(null);
+            }
+        }
+
+        return $this;
     }
 }

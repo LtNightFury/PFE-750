@@ -91,7 +91,7 @@ public function listProperties(PropertyRepository $propertyRepository, Serialize
         'circular_reference_handler' => function ($object) {
             return $object->getId();
         },
-        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__','user','approval']
+        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__','user','approval','contract']
     ]);
 
     return new JsonResponse($json, 200, [], true);
@@ -105,13 +105,15 @@ public function getPropertyById($id, PropertyRepository $propertyRepository, Ser
     if (!$property) {
         return new JsonResponse(['error' => 'Property not found'], Response::HTTP_NOT_FOUND);
     }
+    $json = $serializer->serialize($property, 'json', ['groups' => ['property:read']]);
+
     
     // Use Symfony's serializer with proper context to handle circular references
     $json = $serializer->serialize($property, 'json', [
         'circular_reference_handler' => function ($object) {
             return $object->getId();
         },
-        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__','user']
+        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__','user','contract']
     ]);
     
     // Return a JSON response directly

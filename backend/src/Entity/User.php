@@ -3,15 +3,19 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -33,8 +37,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $resetToken = null;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $profileImage = null;
+
+    #[Vich\UploadableField(mapping: 'User', fileNameProperty: 'profileImage')]
+    private ?File $profileImageFile = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
+
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?\DateTimeInterface $resetTokenExpiresAt = null;
+
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
     private ?string $name = null;
@@ -48,25 +62,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Contract::class)]
     private Collection $contracts;
 
+    #[ORM\Column(type: Types::BIGINT, nullable: true)]
+    private ?string $phoneNumber = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Appointment::class)]
+    private Collection $appointments;
+
 
     public function __construct()
-{
+    {
         $this->properties = new ArrayCollection();
         $this->bookings = new ArrayCollection();
         $this->contracts = new ArrayCollection();
-}
+        $this->appointments = new ArrayCollection();
+    }
 
     public function getName(): ?string
-{
-    return $this->name;
-}
+    {
+        return $this->name;
+    }
+    
+    public function getprofileImage(): ?string
+    {
+        return $this->profileImage 
+            ? '/uploads/profile/' . $this->profileImage
+            : null;
+    }
 
-public function setName(string $name): static
-{
-    $this->name = $name;
+    public function setName(string $name): static
+    {
+        $this->name = $name;
 
-    return $this;
-}
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -158,90 +186,164 @@ public function setName(string $name): static
         
         return $this;
     }
+    
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+        
+        return $this;
+    }
+    
     public function getProperties(): Collection
-{
-    return $this->properties;
-}
-
-public function addProperty(Property $property): self
-{
-    if (!$this->properties->contains($property)) {
-        $this->properties[] = $property;
-        $property->setUser($this);
+    {
+        return $this->properties;
     }
 
-    return $this;
-}
+    public function addProperty(Property $property): self
+    {
+        if (!$this->properties->contains($property)) {
+            $this->properties[] = $property;
+            $property->setUser($this);
+        }
 
-public function removeProperty(Property $property): self
-{
-    if ($this->properties->removeElement($property)) {
-        if ($property->getUser() === $this) {
-            $property->setUser(null);
+        return $this;
+    }
+
+    public function removeProperty(Property $property): self
+    {
+        if ($this->properties->removeElement($property)) {
+            if ($property->getUser() === $this) {
+                $property->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Booking>
+     */
+    public function getBookings(): Collection
+    {
+        return $this->bookings;
+    }
+
+    public function addBooking(Booking $booking): static
+    {
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings->add($booking);
+            $booking->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBooking(Booking $booking): static
+    {
+        if ($this->bookings->removeElement($booking)) {
+            // set the owning side to null (unless already changed)
+            if ($booking->getUser() === $this) {
+                $booking->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contract>
+     */
+    public function getContracts(): Collection
+    {
+        return $this->contracts;
+    }
+
+    public function addContract(Contract $contract): static
+    {
+        if (!$this->contracts->contains($contract)) {
+            $this->contracts->add($contract);
+            $contract->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContract(Contract $contract): static
+    {
+        if ($this->contracts->removeElement($contract)) {
+            // set the owning side to null (unless already changed)
+            if ($contract->getOwner() === $this) {
+                $contract->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+    
+    public function setProfileImageFile(?File $file = null): void
+    {
+        $this->profileImageFile = $file;
+
+        // If a new file is uploaded, update the timestamp to force Doctrine to save changes
+        if ($file) {
+            $this->updatedAt = new \DateTime();
         }
     }
-
-    return $this;
-}
-
-/**
- * @return Collection<int, Booking>
- */
-public function getBookings(): Collection
-{
-    return $this->bookings;
-}
-
-public function addBooking(Booking $booking): static
-{
-    if (!$this->bookings->contains($booking)) {
-        $this->bookings->add($booking);
-        $booking->setUser($this);
+    
+    public function getProfileImageFile(): ?File
+    {
+        return $this->profileImageFile;
+    }
+    
+    public function setProfileImage(?string $image): void
+    {
+        $this->profileImage = $image;
     }
 
-    return $this;
-}
+    public function getPhoneNumber(): ?string
+    {
+        return $this->phoneNumber;
+    }
 
-public function removeBooking(Booking $booking): static
-{
-    if ($this->bookings->removeElement($booking)) {
-        // set the owning side to null (unless already changed)
-        if ($booking->getUser() === $this) {
-            $booking->setUser(null);
+    public function setPhoneNumber(?string $phoneNumber): static
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Appointment>
+     */
+    public function getAppointments(): Collection
+    {
+        return $this->appointments;
+    }
+
+    public function addAppointment(Appointment $appointment): static
+    {
+        if (!$this->appointments->contains($appointment)) {
+            $this->appointments->add($appointment);
+            $appointment->setUser($this);
         }
+
+        return $this;
     }
 
-    return $this;
-}
-
-/**
- * @return Collection<int, Contract>
- */
-public function getContracts(): Collection
-{
-    return $this->contracts;
-}
-
-public function addContract(Contract $contract): static
-{
-    if (!$this->contracts->contains($contract)) {
-        $this->contracts->add($contract);
-        $contract->setOwner($this);
-    }
-
-    return $this;
-}
-
-public function removeContract(Contract $contract): static
-{
-    if ($this->contracts->removeElement($contract)) {
-        // set the owning side to null (unless already changed)
-        if ($contract->getOwner() === $this) {
-            $contract->setOwner(null);
+    public function removeAppointment(Appointment $appointment): static
+    {
+        if ($this->appointments->removeElement($appointment)) {
+            // set the owning side to null (unless already changed)
+            if ($appointment->getUser() === $this) {
+                $appointment->setUser(null);
+            }
         }
-    }
 
-    return $this;
-}
-   
+        return $this;
+    }
 }

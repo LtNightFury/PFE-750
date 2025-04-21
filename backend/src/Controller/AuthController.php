@@ -15,6 +15,9 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+ 
+
 
 #[Route('/api', name: 'api_')]
 class AuthController extends AbstractController
@@ -62,7 +65,14 @@ public function register(Request $request): JsonResponse
     $user = new User();
     $user->setEmail($data['email']);
     $user->setPassword($this->passwordHasher->hashPassword($user, $data['password']));
-    $user->setRoles(['ROLE_USER']);
+    if (!empty($data['role'])) {
+        $user->setRoles([$data['role']]);
+    }else {
+            $user->setRoles(['ROLE_USER']);
+        }
+    
+    
+    $user->setPhoneNumber($data['phonenumber']); // Set default profile image or handle it later
     
     // Add the name field
     if (isset($data['name'])) {
@@ -159,5 +169,86 @@ public function register(Request $request): JsonResponse
         
         return $this->json(['message' => 'Password has been reset successfully'], Response::HTTP_OK);
     }
-     
+    
+    
+    
+    #[Route('/user', name: 'get_current_user', methods: ['GET'])]
+    public function getCurrentUser(): JsonResponse
+    {
+        /** @var User|null $user */
+        $user = $this->getUser();
+    
+        if (!$user) {
+            return $this->json(['message' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+        }
+    
+        
+        
+    
+        return $this->json([
+            'id' => $user->getId(),
+            'name' => $user->getName(),
+            'roles' => $user->getRoles(),
+            'email' => $user->getEmail(),
+            'profileImage' => $user->getProfileImage(),
+            'phonenumber' => $user->getPhoneNumber(),
+        ]);
+    }
+  
+
+    #[Route('/user', name: 'update_current_user', methods: ['POST'])]
+    public function updateCurrentUser(Request $request): JsonResponse
+    {
+        /** @var User|null $user */
+        $user = $this->getUser();
+    
+        if (!$user) {
+            return $this->json(['message' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+        }
+    
+        // Update name if provided
+        if ($request->request->has('name')) {
+            $user->setName($request->request->get('name'));
+        }
+        
+        if ($request->request->has('phonenumber')) {
+            $user->setPhoneNumber($request->request->get('phonenumber'));
+        }
+    
+        // Handle file upload if provided
+        /** @var UploadedFile|null $file */
+        $file = $request->files->get('file');
+    
+        if ($file) {
+            $user->setProfileImageFile($file); // Triggers VichUploader to handle saving
+            
+        }
+    
+        // Validate
+        $errors = $this->validator->validate($user);
+        if (count($errors) > 0) {
+            $errorMessages = [];
+            foreach ($errors as $error) {
+                $errorMessages[] = $error->getMessage();
+            }
+            return $this->json(['message' => 'Validation failed', 'errors' => $errorMessages], Response::HTTP_BAD_REQUEST);
+        }
+    
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    
+        return $this->json([
+            'message' => 'User updated successfully',
+            'user' => [
+                'id' => $user->getId(),
+                'name' => $user->getName(),
+                'roles' => $user->getRoles(),
+                'phonenumber' => $user->getPhoneNumber(),
+                'email' => $user->getEmail(),
+                'profileImage' => $user->getprofileImage(),
+            ]
+        ]);
+    }
+    
+    
 }

@@ -20,3 +20,7 @@ vich_uploader:
             uri_prefix: /uploads/documents  # URL for floorplans
             upload_destination: '%kernel.project_dir%/public/uploads/documents'  # Local directory for floorplans
             namer:  Vich\UploaderBundle\Naming\UniqidNamer  # Automatically generate unique names for floorplans
+        User:
+            uri_prefix: /uploads/profile
+            upload_destination: '%kernel.project_dir%/public/uploads/profile'
+            namer:  Vich\UploaderBundle\Naming\UniqidNamer
