@@ -1,9 +1,9 @@
 .filter-container {
-    padding: 1.5rem;
+    padding: 1rem;
     background: #fff;
     border-radius: 14px;
     border-top: #4DB299 2px solid;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
 }
 
 .filter-row {
@@ -11,7 +11,7 @@
     flex-wrap: wrap;
     gap: 1.25rem;
     border-bottom: gray 1px solid;
-    padding-bottom: 1.25rem;
+    padding-bottom: 1rem;
     align-items: flex-end;
 }
 
@@ -28,10 +28,10 @@
 
 /* Modern Input Styles */
 .modern-input {
-    border: 1px solid black;
-    border-radius: 8px;
+    border: 1px solid #4DB299;
+    border-radius: 1.5rem;
     padding: 0.75rem 1rem;
-    font-size: 0.95rem;
+    font-size: 0.rem;
     width: 100%;
     transition: all 0.3s ease;
     background-color: #f9f9f9;
@@ -53,8 +53,8 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    border: 1px solid black;
-    border-radius: 8px;
+    border: 1px solid #4DB299;
+    border-radius: 1.5rem;
     padding: 0.75rem 2.5rem 0.75rem 1rem;
     font-size: 0.95rem;
     width: 100%;
@@ -113,7 +113,7 @@
 /* Modern Filter Button */
 .modern-filter-button {
     padding: 0.75rem 1.5rem;
-    border-radius: 8px;
+    border-radius: 1.5rem;
     background-color: #4DB299;
     color: white;
     border: none;
@@ -134,7 +134,7 @@
 label {
     font-weight: 600;
     margin-bottom: 0.5rem;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #444;
 }
 

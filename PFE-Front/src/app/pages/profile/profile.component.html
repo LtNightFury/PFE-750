@@ -1,0 +1,33 @@
+<p>profile works!</p>
+<div class="container mt-5" *ngIf="!loading">
+    <div class="card shadow-sm p-4">
+      <div class="d-flex align-items-center">
+        <img 
+          *ngIf="user?.profileImage; else defaultImage" 
+          [src]="user!.profileImage" 
+          class="rounded-circle me-3" 
+          alt="Profile Picture" 
+          width="100" 
+          height="100"
+        />
+        <ng-template #defaultImage>
+          <div class="rounded-circle bg-secondary d-flex justify-content-center align-items-center me-3" style="width: 100px; height: 100px; color: white;">
+            <strong>{{ user!.name[0] }}</strong>
+          </div>
+        </ng-template>
+  
+        <div>
+          <h4 class="mb-1">{{ user!.name }}</h4>
+          <p class="mb-0 text-muted">{{ user!.email }}</p>
+          <p class="mb-0 text-muted" *ngIf="user?.phoneNumber">📞 {{ user!.phoneNumber }}</p>
+          <span class="badge bg-info text-dark mt-2" *ngFor="let role of user!.roles">
+            {{ role }}
+          </span>
+        </div>
+      </div>
+  
+      <div class="mt-4 text-end">
+        <a routerLink="/settings" class="btn btn-outline-primary btn-sm">Edit Profile</a>
+      </div>    </div>
+  </div>
+  

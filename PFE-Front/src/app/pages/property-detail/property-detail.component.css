@@ -15,9 +15,10 @@
   gap: 1.5rem;
 }
 
+
 .right-side {
   flex: 1;
-  background-color: #f3f3f3;
+  border: #4DB299 solid 2px;
   align-items: center;
   justify-content: center;
   border-radius: 0.5rem;
@@ -39,6 +40,7 @@
 .detail-header {
   padding-top: 1rem;
   margin-bottom: 20px;
+  border-bottom: lightgray solid 1px;
 }
 
 
@@ -46,12 +48,23 @@
 .details {
   margin-top: 1rem;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(1, 1fr);
-  gap: 1rem;
+  gap: 2rem;
 
 }
-
+.mini-left{
+  padding: 1rem;
+  border: 1px solid lightgray;
+  border-radius: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.mini-center{
+  padding: 1rem;
+  border: 1px solid lightgray;
+  border-radius: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
 .calender-mini{
   grid-row-start: 2;
@@ -145,6 +158,412 @@ h2 {
   color: #666;
   line-height: 1.6;
   margin-bottom: 1.5rem;
+}
+/* Add this to your property-detail.component.css */
+.property-gallery-container {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  height: 550px;
+  margin-bottom: 20px;
+}
+
+/* Main large image styling */
+.main-image {
+  flex: 3;
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.featured-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.featured-image:hover {
+  transform: scale(1.02);
+}
+
+/* Navigation buttons for main image */
+.image-navigation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 15px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.main-image:hover .image-navigation {
+  opacity: 1;
+}
+
+.nav-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.nav-btn:hover {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+/* Thumbnails grid styling */
+.thumbnails-grid {
+  flex: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  height: 100%;
+  border: lightgray solid 1px;
+  border-radius: 1rem;
+}
+
+.thumbnail-item {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.thumbnail-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.thumbnail-item:hover img {
+  transform: scale(1.05);
+}
+
+.thumbnail-item.selected {
+  border: 2px solid #007bff;
+}
+
+/* Show more photos button styling */
+.show-more {
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.show-more:hover .overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.more-photos-img {
+  filter: brightness(0.7);
+}
+
+/* Full gallery modal styling */
+.gallery-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  color: white;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+}
+
+.close-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.modal-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.modal-image-container {
+  position: relative;
+  width: 80%;
+  height: 70%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-main-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.modal-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal-prev-btn {
+  left: 10px;
+}
+
+.modal-next-btn {
+  right: 10px;
+}
+
+.modal-nav-btn:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.modal-thumbnails {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 20px 0;
+  width: 80%;
+}
+
+.modal-thumbnail {
+  width: 100px;
+  height: 70px;
+  flex-shrink: 0;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.modal-thumbnail.active {
+  opacity: 1;
+  border: 2px solid white;
+}
+
+.modal-thumbnail:hover {
+  opacity: 1;
+}
+
+.modal-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .property-gallery-container {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .main-image {
+    height: 300px;
+  }
+  
+  .thumbnails-grid {
+    height: 200px;
+  }
+}
+
+/* Loading and error states */
+.loading-spinner {
+  text-align: center;
+  padding: 30px;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  padding: 20px;
+}
+
+.no-images {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}
+/* Agent Card Styling */
+.agent-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 100%;
+  max-width: 400px;
+  font-family: poppins, sans-serif;
+}
+
+.card-section {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.card-section:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-size: 16px;
+  color: gray;
+  margin-bottom: 8px;
+  font-weight: 550;
+}
+
+/* Price styling */
+.price {
+  font-size: 24px;
+  color: #4DB299;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+/* Agent info styling */
+.agent-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.agent-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+}
+
+.agent-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.agent-title {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Button styling */
+.action-button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.action-button i {
+  margin-right: 8px;
+}
+
+.primary-button {
+  background-color: #4DB299;
+  color: white;
+  border: none;
+}
+
+.primary-button:hover {
+  background-color: #4DB299;
+}
+
+.outline-button {
+  background-color: white;
+  color: #4DB299;
+  border: 1px solid #4DB299;
+  margin-bottom: 12px;
+}
+
+.outline-button:hover {
+  background-color: #f0f7ff;
+}
+
+.contact-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.contact-buttons .action-button {
+  margin-bottom: 0;
+}
+
+/* Inspection times styling */
+.inspection-note {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.inspection-time {
+  margin-bottom: 12px;
+  font-size: 14px;
 }
 
 @media (max-width: 768px) {

@@ -1,36 +1,61 @@
 <section class="navbar-container">
-    <body>
-        <nav class="navbar">
-            <a routerLink="/home" class="logo">
-                <div class="logo-circle">E</div>
-                <div class="logo-text">EZrent</div>
-            </a>
-            
-            <ul class="nav-links">
-                <li><a [routerLink]="['/home']" routerLinkActive="active">Home</a></li>
-                <li><a [routerLink]="['/property-list']" routerLinkActive="active">Property</a></li>
-                <li><a [routerLink]="['/about-us']" routerLinkActive="active">About</a></li>
-                <li><a [routerLink]="['/service']" routerLinkActive="active">Service</a></li>
-                <li><a [routerLink]="['/contact']" routerLinkActive="active">Contact</a></li>
-              </ul>
-            
-            <div class="auth-buttons" *ngIf="!isLoggedIn">
-                <a routerLink="/register" class="sign-in">Sign in</a>
-                <button type="button" routerLink="/login" class="login-btn">Login</button>
-            </div>
 
-            <!-- Display User Avatar and Dropdown when Logged In -->
-    <div class="user-avatar" *ngIf="isLoggedIn">
-        <img [src]="currentUser?.avatarUrl" alt="User Avatar" class="avatar" />
-        <div class="dropdown">
-          <button class="dropdown-btn">{{ currentUser?.name }}</button>
-          <div class="dropdown-content">
-            <a routerLink="/profile">Profile</a>
-            <a (click)="logout()">Logout</a>
+  <body>
+    <nav class="navbar">
+      <a routerLink="/home" class="logo">
+        <div class="logo-circle">E</div>
+        <div class="logo-text">Easy Rent</div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a [routerLink]="['/home']" routerLinkActive="active">Home</a></li>
+        <li><a [routerLink]="['/property-list']" routerLinkActive="active">Property</a></li>
+        <li><a [routerLink]="['/about-us']" routerLinkActive="active">About</a></li>
+        <li><a [routerLink]="['/service']" routerLinkActive="active">Service</a></li>
+        <li><a [routerLink]="['/contact']" routerLinkActive="active">Contact</a></li>
+      </ul>
+
+      <div class="auth-buttons" *ngIf="!isLoggedIn">
+        <a routerLink="/register" class="sign-in">Sign in</a>
+        <button type="button" routerLink="/login" class="login-btn">Login</button>
+      </div>
+
+      <!-- Display User Avatar and Dropdown when Logged In -->
+      <!-- Modify the user-profile div to use the directive -->
+      <div class="user-profile" *ngIf="isLoggedIn" clickOutside (clickOutside)="showDropdown = false">
+        <div class="profile-container" (click)="toggleDropdown()">
+          <img src="/assets/person.png" alt="User Avatar" class="avatar" />
+          <span class="username">{{ currentUser?.username || 'si omar' }}</span>
+          <div class="menu-dots">
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
           </div>
         </div>
+
+        <div class="dropdown-menu" [class.show]="showDropdown">
+          <a routerLink="/profile" class="dropdown-item">
+            <i class="profile-icon"></i>
+            <span>View profile</span>
+          </a>
+          <a routerLink="/settings" class="dropdown-item">
+            <i class="settings-icon"></i>
+            <span>Account settings</span>
+          </a>
+          <a routerLink="/shortcuts" class="dropdown-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check-fill" viewBox="0 0 16 16">
+              <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-5.146-5.146-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708"/>
+            </svg>
+            <span>My Appointment</span>
+          </a>
+          <a (click)="logout()" class="dropdown-item">
+            <i class="logout-icon"></i>
+            <span>Log out</span>
+            
+          </a>
+        </div>
       </div>
-        </nav>
-    </body>
+    </nav>
+  </body>
 
 </section>

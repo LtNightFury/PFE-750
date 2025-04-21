@@ -4,50 +4,107 @@
   <!-- LEFT SIDE -->
   <div class="left-side">
     <!-- Carousel for Images -->
-    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item" *ngFor="let img of allImages; let i = index" [class.active]="i === 0">
-          <img [src]="img" class="d-block w-100 carousel-img" alt="Property Image">
-        </div>
-      </div>
-      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"
-        data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+   <!-- Gallery layout directly in property-detail.component.html -->
+<div class="property-gallery-container" *ngIf="!isLoading && allImages.length > 0">
+  <!-- Main image on the left -->
+  <div class="main-image">
+    <img [src]="allImages[selectedImageIndex]" alt="Property Image" class="featured-image">
+    <div class="image-navigation">
+      <button class="nav-btn prev-btn" (click)="prevImage()">
+        <i class="bi bi-chevron-left"></i>
       </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying"
-        data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+      <button class="nav-btn next-btn" (click)="nextImage()">
+        <i class="bi bi-chevron-right"></i>
       </button>
     </div>
+  </div>
+  
+  <!-- Thumbnails grid on the right -->
+  <div class="thumbnails-grid">
+    <div class="thumbnail-item" *ngFor="let img of allImages.slice(0, 4); let i = index" 
+         (click)="selectImage(i)" 
+         [class.selected]="selectedImageIndex === i">
+      <img [src]="img" alt="Property Thumbnail">
+    </div>
+    
+    <!-- Show more photos button -->
+    <div class="thumbnail-item show-more" (click)="openFullGallery()" *ngIf="allImages.length > 4">
+      <img [src]="allImages[4]" alt="More Photos" class="more-photos-img">
+      <div class="overlay">
+        <span>View all {{allImages.length}} photos</span>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Full gallery modal -->
+  <div class="gallery-modal" *ngIf="showFullGallery">
+    <div class="modal-header">
+      <h3>All Photos ({{allImages.length}})</h3>
+      <button class="close-btn" (click)="closeFullGallery()">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-image-container">
+        <img [src]="allImages[selectedImageIndex]" alt="Property Image" class="modal-main-image">
+        <button class="modal-nav-btn modal-prev-btn" (click)="prevImage()">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <button class="modal-nav-btn modal-next-btn" (click)="nextImage()">
+          <i class="bi bi-chevron-right"></i>
+        </button>
+      </div>
+      <div class="modal-thumbnails">
+        <div class="modal-thumbnail" 
+             *ngFor="let img of allImages; let i = index" 
+             (click)="selectImage(i)"
+             [class.active]="selectedImageIndex === i">
+          <img [src]="img" alt="Thumbnail">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Show loading indicator or error message when appropriate -->
+<div *ngIf="isLoading" class="loading-spinner">
+  Loading property details...
+</div>
+
+<div *ngIf="!isLoading && error" class="error-message">
+  {{ error }}
+</div>
+
+<div *ngIf="!isLoading && allImages.length === 0" class="no-images">
+  No images available for this property.
+</div>
 
     <!-- Property Details -->
     <div class="detail-header">
       <h2>{{ property.generalinfo.title }}</h2>
       <p>{{ property.generalinfo.description }}</p>
     </div>
-
+    <h5>Property Details:</h5>
     <div class="details">
+      
       <div class="mini-left">
         <ul>
-          <li><i class="fas fa-home icon"></i><span class="text"> Type : {{ property.generalinfo.propertyType }}</span>
+          <li><i class="fas fa-house icon"></i><span class="text"> Type : {{ property.generalinfo.propertyType }}</span>
           </li>
           <li><i class="fa-solid fa-hammer icon"></i><span class="text">Condition : {{ property.generalinfo.propertyCondition
               }}</span></li>
-          <li><i class="fas fa-bed icon"></i><span class="text">{{ property.Specification.bedrooms }} Bedrooms</span>
+          <li><i class="fas fa-bed icon"></i><span class="text">Bedrooms {{ property.Specification.bedrooms }} </span>
           </li>
-          <li><i class="fas fa-bath icon"></i><span class="text">{{ property.Specification.bathrooms }} Bathrooms</span>
+          <li><i class="fas fa-bath icon"></i><span class="text">Bathrooms {{ property.Specification.bathrooms }} </span>
           </li>
-          <li><i class="fas fa-tag icon"></i><span class="text">Price :{{ property.price.price }} TND</span></li>
+          <li><i class="fas fa-expand icon"></i><span class="text">Size : {{ property.Specification.size }} m²</span>
+          </li>
+          
         </ul>
-      </div>
-
-      <div class="mini-center">
-        <h5><i class="fas fa-handshake"></i> Deal Type: {{ property.generalinfo.dealType }}</h5>
+        <h6><i class="fas fa-handshake"></i> Deal Type: {{ property.generalinfo.dealType }}</h6>
 
         <div class="amenities-section" *ngIf="property.Amenities">
-          <h5><i class="fas fa-check-circle"></i> Amenities:</h5>
+          <h6><i class="fas fa-check-circle"></i> Amenities:</h6>
           <!-- Display amenities here -->
           <ul class="amenities-list">
             <li *ngIf="property.Amenities.centralAC">
@@ -134,16 +191,53 @@
             <!-- Add more amenities as needed -->
           </ul>
         </div>
-        
-
-        <!-- Property Detail Content... -->
-
-
-
       </div>
+
+     
       <div class="mini-right">
-          <h5>Owner details:</h5>
-          <h6>{{ property.userName }}</h6>      
+        <!-- Owner/Agent Card -->
+<div class="agent-card">
+  <!-- Price Section -->
+  <div class="card-section">
+    <div class="label">Price</div>
+    <div class="price">TND{{property.price.price| number}}</div>
+    
+  </div>
+  
+  <!-- Agent Detail Section -->
+  <div class="card-section">
+    <div class="label">Owner Detail</div>
+    <div class="agent-info">
+      <img src="/assets/person.png " alt="Agent" class="agent-photo">
+      <div class="agent-details">
+        <div class="agent-name">{{property.userName || 'Agent Name'}}</div>
+        
+      </div>
+    </div>
+    <div class="contact-buttons">
+      <button class="action-button primary-button">
+        <i class="bi bi-envelope"></i> Mail Agent
+      </button>
+      <button class="action-button outline-button">
+        <i class="bi bi-telephone"></i> Call Agent
+      </button>
+    </div>
+  </div>
+  
+  <!-- Inspection Times Section -->
+  <div class="card-section">
+    <div class="label">Inspection Times</div>
+    <div class="inspection-note">Live inspections only available on:</div>
+    <div class="inspection-time">
+      <strong>Monday - Friday</strong> at 10:00am - 5:00pm
+    </div>
+    <button class="action-button primary-button">
+      <i class="bi bi-calendar-check"></i> Make Appointment
+    </button>
+  </div>
+</div>
+         <!-- <h5>Owner details:</h5>
+          <h6>{{ property.userName }}</h6>  -->    
     </div>
     <div class="calender-mini">
       <div *ngIf="property.generalinfo.dealType === 'rent'">

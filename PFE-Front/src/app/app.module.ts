@@ -43,6 +43,9 @@ import { Map2Component } from './components/map2/map2.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ServiceComponent } from './components/service/service.component';
+import { ClickOutsideDirective } from './directives/click-outside.directive';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { UserSettingsComponent } from './pages/user-settings/user-settings.component';
 
 
 
@@ -78,6 +81,9 @@ import { ServiceComponent } from './components/service/service.component';
     ContactComponent,
     AboutUsComponent,
     ServiceComponent,
+    ClickOutsideDirective,
+    ProfileComponent,
+    UserSettingsComponent,
     
     ],
   imports: [

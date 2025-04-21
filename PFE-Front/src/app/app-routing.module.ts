@@ -12,6 +12,8 @@ import { PropertyDetailComponent } from './pages/property-detail/property-detail
 import { ContactComponent } from './components/contact/contact.component';
 import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ServiceComponent } from './components/service/service.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { UserSettingsComponent } from './pages/user-settings/user-settings.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -26,6 +28,8 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'about-us',component:AboutUsComponent},
   { path: 'service', component:ServiceComponent},
+  { path: 'profile', component: ProfileComponent },
+  { path: 'settings', component:UserSettingsComponent},
   
   //lena bech nhot el route ta3 el dashboard//
   { path: '', redirectTo: '/home', pathMatch: 'full' }
