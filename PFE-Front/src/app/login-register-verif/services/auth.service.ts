@@ -51,8 +51,8 @@ if (token && !this.jwtHelper.isTokenExpired(token)) {
     return this.currentUserSubject.value;
   }
   
-  register(name: string, email: string, password: string,phoneNumber:string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register`, { email, password, name,phoneNumber });
+  register(name: string, email: string, password: string,phoneNumber:string,role:string): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register`, { email, password, name,phoneNumber,role });
   }
   
 
