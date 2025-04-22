@@ -119,7 +119,7 @@ public function listProperties(PropertyRepository $propertyRepository, Serialize
         'circular_reference_handler' => function ($object) {
             return $object->getId();
         },
-        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__','user']
+        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__','user','bookings','contracts','appointments']
     ]);
 
     return new JsonResponse($json, 200, [], true);
@@ -128,9 +128,8 @@ public function listProperties(PropertyRepository $propertyRepository, Serialize
 public function getUsers(UserRepository $userRepository, SerializerInterface $serializer): JsonResponse {
     $users = $userRepository->findAll();
     $json = $serializer->serialize($users, 'json', [
-        'circular_reference_handler' => function ($object) {
-            return $object->getId();
-        }
+        'groups' => ['admin:read'],
+         
     ]);
     return new JsonResponse($json, Response::HTTP_OK, [], true);
 }

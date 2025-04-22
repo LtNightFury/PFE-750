@@ -188,6 +188,7 @@ public function register(Request $request): JsonResponse
         return $this->json([
             'id' => $user->getId(),
             'name' => $user->getName(),
+            'lastName' => $user->getLastName(),
             'roles' => $user->getRoles(),
             'email' => $user->getEmail(),
             'profileImage' => $user->getProfileImage(),
@@ -205,8 +206,11 @@ public function register(Request $request): JsonResponse
         if (!$user) {
             return $this->json(['message' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
-    
-        // Update name if provided
+
+        if ($request->request->has('lastname')) {
+            $user->setLastname($request->request->get('lastname'));
+        }
+        
         if ($request->request->has('name')) {
             $user->setName($request->request->get('name'));
         }
@@ -242,6 +246,7 @@ public function register(Request $request): JsonResponse
             'user' => [
                 'id' => $user->getId(),
                 'name' => $user->getName(),
+                'lastname' => $user->getLastName(),
                 'roles' => $user->getRoles(),
                 'phonenumber' => $user->getPhoneNumber(),
                 'email' => $user->getEmail(),
@@ -249,6 +254,55 @@ public function register(Request $request): JsonResponse
             ]
         ]);
     }
+    #[Route('/user/update-password', name: 'update_password', methods: ['POST'])]
+public function updatePassword(Request $request): JsonResponse
+{
+    /** @var User|null $user */
+    $user = $this->getUser();
+
+    if (!$user) {
+        return $this->json(['message' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    $data = json_decode($request->getContent(), true);
+
+    if (!isset($data['currentPassword']) || !isset($data['newPassword'])) {
+        return $this->json(['message' => 'Current and new passwords are required'], Response::HTTP_BAD_REQUEST);
+    }
+
     
+    if (!$this->passwordHasher->isPasswordValid($user, $data['currentPassword'])) {
+        return $this->json(['message' => 'Invalid current password'], Response::HTTP_BAD_REQUEST);
+    }
+
+    
+    $user->setPassword($this->passwordHasher->hashPassword($user, $data['newPassword']));
+
+    $this->entityManager->persist($user);
+    $this->entityManager->flush();
+
+    return $this->json(['message' => 'Password updated successfully'], Response::HTTP_OK);
+}
+
+#[Route('/user/remove-profile-picture', name: 'remove_profile_picture', methods: ['POST'])]
+public function removeProfilePicture(): JsonResponse
+{
+    /** @var User|null $user */
+    $user = $this->getUser();
+
+    if (!$user) {
+        return $this->json(['message' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+    }
+
+ 
+    $user->setProfileImage(null);
+    $user->setProfileImageFile(null); 
+
+    $this->entityManager->persist($user);
+    $this->entityManager->flush();
+
+    return $this->json(['message' => 'Profile picture removed successfully'], Response::HTTP_OK);
+}
+
     
 }

@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -21,36 +22,47 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['admin:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank]
     #[Assert\Email]
+    #[Groups(['admin:read'])]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups(['admin:read'])]
     private array $roles = [];
 
     #[ORM\Column]
+    #[Groups(['admin:read'])]
     private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $resetToken = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Groups(['admin:read'])]
     private ?string $profileImage = null;
 
     #[Vich\UploadableField(mapping: 'User', fileNameProperty: 'profileImage')]
+    #[Groups(['admin:read'])]
     private ?File $profileImageFile = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['admin:read'])]
     private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
+    #[Groups(['admin:read'])]
     private ?\DateTimeInterface $resetTokenExpiresAt = null;
+
+
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
+    #[Groups(['admin:read'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Property::class)]
@@ -63,14 +75,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $contracts;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['admin:read'])]
     private ?string $phoneNumber = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Appointment::class)]
     private Collection $appointments;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['admin:read'])]
+    private ?string $lastname = null;
+
 
     public function __construct()
     {
+
         $this->properties = new ArrayCollection();
         $this->bookings = new ArrayCollection();
         $this->contracts = new ArrayCollection();
@@ -343,6 +361,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $appointment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLastname(): ?string
+    {
+        return $this->lastname;
+    }
+
+    public function setLastname(?string $lastname): static
+    {
+        $this->lastname = $lastname;
 
         return $this;
     }
