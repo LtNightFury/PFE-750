@@ -1,1 +1,144 @@
-<p>user-settings works!</p>
+<div class="settings-container" *ngIf="!loading">
+    <div class="profile-header">
+      <div class="user-info">
+        <img 
+          *ngIf="profileImagePreview; else defaultImage" 
+          [src]="profileImagePreview" 
+          class="profile-avatar" 
+          alt="Profile Picture"
+        />
+        <ng-template #defaultImage>
+          <div class="profile-avatar-placeholder">
+            <span>{{ userForm.get('name')?.value[0] }}</span>
+          </div>
+        </ng-template>
+        <span class="user-name">{{ userForm.get('name')?.value }} {{ userForm.get('lastName')?.value }}</span>
+      </div>
+      <div class="account-title">Settings</div>
+      <button class="close-button" (click)="cancel()">×</button>
+    </div>
+  
+    <div class="content-container">
+      <!-- Left sidebar -->
+      <app-sidebar [activePage]="'Profile Settings'"></app-sidebar>
+  
+      <!-- Main content -->
+      <div class="main-content">
+        <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+          <div class="profile-section">
+            <h3>Profile Picture</h3>
+            <div class="profile-picture-container">
+              <div class="image-wrapper">
+                <img 
+                  *ngIf="profileImagePreview; else mainDefaultImage" 
+                  [src]="profileImagePreview" 
+                  class="main-profile-image" 
+                  alt="Profile Picture"
+                />
+                <ng-template #mainDefaultImage>
+                  <div class="main-profile-placeholder">
+                    <span>{{ userForm.get('name')?.value[0] }}</span>
+                  </div>
+                </ng-template>
+              </div>
+              
+              <div class="image-actions">
+                <label class="upload-button">
+                  <span>Upload Image</span>
+                  <input type="file" accept="image/jpeg,image/jpg,image/gif" (change)="onFileSelected($event)" style="display:none;">
+                </label>
+                <button type="button" class="remove-button" (click)="removeProfileImage()" [disabled]="!profileImagePreview">
+                  Remove
+                </button>
+                <p class="upload-info">We support JPEGs, JPGs and GIFs under 10MB</p>
+              </div>
+            </div>
+          </div>
+  
+          <div class="profile-section">
+            <div class="name-container">
+              <div class="name-field">
+                <h3>First Name</h3>
+                <input type="text" formControlName="name" class="form-input" [ngClass]="{'invalid': userForm.get('name')?.invalid && userForm.get('name')?.touched}">
+                <div class="validation-error" *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched">
+                  First name is required
+                </div>
+              </div>
+              <div class="name-field">
+                <h3>Last Name</h3>
+                <input type="text" formControlName="lastName" class="form-input" [ngClass]="{'invalid': userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched}">
+                <div class="validation-error" *ngIf="userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched">
+                  Last name is required
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="profile-section">
+            <h3>Email</h3>
+            <input type="email" formControlName="email" class="form-input" [ngClass]="{'invalid': userForm.get('email')?.invalid && userForm.get('email')?.touched}">
+            <div class="validation-error" *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+              Please enter a valid email address
+            </div>
+            <p class="email-info">Used to log in to your account</p>
+          </div>
+  
+          <div class="profile-section">
+            <h3>Phone Number</h3>
+            <input type="tel" formControlName="phoneNumber" class="form-input">
+          </div>
+  
+          <div class="profile-section">
+            <div class="password-container">
+              <div>
+                <h3>Password</h3>
+                <p class="password-info">Log in with your password instead of using temporary login codes</p>
+              </div>
+              <button type="button" class="change-password-button" (click)="togglePasswordFields()">
+                {{ showPasswordFields ? 'Cancel' : 'Change Password' }}
+              </button>
+            </div>
+  
+            <div class="password-fields" *ngIf="showPasswordFields" [formGroup]="passwordForm">
+              <div class="password-field">
+                <h3>Current Password</h3>
+                <input type="password" formControlName="currentPassword" class="form-input" 
+                  [ngClass]="{'invalid': passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched}">
+                <div class="validation-error" *ngIf="passwordForm.get('currentPassword')?.invalid && passwordForm.get('currentPassword')?.touched">
+                  Current password is required
+                </div>
+              </div>
+              
+              <div class="password-field">
+                <h3>New Password</h3>
+                <input type="password" formControlName="newPassword" class="form-input"
+                  [ngClass]="{'invalid': passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched}">
+                <div class="validation-error" *ngIf="passwordForm.get('newPassword')?.invalid && passwordForm.get('newPassword')?.touched">
+                  Password must be at least 8 characters
+                </div>
+              </div>
+              
+              <div class="password-field">
+                <h3>Confirm New Password</h3>
+                <input type="password" formControlName="confirmPassword" class="form-input"
+                  [ngClass]="{'invalid': passwordForm.get('confirmPassword')?.value !== passwordForm.get('newPassword')?.value && passwordForm.get('confirmPassword')?.touched}">
+                <div class="validation-error" 
+                  *ngIf="passwordForm.get('confirmPassword')?.value !== passwordForm.get('newPassword')?.value && passwordForm.get('confirmPassword')?.touched">
+                  Passwords do not match
+                </div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="footer-actions">
+            <button type="button" class="cancel-button" (click)="cancel()">Cancel</button>
+            <button type="submit" class="save-button" [disabled]="userForm.invalid || (showPasswordFields && passwordForm.invalid)">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="loading-spinner" *ngIf="loading">
+    <span>Loading...</span>
+  </div>
