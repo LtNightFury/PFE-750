@@ -20,9 +20,7 @@ export class UserService {
     return `http://backend.ddev.site${path.startsWith('/') ? path : '/' + path}`;
   }
   
-  updateUserProfile(userData: any): Observable<User> {
-    return this.http.post<User>(`${this.apiUrl}/user`, userData);
-  }
+  
 
   // Update user profile with FormData (for file uploads)
   updateUserProfileWithImage(formData: FormData): Observable<User> {
