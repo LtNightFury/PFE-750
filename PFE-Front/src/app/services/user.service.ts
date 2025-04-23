@@ -20,7 +20,7 @@ export class UserService {
     return `http://backend.ddev.site${path.startsWith('/') ? path : '/' + path}`;
   }
   
-  
+
 
   // Update user profile with FormData (for file uploads)
   updateUserProfileWithImage(formData: FormData): Observable<User> {

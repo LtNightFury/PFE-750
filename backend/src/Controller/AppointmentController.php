@@ -34,7 +34,7 @@ class AppointmentController extends AbstractController
         if (!$user) {
             return new JsonResponse(['error' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
         }
-        $id = $data['id'] ;
+        $id = $data['propertyId'] ;
         $property = $this->propertyRepository->find($id);
         if (!$property) {
             return new JsonResponse(['error' => 'Property not found'], Response::HTTP_NOT_FOUND);
