@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Booking, Property } from '../models/property.model';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
+import { Appointment } from '../models/Appointment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -49,4 +50,15 @@ export class PropertyService {
   deleteProperty(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
+  scheduleAppointment(appointment: Appointment): Observable<Appointment> {
+    return this.http.post<Appointment>('http://backend.ddev.site/api/appointments', appointment);
+  }
+  
+  getAvailableAppointmentSlots(propertyId: number, date: string): Observable<{ date: string; availableSlots: string[] }> {
+    return this.http.get<{ date: string; availableSlots: string[] }>(
+      `http://backend.ddev.site/api/properties/${propertyId}/available-slots?date=${date}`
+    );
+  }
+  
 }
