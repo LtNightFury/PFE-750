@@ -137,7 +137,7 @@ export class UserSettingsComponent {
     
     // Combine first and last name
     formData.append('name', this.userForm.value.name);
-formData.append('lastname', this.userForm.value.lastName);
+formData.append('lastName', this.userForm.value.lastName);
 formData.append('email', this.userForm.value.email);
     
     if (this.userForm.value.phoneNumber) {
@@ -169,7 +169,7 @@ formData.append('email', this.userForm.value.email);
   else {
     const userData = {
       name: this.userForm.value.name,
-      lastname: this.userForm.value.lastName,
+      lastName: this.userForm.value.lastName,
       email: this.userForm.value.email,
       phoneNumber: this.userForm.value.phoneNumber || null
     };
