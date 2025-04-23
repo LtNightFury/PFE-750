@@ -3,7 +3,7 @@
     <div class="user-info">
       <img
         *ngIf="user?.profileImage; else defaultImage"
-        [src]="user?.profileImage"
+        [src]="getImageUrl(user?.profileImage || '')"
         class="profile-avatar"
         alt="Profile Picture"
       />

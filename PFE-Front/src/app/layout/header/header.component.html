@@ -26,7 +26,7 @@
         
         <div class="profile-container" (click)="toggleDropdown()">
           
-          <img src="/assets/person.png" alt="User Avatar" class="avatar" />
+          <img [src]="getImageUrl(user?.profileImage || '')" class="avatar" />
           <span class="username">{{ user?.name  || 'si omar' }}</span>
           
           <div class="menu-dots">

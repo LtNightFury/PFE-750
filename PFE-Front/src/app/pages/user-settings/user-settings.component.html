@@ -3,10 +3,12 @@
       <div class="user-info">
         <img 
           *ngIf="profileImagePreview; else defaultImage" 
-          [src]="profileImagePreview" 
+          [src]="getImageUrl(user?.profileImage || '')"
           class="profile-avatar" 
           alt="Profile Picture"
         />
+        
+
         <ng-template #defaultImage>
           <div class="profile-avatar-placeholder">
             <span>{{ userForm.get('name')?.value[0] }}</span>

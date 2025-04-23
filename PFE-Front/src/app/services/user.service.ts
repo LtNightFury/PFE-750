@@ -14,7 +14,12 @@ export class UserService {
   getUserProfile(): Observable<User> {
     return this.http.get<User>(`${this.apiUrl}/user`);
   }
-
+  getImageUrl(path: string): string {
+    if (!path) return 'assets/default-avatar.png';
+    if (path.startsWith('http')) return path;
+    return `http://backend.ddev.site${path.startsWith('/') ? path : '/' + path}`;
+  }
+  
   updateUserProfile(userData: any): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/user`, userData);
   }
