@@ -211,6 +211,29 @@ public function delete(int $id, EntityManagerInterface $em): JsonResponse
 
     return new JsonResponse(['success' => true, 'message' => 'Property deleted successfully']);
 }
+#[Route('/user/properties', name: 'user_properties', methods: ['GET'])]
+public function getUserProperties(PropertyRepository $propertyRepository, SerializerInterface $serializer): JsonResponse
+{
+    $user = $this->getUser();
+
+    if (!$user) {
+        return new JsonResponse(['error' => 'Authentication required'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    // Fetch properties by current user
+    $properties = $propertyRepository->findBy(['user' => $user]);
+
+    // Serialize the result
+    $json = $serializer->serialize($properties, 'json', [
+        'circular_reference_handler' => function ($object) {
+            return $object->getId();
+        },
+        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__','user','contract']
+    ]);
+
+    return new JsonResponse($json, 200, [], true);
+}
+
 
 
 

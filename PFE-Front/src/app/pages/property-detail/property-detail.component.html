@@ -231,10 +231,31 @@
     <div class="inspection-time">
       <strong>Monday - Friday</strong> at 10:00am - 5:00pm
     </div>
-    <button class="action-button primary-button">
-      <i class="bi bi-calendar-check"></i> Make Appointment
+    <button class="action-button primary-button" (click)="openAppointmentForm()">
+      <i class="bi bi-calendar-check" ></i> Make Appointment
     </button>
   </div>
+    <!-- FIXME: here modal -->
+    <div *ngIf="appointmentSuccess" class="alert alert-success mt-3">
+      <h4>Appointment Scheduled!</h4>
+      <p>Your appointment has been scheduled successfully for 
+        {{ scheduledAppointment?.appointmentDate | date:'longDate' }} at 
+        {{ scheduledAppointment?.appointmentTime }}.
+      </p>
+      <p>We'll send you a confirmation email with details.</p>
+    </div>
+    
+    <!-- Appointment form modal overlay -->
+    <div class="modal-overlay" *ngIf="showAppointmentForm">
+      <div class="modal-container">
+        <app-appointment-form
+          [propertyId]="property.id"
+          (appointmentScheduled)="onAppointmentScheduled($event)"
+          (formClosed)="closeAppointmentForm()"
+        ></app-appointment-form>
+      </div>
+    </div>
+     
 </div>
          <!-- <h5>Owner details:</h5>
           <h6>{{ property.userName }}</h6>  -->    

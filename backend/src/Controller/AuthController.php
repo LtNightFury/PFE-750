@@ -94,7 +94,7 @@ public function register(Request $request): JsonResponse
     $this->entityManager->flush();
     
     return $this->json(['message' => 'User registered successfully'], Response::HTTP_CREATED);
-}
+    }
     #[Route('/forgot-password', name: 'forgot_password', methods: ['POST'])]
     public function forgotPassword(Request $request): JsonResponse
     {
@@ -172,6 +172,45 @@ public function register(Request $request): JsonResponse
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     #[Route('/user', name: 'get_current_user', methods: ['GET'])]
     public function getCurrentUser(): JsonResponse
     {
@@ -179,7 +218,7 @@ public function register(Request $request): JsonResponse
         $user = $this->getUser();
     
         if (!$user) {
-            return $this->json(['message' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+            return $this->json(['message' => 'Unauthorized']);
         }
     
         
@@ -192,7 +231,7 @@ public function register(Request $request): JsonResponse
             'roles' => $user->getRoles(),
             'email' => $user->getEmail(),
             'profileImage' => $user->getProfileImage(),
-            'phonenumber' => $user->getPhoneNumber(),
+            'phoneNumber' => $user->getPhoneNumber(),
         ]);
     }
   
@@ -207,8 +246,8 @@ public function register(Request $request): JsonResponse
             return $this->json(['message' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
 
-        if ($request->request->has('lastname')) {
-            $user->setLastname($request->request->get('lastname'));
+        if ($request->request->has('lastName')) {
+            $user->setLastname($request->request->get('lastName'));
         }
         
         if ($request->request->has('name')) {
@@ -246,9 +285,9 @@ public function register(Request $request): JsonResponse
             'user' => [
                 'id' => $user->getId(),
                 'name' => $user->getName(),
-                'lastname' => $user->getLastName(),
+                'lastName' => $user->getLastName(),
                 'roles' => $user->getRoles(),
-                'phonenumber' => $user->getPhoneNumber(),
+                'phoneNumber' => $user->getPhoneNumber(),
                 'email' => $user->getEmail(),
                 'profileImage' => $user->getprofileImage(),
             ]

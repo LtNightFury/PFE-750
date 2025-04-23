@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Booking, Property } from 'src/app/models/property.model';
 import { PropertyService } from 'src/app/services/property.service';
 import { DateRangePickerComponent } from 'src/app/components/date-range-picker/date-range-picker.component';
+import { Appointment } from 'src/app/models/Appointment.model';
 
 @Component({
   selector: 'app-property-detail',
@@ -20,6 +21,9 @@ export class PropertyDetailComponent implements OnInit {
   bookings: { startDate: Date; endDate: Date }[] = [];
   selectedImageIndex = 0;
 showFullGallery = false;
+showAppointmentForm = false;
+appointmentSuccess = false;
+scheduledAppointment: Appointment | null = null;
   
   // Store selected dates
   selectedDateRange: { startDate: Date | null; endDate: Date | null } = {
@@ -120,6 +124,26 @@ prevImage(): void {
 
 
 
+openAppointmentForm(): void {
+  this.showAppointmentForm = true;
+}
 
+// Handle appointment scheduling
+onAppointmentScheduled(appointment: Appointment): void {
+  this.showAppointmentForm = false;
+  this.appointmentSuccess = true;
+  this.scheduledAppointment = appointment;
+  
+  
+  // Optional: Hide success message after a few seconds
+  setTimeout(() => {
+    this.appointmentSuccess = false;
+  }, 5000);
+}
+
+// Close the appointment form
+closeAppointmentForm(): void {
+  this.showAppointmentForm = false;
+}
 
 }
