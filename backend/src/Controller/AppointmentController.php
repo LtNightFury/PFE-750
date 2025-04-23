@@ -148,6 +148,7 @@ public function getUserAppointments(): JsonResponse
     $appointments = $this->em->getRepository(Appointment::class)->findBy(['user' => $user]);
 
     $data = [];
+    
 
     foreach ($appointments as $appointment) {
         $data[] = [
