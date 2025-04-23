@@ -179,7 +179,7 @@ public function register(Request $request): JsonResponse
         $user = $this->getUser();
     
         if (!$user) {
-            return $this->json(['message' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+            return $this->json(['message' => 'Unauthorized']);
         }
     
         

@@ -46,7 +46,6 @@ import { ServiceComponent } from './components/service/service.component';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { UserSettingsComponent } from './pages/user-settings/user-settings.component';
-import { LucideAngularModule } from 'lucide-angular';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 
 
@@ -105,8 +104,7 @@ import { SidebarComponent } from './layout/sidebar/sidebar.component';
     MatSelectModule,
     MatIconModule,
     MatButtonModule,
-    LucideAngularModule,
-    
+   
    
     
     
