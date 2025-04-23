@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Appointment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Property;
 
 /**
  * @extends ServiceEntityRepository<Appointment>
@@ -45,4 +46,30 @@ class AppointmentRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+ /**
+     * Get booked time slots (in H:i format) for a property on a specific date.
+     *
+     * @param int $propertyId
+     * @param \DateTime $date
+     * @return string[] List of booked times (e.g. ['09:00', '09:30', ...])
+     */
+    public function getBookedSlotsForDate(int $propertyId, \DateTime $date): array
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a.appointmentTime')
+            ->where('a.property = :propertyId')
+            ->andWhere('a.appointmentDate = :appointmentDate')
+            ->setParameter('propertyId', $propertyId)
+            ->setParameter('appointmentDate', $date->format('Y-m-d'));
+
+        $results = $qb->getQuery()->getResult();
+
+        return array_map(function ($row) {
+            if ($row['appointmentTime'] instanceof \DateTimeInterface) {
+                return $row['appointmentTime']->format('H:i');
+            }
+            return null;
+        }, $results);
+    }
 }
+

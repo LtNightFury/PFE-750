@@ -17,8 +17,6 @@ class Appointment
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $appointmentDate = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $notes = null;
 
     #[ORM\ManyToOne(inversedBy: 'appointments')]
     #[ORM\JoinColumn(nullable: false)]
@@ -27,6 +25,18 @@ class Appointment
     #[ORM\ManyToOne(inversedBy: 'appointments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Property $property = null;
+
+    #[ORM\Column(length: 1000, nullable: true)]
+    private ?string $message = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $status = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?\DateTimeInterface $appointmentTime = null;
+
+
+    
 
     public function getId(): ?int
     {
@@ -45,17 +55,9 @@ class Appointment
         return $this;
     }
 
-    public function getNotes(): ?string
-    {
-        return $this->notes;
-    }
+  
 
-    public function setNotes(?string $notes): static
-    {
-        $this->notes = $notes;
-
-        return $this;
-    }
+   
 
     public function getUser(): ?User
     {
@@ -77,6 +79,42 @@ class Appointment
     public function setProperty(?Property $property): static
     {
         $this->property = $property;
+
+        return $this;
+    }
+
+    public function getMessage(): ?string
+    {
+        return $this->message;
+    }
+
+    public function setMessage(?string $message): static
+    {
+        $this->message = $message;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): static
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getAppointmentTime(): ?\DateTimeInterface
+    {
+        return $this->appointmentTime;
+    }
+
+    public function setAppointmentTime(\DateTimeInterface $appointmentTime): static
+    {
+        $this->appointmentTime = $appointmentTime;
 
         return $this;
     }
