@@ -38,12 +38,19 @@ export class UserSettingsComponent {
       confirmPassword: ['', Validators.required]
     });
   }
+  getImageUrl(path: string): string {
+    if (!path) return 'assets/default-avatar.png';
+    if (path.startsWith('http')) return path;
+    return `http://backend.ddev.site${path.startsWith('/') ? path : '/' + path}`;
+  }
+  
 
   ngOnInit(): void {
     this.userService.getUserProfile().subscribe({
       next: (data) => {
         this.user = data;
-        
+        this.profileImagePreview = this.userService.getImageUrl(this.user.profileImage);
+
         // Split name into first and last name (assuming format is "First Last")
         const nameParts = this.user.name.split(' ');
         const name = nameParts[0] || '';
@@ -99,6 +106,7 @@ export class UserSettingsComponent {
       this.passwordForm.reset();
     }
   }
+ 
 
   onSubmit(): void {
     if (this.userForm.invalid) {

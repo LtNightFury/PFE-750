@@ -15,7 +15,11 @@ export class HeaderComponent {
   user: any;
 
   constructor(private authService: AuthService, private userService: UserService) {}
-
+  getImageUrl(path: string): string {
+    if (!path) return 'assets/default-avatar.png';
+    if (path.startsWith('http')) return path;
+    return `http://backend.ddev.site${path.startsWith('/') ? path : '/' + path}`;
+  }
   ngOnInit(): void {
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
@@ -27,7 +31,7 @@ export class HeaderComponent {
     });
     console.log(this.currentUser);
   }
-
+  
   logout(): void {
     this.authService.logout();
   }
