@@ -50,9 +50,9 @@ export class AppointmentFormComponent implements OnInit {
     });
     
     this.appointmentForm = this.fb.group({
-      name: [this.currentUser?.name || '', [Validators.required]],
-      email: [this.currentUser?.email || '', [Validators.required, Validators.email]],
-      phone: [this.currentUser?.phoneNumber || '', [Validators.required, Validators.pattern(/^\+?[0-9]{8,15}$/)]],
+      name: [this.currentUser?.name || '', ],
+      email: [this.currentUser?.email || '', ],
+      phone: [this.currentUser?.phoneNumber || '', ],
       appointmentDate: ['', [Validators.required]],
       appointmentTime: ['', [Validators.required]],
       message: ['']
