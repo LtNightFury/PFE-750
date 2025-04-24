@@ -119,6 +119,10 @@ public function myBookings(BookingRepository $bookingRepository): JsonResponse
             'endDate' => $booking->getEndDate()->format('Y-m-d'),
             'propertyId' => $booking->getProperty()->getId(),
             'status' => $booking->getApproval(),
+            'popertyTitle' => $booking->getProperty()->getGeneralinfo()->getTitle(),
+            'propertyCity' => $booking->getProperty()->getLocation()->getCity(),
+            'propertysubcity'  => $booking->getProperty()->getLocation()->getSubcity(),
+
         ];
     }, $bookings);
 
