@@ -1,14 +1,26 @@
-/* src/app/pages/my-appointments/my-appointments.component.css */
-.container {
-  max-width: 800px;
+/* Layout: container spacing */
+.container-fluid {
+  max-width: 100rem;
+  margin: 2rem auto;
+  padding: 0 1rem;
 }
 
+/* Sidebar styling */
+app-sidebar {
+  height: 100vh;
+  background-color: #f8f9fa;
+  border-right: 1px solid #e0e0e0;
+}
+
+/* Timeline */
 .timeline-item {
   display: flex;
+  flex-direction: row;
   margin-bottom: 2rem;
   position: relative;
 }
 
+/* Marker */
 .timeline-marker {
   position: relative;
   margin-right: 20px;
@@ -34,6 +46,7 @@
   z-index: -1;
 }
 
+/* Card */
 .card {
   width: 100%;
   border-left: 5px solid transparent;
@@ -59,40 +72,62 @@
   margin-right: 5px;
 }
 
+/* Status colors */
 .pending {
   background-color: #ffc107;
 }
-
 .confirmed {
   background-color: #198754;
 }
-
 .cancelled {
   background-color: #dc3545;
 }
-
 .approved {
-  background-color: #198754; /* Treat 'approved' as 'confirmed' */
+  background-color: #198754;
 }
-
 .marker-pending {
   background-color: #ffc107;
 }
-
 .marker-confirmed,
 .marker-approved {
   background-color: #198754;
 }
-
 .marker-cancelled {
   background-color: #dc3545;
 }
-app-sidebar {
-  height: 100vh;
-  background-color: #f8f9fa;
-  border-right: 1px solid #e0e0e0;
-}
-.container-fluid {
-  max-width: 100rem;
-  margin: 2rem;
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+  .timeline-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .timeline-marker {
+    margin: 0 0 10px 0;
+  }
+
+  .timeline-marker::after {
+    left: 50%;
+    transform: translateX(-50%);
+    height: 3px;
+    width: 100%;
+  }
+
+  .card-body {
+    padding: 0.75rem;
+  }
+
+  .badge {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  app-sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+  }
 }
