@@ -85,6 +85,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['admin:read'])]
     private ?string $lastname = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Contactus::class)]
+    private Collection $contactuses;
+
 
     public function __construct()
     {
@@ -93,6 +96,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->bookings = new ArrayCollection();
         $this->contracts = new ArrayCollection();
         $this->appointments = new ArrayCollection();
+        $this->contactuses = new ArrayCollection();
     }
 
     public function getName(): ?string
@@ -373,6 +377,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastname(?string $lastname): static
     {
         $this->lastname = $lastname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contactus>
+     */
+    public function getContactuses(): Collection
+    {
+        return $this->contactuses;
+    }
+
+    public function addContactus(Contactus $contactus): static
+    {
+        if (!$this->contactuses->contains($contactus)) {
+            $this->contactuses->add($contactus);
+            $contactus->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContactus(Contactus $contactus): static
+    {
+        if ($this->contactuses->removeElement($contactus)) {
+            // set the owning side to null (unless already changed)
+            if ($contactus->getUser() === $this) {
+                $contactus->setUser(null);
+            }
+        }
 
         return $this;
     }

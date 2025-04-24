@@ -16,6 +16,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use App\Entity\Contactus;
  
 
 
@@ -343,5 +344,36 @@ public function removeProfilePicture(): JsonResponse
     return $this->json(['message' => 'Profile picture removed successfully'], Response::HTTP_OK);
 }
 
-    
+#[Route('/contact', name: 'app_contactus_post', methods: ['POST'])]
+public function createContact(Request $request, EntityManagerInterface $em): JsonResponse
+{
+    /** @var User|null $user */
+    $user = $this->getUser();
+    if (!$user) {
+        return new JsonResponse(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+    }
+    $data = json_decode($request->getContent(), true);
+
+    if (
+        !isset($data['fullname'], $data['email'], $data['phonenumber'], $data['subject'], $data['message'])
+    ) {
+        return new JsonResponse(['error' => 'Missing required fields'], Response::HTTP_BAD_REQUEST);
+    }
+
+    $contact = new Contactus();
+    $contact->setUser($user); // Set the user who is sending the message
+    $contact->setFullname($data['fullname']);
+    $contact->setEmail($data['email']);
+    $contact->setPhonenumber((int) $data['phonenumber']);
+    $contact->setSubject($data['subject']);
+    $contact->setMessage($data['message']);
+
+    $em->persist($contact);
+    $em->flush();
+
+    return new JsonResponse([
+        'message' => 'Contact message received successfully!',
+        'id' => $contact->getId()
+    ], Response::HTTP_CREATED);
+}
 }
