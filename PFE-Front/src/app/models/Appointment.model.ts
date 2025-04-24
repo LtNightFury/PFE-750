@@ -10,4 +10,7 @@ export interface Appointment {
     message?: string;
     status?: 'pending' | 'confirmed' | 'cancelled';
     userId?: number;
+    propertyTitle: string;
+  propertycity: string;
+  propertysubcity?: string;
   }

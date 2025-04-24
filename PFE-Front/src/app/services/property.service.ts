@@ -60,5 +60,8 @@ export class PropertyService {
       `http://backend.ddev.site/api/properties/${propertyId}/available-slots?date=${date}`
     );
   }
+  getUserAppointments(): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>('http://backend.ddev.site/api/my-appointments');
+  }
   
 }

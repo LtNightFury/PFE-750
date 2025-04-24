@@ -14,6 +14,7 @@ import { AboutUsComponent } from './components/about-us/about-us.component';
 import { ServiceComponent } from './components/service/service.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { UserSettingsComponent } from './pages/user-settings/user-settings.component';
+import { MyAppointmentsComponent } from './components/my-appointments/my-appointments.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'service', component:ServiceComponent},
   { path: 'profile', component: ProfileComponent },
   { path: 'settings', component:UserSettingsComponent},
+  { path: 'my-appointments', component: MyAppointmentsComponent },
   
   //lena bech nhot el route ta3 el dashboard//
   { path: '', redirectTo: '/home', pathMatch: 'full' }

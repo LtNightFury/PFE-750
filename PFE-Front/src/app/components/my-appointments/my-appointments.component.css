@@ -1,0 +1,98 @@
+/* src/app/pages/my-appointments/my-appointments.component.css */
+.container {
+  max-width: 800px;
+}
+
+.timeline-item {
+  display: flex;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.timeline-marker {
+  position: relative;
+  margin-right: 20px;
+}
+
+.timeline-marker div {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 3px solid white;
+  position: relative;
+  top: 10px;
+}
+
+.timeline-marker::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 7px;
+  width: 3px;
+  height: 100%;
+  background-color: #ddd;
+  z-index: -1;
+}
+
+.card {
+  width: 100%;
+  border-left: 5px solid transparent;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+  padding: 1rem 1.25rem;
+}
+
+.badge {
+  text-transform: capitalize;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.75rem;
+}
+
+.appointment-details i {
+  margin-right: 5px;
+}
+
+.pending {
+  background-color: #ffc107;
+}
+
+.confirmed {
+  background-color: #198754;
+}
+
+.cancelled {
+  background-color: #dc3545;
+}
+
+.approved {
+  background-color: #198754; /* Treat 'approved' as 'confirmed' */
+}
+
+.marker-pending {
+  background-color: #ffc107;
+}
+
+.marker-confirmed,
+.marker-approved {
+  background-color: #198754;
+}
+
+.marker-cancelled {
+  background-color: #dc3545;
+}
+app-sidebar {
+  height: 100vh;
+  background-color: #f8f9fa;
+  border-right: 1px solid #e0e0e0;
+}
+.container-fluid {
+  max-width: 1600px;
+  margin: 2rem;
+}

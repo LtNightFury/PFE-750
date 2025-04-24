@@ -119,7 +119,8 @@ export class AppointmentFormComponent implements OnInit {
       appointmentDate: this.appointmentForm.value.appointmentDate,
       appointmentTime: this.appointmentForm.value.appointmentTime,
       message: this.appointmentForm.value.message,
-      
+      propertyTitle: '',
+      propertycity: ''
     };
     
     this.propertyService.scheduleAppointment(appointment)

@@ -48,6 +48,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { UserSettingsComponent } from './pages/user-settings/user-settings.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { AppointmentFormComponent } from './components/appointment-form/appointment-form.component';
+import { MyAppointmentsComponent } from './components/my-appointments/my-appointments.component';
 
 
 
@@ -88,6 +89,7 @@ import { AppointmentFormComponent } from './components/appointment-form/appointm
     UserSettingsComponent,
     SidebarComponent,
     AppointmentFormComponent,
+    MyAppointmentsComponent,
     
     ],
   imports: [
