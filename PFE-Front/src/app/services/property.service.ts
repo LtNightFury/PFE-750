@@ -40,6 +40,11 @@ export class PropertyService {
   addProperty(property: Property): Observable<Property> {
     return this.http.post<Property>(this.apiUrl, property);
   }
+  // Fetch user bookings
+  getUserBookings(): Observable<Booking[]> {
+    return this.http.get<Booking[]>('http://backend.ddev.site/api/booking/my-bookings');
+  }
+  
 
   // Update an existing property
   updateProperty(id: number, property: Property): Observable<Property> {

@@ -1,0 +1,53 @@
+<div class="d-flex container-fluid ">
+    <!-- Sidebar -->
+    <div class="sidebar-container">
+      <app-sidebar [activePage]="'My Bookings'"></app-sidebar> <!-- or copy the HTML for your sidebar here -->
+    </div>
+  
+    <!-- Main content -->
+    <div class="content-container flex-grow-1 p-4">
+      <h2 class="mb-4">My Bookings</h2>
+  
+      <!-- No bookings state -->
+      <div *ngIf="!isLoading && bookings.length === 0" class="text-muted text-center">
+        No bookings found.
+      </div>
+  
+      <!-- Display bookings -->
+      <div *ngFor="let b of bookings" class="timeline-item">
+        <div class="timeline-marker">
+          <div [ngClass]="getStatusClass(b.status)"></div>
+        </div>
+  
+        <div class="timeline-content card shadow-sm">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <h5 class="card-title mb-0">Property ID: {{ b.propertyId }}</h5>
+                <small class="text-muted">
+                  From: {{ b.startDate }} To: {{ b.endDate }}
+                </small>
+              </div>
+              <span *ngIf="b.status" class="pill"
+      [ngClass]="{
+        'bg-orange': b.status === 'pending',
+        'bg-green': b.status === 'approved',
+        'bg-red': b.status === 'rejected'
+      }">
+  {{ b.status | titlecase }}
+</span>
+              
+            </div>
+  
+            <div class="booking-details">
+              <p class="mb-1">
+                <i class="bi bi-calendar-event"></i>
+                From {{ b.startDate }} to {{ b.endDate }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

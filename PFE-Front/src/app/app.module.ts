@@ -49,6 +49,7 @@ import { UserSettingsComponent } from './pages/user-settings/user-settings.compo
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { AppointmentFormComponent } from './components/appointment-form/appointment-form.component';
 import { MyAppointmentsComponent } from './components/my-appointments/my-appointments.component';
+import { MyBookingsComponent } from './components/my-bookings/my-bookings.component';
 
 
 
@@ -90,6 +91,7 @@ import { MyAppointmentsComponent } from './components/my-appointments/my-appoint
     SidebarComponent,
     AppointmentFormComponent,
     MyAppointmentsComponent,
+    MyBookingsComponent,
     
     ],
   imports: [

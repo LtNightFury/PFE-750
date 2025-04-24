@@ -21,9 +21,9 @@
           <i class="menu-icon referrals-icon"></i>
           <span>My Appointments</span>
         </li>
-        <li class="menu-item">
+        <li class="menu-item" [ngClass]="{'active':activePage==='My Bookings'}" routerLink="/my-bookings" >
           <i class="menu-icon blocked-icon"></i>
-          <span>Blocked</span>
+          <span>My Bookings</span>
         </li>
       </ul>
     </div>

@@ -74,7 +74,7 @@ scheduledAppointment: Appointment | null = null;
     const booking: Booking = {
       startDate: this.selectedDateRange.startDate.toISOString(),
       endDate: this.selectedDateRange.endDate.toISOString(),
-      property: this.property.id
+      propertyId: this.property.id
       // Add any other data you need here
     };
 

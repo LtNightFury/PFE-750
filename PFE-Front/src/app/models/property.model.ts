@@ -107,7 +107,8 @@ export interface Property {
     id?: number; // ⬅️ Make it optional
     startDate: string;
     endDate: string;
-    property: number;
+    propertyId: number;
     approval?: string;
+    status?: string;
   }
   
