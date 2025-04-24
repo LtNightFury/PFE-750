@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { last } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { UserService } from 'src/app/services/user.service';
 
@@ -52,14 +53,13 @@ export class UserSettingsComponent {
         this.profileImagePreview = this.userService.getImageUrl(this.user.profileImage);
 
         // Split name into first and last name (assuming format is "First Last")
-        const nameParts = this.user.name.split(' ');
-        const name = nameParts[0] || '';
-        const lastName = nameParts.slice(1).join(' ') || '';
+        
         
         // Set form values
         this.userForm.patchValue({
-          name: name,
-          lastName: lastName,
+          name: this.user.name,
+          lastName: this.user.lastName,
+          
           email: this.user.email,
           phoneNumber: this.user.phoneNumber || ''
         });

@@ -14,11 +14,12 @@
         </li>
         <li class="menu-item">
           <i class="menu-icon notifications-icon"></i>
+          <!--Notification system lemba3ed-->
           <span>Notifications</span>
         </li>
-        <li class="menu-item">
+        <li [ngClass]="{'active':activePage==='My Appointments'}" routerLink="/my-appointments" class="menu-item">
           <i class="menu-icon referrals-icon"></i>
-          <span>Referrals</span>
+          <span>My Appointments</span>
         </li>
         <li class="menu-item">
           <i class="menu-icon blocked-icon"></i>
