@@ -158,18 +158,14 @@ public function getUserAppointments(): JsonResponse
             'appointmentTime' => $appointment->getAppointmentTime()?->format('H:i'),
             'message' => $appointment->getMessage(),
             'propertyId' => $appointment->getProperty()?->getId(),
+            'propertyTitle' => $appointment->getProperty()?->getGeneralinfo()?->getTitle(),
+            'propertycity' => $appointment->getProperty()?->getLocation()->getCity(),
+            'propertysubcity' => $appointment->getProperty()?->getLocation()->getSubcity(),
         ];
     }
 
     return new JsonResponse($data, Response::HTTP_OK);
 }
-
-
-
-
-
-
-
 
 
 

@@ -13,6 +13,8 @@ use App\Repository\PropertyRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\Serializer\SerializerInterface;
 use App\Entity\User;
+use App\Entity\Contactus;
+use App\Repository\ContactusRepository;
 
 
 #[Route('/api/admin', name: 'app_admin')]
@@ -134,4 +136,18 @@ public function getUsers(UserRepository $userRepository, SerializerInterface $se
     return new JsonResponse($json, Response::HTTP_OK, [], true);
 }
 
+#[Route('/contactus', name: 'admin_contactus_list', methods: ['GET'])]
+public function getContactUs(ContactusRepository $contactusRepository, SerializerInterface $serializer): JsonResponse {
+    $contactus = $contactusRepository->findAll();
+    $json = $serializer->serialize($contactus, 'json', [
+        'groups' => ['admin:read'],
+         
+    ]);
+    return new JsonResponse($json, Response::HTTP_OK, [], true);
+
+
+
+
+
+}
 }
