@@ -6,6 +6,7 @@ use App\Repository\MediaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MediaRepository::class)]
 class Media
@@ -16,12 +17,15 @@ class Media
     private ?int $id = null;
 
     #[ORM\OneToMany(mappedBy: 'media', targetEntity: Photos::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Groups(['property:list', 'property:read'])]
     private Collection $photos;
 
     #[ORM\OneToMany(mappedBy: 'media', targetEntity: FloorPlans::class,cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Groups(['property:read'])]
     private Collection $floorPlans;
 
     #[ORM\OneToMany(mappedBy: 'media', targetEntity: Documents::class,cascade: ['persist', 'remove'], orphanRemoval: true)]
+    #[Groups(['property:read'])]
     private Collection $documents;
 
     public function __construct()

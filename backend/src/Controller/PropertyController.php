@@ -81,45 +81,43 @@ public function create(Request $request): JsonResponse
     
 
 #[Route('/properties', name: 'property_get', methods: ['GET'])]
-public function listProperties(PropertyRepository $propertyRepository, SerializerInterface $serializer)
+public function listProperties(PropertyRepository $propertyRepository, SerializerInterface $serializer): JsonResponse
 {
-    // Only fetch properties where approval = 'approved'
+    // Fetch only approved properties
     $properties = $propertyRepository->findBy(['approval' => 'approved']);
 
-    // Serialize with circular reference handler
+    // Serialize properties with the "property:list" group
     $json = $serializer->serialize($properties, 'json', [
+        'groups' => ['property:list'],
         'circular_reference_handler' => function ($object) {
             return $object->getId();
         },
-        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__','user','approval','contract']
     ]);
 
     return new JsonResponse($json, 200, [], true);
 }
 
+
 #[Route('/properties/{id}', name: 'property_get_by_id', methods: ['GET'])]
-public function getPropertyById($id, PropertyRepository $propertyRepository, SerializerInterface $serializer)
+public function getPropertyById($id, PropertyRepository $propertyRepository, SerializerInterface $serializer): JsonResponse
 {
     $property = $propertyRepository->find($id);
-    
+
     if (!$property) {
         return new JsonResponse(['error' => 'Property not found'], Response::HTTP_NOT_FOUND);
     }
-    $json = $serializer->serialize($property, 'json', ['groups' => ['property:read']]);
 
-    
-    // Use Symfony's serializer with proper context to handle circular references
+    // Serialize with "property:read" group
     $json = $serializer->serialize($property, 'json', [
+        'groups' => ['property:read'],
         'circular_reference_handler' => function ($object) {
             return $object->getId();
         },
-        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__','user','contract']
     ]);
-    
-    // Return a JSON response directly
+
     return new JsonResponse($json, 200, [], true);
-   
 }
+
 
 
 
@@ -127,7 +125,7 @@ public function getPropertyById($id, PropertyRepository $propertyRepository, Ser
 #[Route('/properties/{id}', name: 'property_update', methods: ['PUT', 'PATCH'])]
 public function update(int $id, Request $request): JsonResponse
 {
-    // Ensure the user is authenticated
+    
     $user = $this->getUser();
     
     if (!$user) {
@@ -141,8 +139,8 @@ public function update(int $id, Request $request): JsonResponse
         return new JsonResponse(['error' => 'Property not found'], Response::HTTP_NOT_FOUND);
     }
     
-    // Get JSON data from the request body
-    $data = json_decode($request->getContent(), true); // Use getContent for the raw body
+
+    $data = json_decode($request->getContent(), true); 
     
     if (!$data) {
         return new JsonResponse(['error' => 'Invalid JSON data'], Response::HTTP_BAD_REQUEST);

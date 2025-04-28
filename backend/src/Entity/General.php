@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\GeneralRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: GeneralRepository::class)]
 #[ORM\Table(name: '`general`')]
@@ -15,21 +16,27 @@ class General
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['property:list', 'property:read'])]
     private ?string $deal_type = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['property:list', 'property:read'])]
     private ?string $title = null;
 
     #[ORM\Column(length: 1000)]
+    #[Groups(['property:read'])]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['property:read'])]
     private ?string $PropertyCondition = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['property:read'])]
     private ?string $propertyType = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['property:read'])]
     private ?string $availabilityDate = null;
 
     public function getId(): ?int

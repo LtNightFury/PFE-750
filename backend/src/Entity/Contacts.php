@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ContactsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ContactsRepository::class)]
 class Contacts
@@ -15,9 +16,11 @@ class Contacts
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['property:read'])]
     private ?string $email = null;
 
     #[ORM\Column(type: Types::BIGINT)]
+    #[Groups(['property:read'])]
     private ?string $phone = null;
 
     public function getId(): ?int

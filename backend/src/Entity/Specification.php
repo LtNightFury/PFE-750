@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SpecificationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SpecificationRepository::class)]
 class Specification
@@ -15,30 +16,48 @@ class Specification
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['property:read'])]
+
     private ?string $bedrooms = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['property:read'])]
+
     private ?string $bathrooms = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['property:read'])]
+
     private ?string $parkingSpots = null;
 
     #[ORM\Column(type: Types::BIGINT, nullable: true)]
+    #[Groups(['property:read'])]
+
     private ?string $size = null;
 
     #[ORM\Column(type: Types::BIGINT, nullable: true)]
+    #[Groups(['property:read'])]
+
     private ?string $plotSize = null;
 
     #[ORM\Column(type: Types::BIGINT, nullable: true)]
+    #[Groups(['property:read'])]
+
     private ?string $builtUpArea = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['property:read'])]
+
     private ?int $constructionYear = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['property:read'])]
+
     private ?int $Renovationyear = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['property:read'])]
+
     private ?string $Furnishing = null;
 
     public function getId(): ?int
