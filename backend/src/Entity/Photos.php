@@ -6,6 +6,7 @@ use App\Repository\PhotosRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PhotosRepository::class)]
 #[Vich\Uploadable]
@@ -20,6 +21,7 @@ class Photos
     private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['property:list', 'property:read'])]
     private ?string $imageName = null;
 
     #[ORM\Column(nullable: true)]

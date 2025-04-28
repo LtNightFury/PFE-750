@@ -28,7 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank]
     #[Assert\Email]
-    #[Groups(['admin:read'])]
+    #[Groups(['admin:read', 'property:read'])]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -43,11 +43,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $resetToken = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['admin:read'])]
+    #[Groups(['admin:read', 'property:read'])]
     private ?string $profileImage = null;
 
     #[Vich\UploadableField(mapping: 'User', fileNameProperty: 'profileImage')]
-    #[Groups(['admin:read'])]
+    #[Groups(['admin:read', 'property:read'])]
     private ?File $profileImageFile = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
@@ -62,7 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Groups(['admin:read'])]
+    #[Groups(['admin:read', 'property:read'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Property::class)]
@@ -75,14 +75,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $contracts;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['admin:read'])]
+    #[Groups(['admin:read', 'property:read'])]
     private ?string $phoneNumber = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Appointment::class)]
     private Collection $appointments;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['admin:read'])]
+    #[Groups(['admin:read', 'property:read'])]
     private ?string $lastname = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Contactus::class)]

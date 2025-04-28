@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PriceRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PriceRepository::class)]
 class Price
@@ -15,21 +16,29 @@ class Price
     private ?int $id = null;
 
     #[ORM\Column(type: Types::BIGINT)]
+    #[Groups(['property:list', 'property:read'])]
     private ?string $price = null;
 
     #[ORM\Column(type: Types::BIGINT, nullable: true)]
+    #[Groups(['property:read'])]
     private ?string $pricesqft = null;
 
     #[ORM\Column(type: Types::BIGINT, nullable: true)]
+    #[Groups(['property:read'])]
     private ?string $originalprice = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $hideprice = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['property:read'])]
+
     private ?string $charges = null;
 
     #[ORM\Column(type: Types::BIGINT, nullable: true)]
+    #[Groups(['property:read'])]
+
     private ?string $servicecharge = null;
 
     public function getId(): ?int

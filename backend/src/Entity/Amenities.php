@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AmenitiesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AmenitiesRepository::class)]
 class Amenities
@@ -11,87 +12,115 @@ class Amenities
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $centralAC = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $parking = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $elevator = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $petsAllowed = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $conciergeService = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $securityService = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $lobbyInBuilding = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $maidsRoom = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $studyRoom = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $balcony = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $walkInCloset = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $childrensPlayArea = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $garden = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $barbecueArea = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $jacuzzi = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $sauna = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $sharedGym = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $privateGym = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $sharedPool = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $privatePool = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $spa = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $viewOfWater = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $viewOfLandmark = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $nearbyHospitals = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $nearbyPublicTransport = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $nearbySchools = null;
 
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?bool $nearbyShopping = null;
 
     public function getId(): ?int

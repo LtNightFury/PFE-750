@@ -14,38 +14,48 @@ class Property
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['property:list', 'property:read'])]
     private ?int $id = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['property:list', 'property:read'])]
     private ?General $generalinfo = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['property:list', 'property:read'])]
     private ?Location $location = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['property:list', 'property:read'])]
     private ?Specification $Specification = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['property:list', 'property:read'])]
     private ?Price $price = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+  
+    #[Groups(['property:read'])]
     private ?Amenities $Amenities = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+    
     private ?Contacts $contacts = null;
 
     #[ORM\ManyToOne(inversedBy: 'properties')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['property:read'])]
     private ?User $user = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['property:list', 'property:read'])]
     private ?Media $Media = null;
 
     #[ORM\Column(length: 255, options: ['default' => 'pending'])]
@@ -204,11 +214,8 @@ class Property
 
         return $this;
     }
-    #[Groups(['property:read'])]
-    public function getUserName(): ?string
-    {
-        return $this->user ? $this->user->getName() : null;
-    }
+    
+    
 
     /**
      * @return Collection<int, Appointment>
