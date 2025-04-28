@@ -1,0 +1,52 @@
+<div class="property-list">
+  <header class="page-header">
+    <div>
+      <div class="breadcrumb">
+        <a routerLink="/property-list">Properties</a> &gt; Properties Cards
+      </div>
+      <div class="page-header-headline">
+        <h2 class="text-h1">{{ filteredProperties.length }} Properties</h2>
+      </div>
+      <div class="page-header-end d-flex gap-1"></div>
+    </div>
+  </header>
+  <div class="property-list-filter">
+    <div class="table-panel">
+      <div class="table-panel-search">
+         <div class="search-box">
+            <input type="text" placeholder="Search" [(ngModel)]="currentFilters.search" 
+                   (input)="applyFilters()" class="search-input">
+                   <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          </div>
+        </div>
+      </div>
+    <div class="flex flex-wrap gap-4">
+      <button type="button" routerLink="/edit" class="btn"><span class="btn-text"> <i class="fa-solid fa-plus"></i>Add New property</span></button>
+     </div>
+  </div>
+  <div class="property-list-view">
+   <div class="property-list-cards">
+      <div class="property-list-cards-items">
+         <ng-container *ngIf="!isLoading && !error">
+            <app-property-card2 
+              *ngFor="let property of filteredProperties" 
+              [property]="property">
+            </app-property-card2>
+          </ng-container>
+      </div>
+      <div class="filter-sidebar">
+         <div class="filter-header">
+           <h2>Filters</h2>
+           <!-- Clear all filters button -->
+           <button class="btn-clear" (click)="clearAllFilters()">clear all</button>
+         </div>
+         
+         <app-property-filter 
+           (filterChanged)="onFilterChanged($event)">
+         </app-property-filter>
+       </div>
+      
+   </div>
+
+  </div>
+</div>

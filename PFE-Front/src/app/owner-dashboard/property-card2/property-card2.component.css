@@ -1,0 +1,76 @@
+.property-card {
+  position: relative;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 2rem;
+  border-bottom: #918f90 solid 0.0625rem;
+}
+.properties-card:not(:last-child) {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: .0625rem solid gray;
+}
+.property-card-image {  
+    align-self: flex-start;
+    object-fit: cover;
+    overflow: hidden;
+    
+    border-radius: 1rem;
+
+}
+.property-card-info {
+ flex: 1;
+}
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
+}
+.property-name{
+  display: flex;
+      flex-wrap: wrap;
+      gap: .25rem 1rem;
+      align-items: center;
+      margin-bottom: .5rem;
+      overflow-wrap: anywhere;
+  }
+.property-card-adress {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  margin-bottom: 2rem;
+  color: #918f90;
+}
+.property-card-adress-item{
+  display: flex ;
+      gap: .5rem;
+      align-items: center;
+      text-transform: capitalize;
+  }
+  .property-data-item {
+    display: flex
+;
+    flex-direction: column;
+    gap: .1875rem;
+}
+.property-card-caption {
+  font-size: .875rem;
+  line-height: 1.43;
+  color: #918f90;
+}
+.property-image-container {
+  position: relative;
+ width: 16rem;
+  height: 14rem;
+  overflow: hidden;
+  border-radius: 1rem;
+}
+.property-data {
+  display: flex
+;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+}

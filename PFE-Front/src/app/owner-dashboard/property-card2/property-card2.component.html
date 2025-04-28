@@ -1,0 +1,149 @@
+
+<!-- property-card.component.html -->
+<div class="property-card" (click)="navigateToDetail()">
+    <div class="property-card-image">
+      <div class="property-image-container">
+        <img [src]="getPropertyImage()" alt="{{ property.generalinfo.title }}" class="property-image">
+      </div>
+    </div>
+    <div class="property-card-info">
+        <div class="property-name">
+            <h3 class="property-title">{{property.generalinfo.title}}</h3>
+            <div class="property-status"></div> 
+        </div>
+        <div class="property-card-adress">
+           <div class="property-card-adress-item">
+            <p>{{property.generalinfo.propertyType}}</p>
+           </div>
+           <div class="property-card-adress-item">
+            <p>{{property.generalinfo.dealType}}</p>
+           </div>
+           <div class="property-card-adress-item">
+            <p>{{property.generalinfo.propertyCondition}}</p>
+           </div>
+        </div>
+        <div class="property-card-adress">
+            <p>{{property.location.country}}, {{property.location.city}}, {{property.location.subcity}}</p>
+           </div>
+           <ul class="property-data">
+            <li class="property-data-item">
+                <div class="property-card-value">{{property.price.price}}</div>
+                <p class="property-card-caption">Price</p>
+            </li>
+            <li class="property-data-item">
+                <div class="property-card-value"></div>{{property.Specification.size}}</li>
+            <li class="property-data-item"><div class="property-card-value">{{property.Specification.bathrooms}}</div>
+                <p class="property-card-caption">Bathrooms</p>
+            </li>
+            <li class="property-data-item"><div class="property-card-value">{{property.Specification.bedrooms}}</div>
+            <p class="property-card-caption">Bedrooms</p></li>
+           </ul>
+        
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Property Image and Details Container -->
+    <!-- Property Header with ID and Status -->
+     <!-- Property Header with ID and Status 
+    <div class="property-header">
+      <h3 class="property-id">{{ property.id }}</h3>
+      
+      <div class="property-status-container">
+        <span *ngIf="isOffMarket" class="off-market-badge">OFF MARKET</span>
+        <span class="status-badge" [ngClass]="{'active': propertyStatus === 'Active', 
+                                               'draft': propertyStatus === 'Draft'}">
+          {{ propertyStatus }}
+        </span>
+      </div>
+    </div>
+    
+   
+    <div class="property-image">
+      <img [src]="getPropertyImage()" alt="{{ property.generalinfo.title }}">
+    </div>
+    
+     Property Features 
+    <div class="property-features">
+      <div class="feature">
+        <i class="feature-icon home-icon"></i>
+        <span>{{ property.generalinfo.propertyType }}</span>
+      </div>
+      
+      <div class="feature">
+        <i class="feature-icon tag-icon"></i>
+        <span>{{ property.generalinfo.dealType }}</span>
+      </div>
+      
+      <div class="feature" *ngIf="property.generalinfo.dealType === 'Primary'">
+        <i class="feature-icon primary-icon"></i>
+        <span>Primary</span>
+      </div>
+      
+      <div class="feature" *ngIf="property.generalinfo.dealType === 'Secondary'">
+        <i class="feature-icon secondary-icon"></i>
+        <span>Secondary</span>
+      </div>
+      
+      <div class="feature" *ngIf="property.generalinfo.propertyCondition === 'Under Construction'">
+        <i class="feature-icon construction-icon"></i>
+        <span>Under Construction</span>
+      </div>
+      
+      <div class="feature" *ngIf="property.generalinfo.propertyCondition === 'Completed'">
+        <i class="feature-icon completed-icon"></i>
+        <span>Completed</span>
+      </div>
+    </div>
+    
+    Property Location 
+    <div class="property-location">
+      <p>{{ property.location.country }}, {{ property.location.city }}, {{ property.location.subcity }}</p>
+    </div>
+    
+     Property Details 
+    <div class="property-details">
+      <Price 
+      <div class="detail-item price">
+        <h4>{{ property.price.price }} {{ property.price.price.includes('AED') ? '' : 'AED' }}</h4>
+        <p>Price</p>
+      </div>
+      
+       Size 
+      <div class="detail-item size">
+        <h4>{{ property.Specification.size || property.Specification.builtUpArea }} sqft</h4>
+        <p>Size</p>
+      </div>
+      
+      Built-up area 
+      <div class="detail-item area" *ngIf="property.Specification.builtUpArea">
+        <h4>{{ property.Specification.builtUpArea }} sqft</h4>
+        <p>Built-up area</p>
+      </div>
+      
+       Bedrooms 
+      <div class="detail-item bedrooms">
+        <h4>{{ property.Specification.bedrooms }}</h4>
+        <p>Bedrooms</p>
+      </div>
+      
+      Bathrooms 
+      <div class="detail-item bathrooms">
+        <h4>{{ property.Specification.bathrooms }}</h4>
+        <p>Bathrooms</p>
+      </div>
+    </div>
+  </div>-->
+  

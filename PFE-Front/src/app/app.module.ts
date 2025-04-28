@@ -50,6 +50,11 @@ import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { AppointmentFormComponent } from './components/appointment-form/appointment-form.component';
 import { MyAppointmentsComponent } from './components/my-appointments/my-appointments.component';
 import { MyBookingsComponent } from './components/my-bookings/my-bookings.component';
+import { OwnerSidebarComponent } from './owner-dashboard/owner-sidebar/owner-sidebar.component';
+import { OwnerDashComponent } from './owner-dashboard/owner-dash/owner-dash.component';
+import { LucideAngularModule, Home, Building2, Calendar, MessageSquare, Wallet } from 'lucide-angular';
+import { PropertyCard2Component } from './owner-dashboard/property-card2/property-card2.component';
+import { PropertyListDashComponent } from './owner-dashboard/property-list-dash/property-list-dash.component';
 
 
 
@@ -92,6 +97,10 @@ import { MyBookingsComponent } from './components/my-bookings/my-bookings.compon
     AppointmentFormComponent,
     MyAppointmentsComponent,
     MyBookingsComponent,
+    OwnerSidebarComponent,
+    OwnerDashComponent,
+    PropertyCard2Component,
+    PropertyListDashComponent,
     
     ],
   imports: [
@@ -110,6 +119,7 @@ import { MyBookingsComponent } from './components/my-bookings/my-bookings.compon
     MatSelectModule,
     MatIconModule,
     MatButtonModule,
+    LucideAngularModule.pick({ Home, Building2, Calendar, MessageSquare, Wallet }),
    
    
     
