@@ -1,0 +1,46 @@
+<!-- owner-sidebar.component.html -->
+<div class="sidebar-container" [ngClass]="{'collapsed': isCollapsed}">
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-container">
+          <h4 *ngIf="!isCollapsed">Welcome back</h4>
+          <button class="collapse-btn" (click)="toggleSidebar()">
+            <i class="fa" [ngClass]="{'fa-chevron-left': !isCollapsed, 'fa-chevron-right': isCollapsed}"></i>
+          </button>
+        </div>
+        <div class="header-title" *ngIf="!isCollapsed">
+          <h2>Untitled UI</h2>
+        </div>
+      </div>
+  
+      <div class="sidebar-content">
+        <nav class="nav-section">
+            <a routerLink="/owner/dashboard" class="nav-link" routerLinkActive="active">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" id="dashboard">
+                    <path fill="none" d="M0 0h24v24H0V0z"></path>
+                    <path d="M4 13h6c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1zm0 8h6c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1zm10 0h6c.55 0 1-.45 1-1v-8c0-.55-.45-1-1-1h-6c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1zM13 4v4c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1h-6c-.55 0-1 .45-1 1z"></path>
+                  </svg>
+              <span *ngIf="!isCollapsed">Dashboard</span>
+            </a>
+            <a routerLink="/owner/properties" class="nav-link" routerLinkActive="active">
+                <i class="fa-duotone fa-solid fa-house"></i>
+              <span *ngIf="!isCollapsed">My Properties</span>
+            </a>
+            <a routerLink="/owner/appointments" class="nav-link" routerLinkActive="active">
+                <i class="fa-duotone fa-solid fa-calendar-days"></i>
+              <span *ngIf="!isCollapsed">Appointments</span>
+            </a>
+            <a routerLink="/owner/messages" class="nav-link" routerLinkActive="active">
+              <i class="pi pi-comments"></i>
+              <span *ngIf="!isCollapsed">Messages</span>
+            </a>
+            <a routerLink="/owner/earnings" class="nav-link" routerLinkActive="active">
+              <i class="pi pi-wallet"></i>
+              <span *ngIf="!isCollapsed">Earnings</span>
+            </a>
+          </nav>
+      </div>
+  
+      
+    </div>
+  </div>

@@ -104,7 +104,7 @@ export interface Property {
     phone: string;
   }
   export interface Booking {
-    id?: number; // ⬅️ Make it optional
+    id?: number; 
     startDate: string;
     endDate: string;
     propertyId: number;

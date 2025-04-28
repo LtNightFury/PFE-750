@@ -7,6 +7,9 @@ import { User } from '../models/user.model';
   providedIn: 'root'
 })
 export class UserService {
+  getCurrentUserId() {
+    throw new Error('Method not implemented.');
+  }
   private apiUrl = 'http://backend.ddev.site/api';
 
   constructor(private http: HttpClient) {}

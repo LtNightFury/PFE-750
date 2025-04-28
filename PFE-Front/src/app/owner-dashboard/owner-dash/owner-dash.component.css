@@ -1,0 +1,146 @@
+/* owner-dashboard.component.css */
+.dashboard-container {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+  }
+  
+  .breadcrumb {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 15px;
+  }
+  
+  .breadcrumb a {
+    color: #777;
+    text-decoration: none;
+  }
+  
+  .dashboard-title {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  
+  .controls-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .search-box {
+    position: relative;
+    width: 300px;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 10px 35px 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .btn-export, .btn-add, .btn-retry {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    font-size: 14px;
+  }
+  
+  .btn-export {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+  }
+  
+  .btn-add {
+    background-color: #5ec269;
+    color: white;
+  }
+  
+  .dashboard-content {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .property-grid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .filter-sidebar {
+    width: 300px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+  }
+  
+  .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+  }
+  
+  .filter-header h2 {
+    font-size: 20px;
+    margin: 0;
+  }
+  
+  .btn-clear {
+    background: none;
+    border: none;
+    color: #1976d2;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .loading-container, .error-container, .empty-container {
+    grid-column: 1 / -1;
+    padding: 40px;
+    text-align: center;
+    color: #666;
+  }
+  
+  .error-container {
+    color: #d32f2f;
+  }
+  .left-sidebar {
+    display: flex
+;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: 23.5625rem;
+    height: 100%;
+    padding: 0;
+    background: var(--bg-primary);
+    border-right: 0.0625rem solid var(--border-primary);
+    transition: var(--transition-duration);
+}
+.page-body {
+    display: flex;
+    min-height: 100vh;
+}

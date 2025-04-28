@@ -8,7 +8,8 @@ import { Appointment } from '../models/Appointment.model';
   providedIn: 'root'
 })
 export class PropertyService {
-
+  
+  private apiUrl2 = 'http://backend.ddev.site/api/user/properties';  // Symfony API endpoint
   private apiUrl = 'http://backend.ddev.site/api/properties/';  // Symfony API endpoint
 
   constructor(private http: HttpClient) {}
@@ -28,6 +29,21 @@ export class PropertyService {
       })
     );
   }
+
+  getAllPropertiesByOwnerId(): Observable<Property[]> {
+    return this.http.get<Property[]>(`${this.apiUrl2}`).pipe(
+      map((properties: any[]) => {
+        return properties.map(property => {
+          if (property?.Media?.photos?.length > 0) {
+            property.mainImage = 'http://backend.ddev.site' + property.Media.photos[0].imageName;
+          } else {
+            property.mainImage = '/assets/default.jpg'; // fallback
+          }
+          return property;
+        });
+      })
+    );}
+
   getPropertyById(id: number): Observable<Property> {
     return this.http.get<Property>(`${this.apiUrl}${id}`);
   }
