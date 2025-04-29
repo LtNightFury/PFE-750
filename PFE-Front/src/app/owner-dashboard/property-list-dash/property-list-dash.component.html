@@ -34,7 +34,7 @@
             </app-property-card2>
           </ng-container>
       </div>
-      <div class="filter-sidebar">
+      <div class="filter-sidebar"  *ngIf="filteredProperties.length > 0">
          <div class="filter-header">
            <h2>Filters</h2>
            <!-- Clear all filters button -->
