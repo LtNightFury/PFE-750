@@ -62,6 +62,7 @@ class Property
     private ?string $approval = 'pending';
 
     #[ORM\OneToMany(mappedBy: 'property', targetEntity: Booking::class, orphanRemoval: true)]
+    #[Groups(['property:read'])]
     private Collection $bookings;
 
     #[ORM\OneToMany(mappedBy: 'property', targetEntity: Appointment::class)]

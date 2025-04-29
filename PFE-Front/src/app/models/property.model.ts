@@ -8,15 +8,15 @@ export interface Property {
     contacts: Contacts;
     Media: Media;
     bookings: Booking[];
-    userName: string;
+      user: userprofile;
   }
   
   export interface GeneralInfo {
     id: number;
-    dealType: string;
+    deal_type: string;
     title: string;
     description: string;
-    propertyCondition: string;
+    PropertyCondition: string;
     propertyType: string;
     availabilityDate: string | null;
   }
@@ -110,5 +110,15 @@ export interface Property {
     propertyId: number;
     approval?: string;
     status?: string;
+  }
+
+  export interface userprofile {
+    
+    name: string;
+    lastname: string;
+    email: string;
+    phoneNumber: string;
+    profileImage: string ;
+   
   }
   

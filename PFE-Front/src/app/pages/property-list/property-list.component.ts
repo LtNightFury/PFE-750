@@ -24,7 +24,7 @@ export class PropertyListComponent implements OnInit {
 
   onFiltersChanged(filters: any) {
     this.filteredProperties = this.allProperties.filter(prop => {
-      const matchesDealType = filters.dealType ? prop.generalinfo.dealType.toLowerCase() === filters.dealType.toLowerCase() : true;
+      const matchesDealType = filters.dealType ? prop.generalinfo.deal_type.toLowerCase() === filters.dealType.toLowerCase() : true;
       const matchesType = filters.type ? prop.generalinfo.propertyType === filters.type : true;
       const matchesCity = filters.city ? prop.location.city.toLowerCase().includes(filters.city.toLowerCase()) : true;
       const matchesMinPrice = filters.minPrice ? +prop.price.price >= filters.minPrice : true;

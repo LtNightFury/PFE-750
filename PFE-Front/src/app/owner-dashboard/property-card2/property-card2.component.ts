@@ -24,12 +24,12 @@ export class PropertyCard2Component {
   
   determinePropertyStatus(): string {
     // You can customize this logic based on your business rules
-    return this.property?.generalinfo?.propertyCondition || 'Active';
+    return this.property?.generalinfo?.PropertyCondition || 'Active';
   }
   
   checkIfOffMarket(): boolean {
     // Define your off-market logic here
-    return this.property?.generalinfo?.propertyCondition === 'Off Market';
+    return this.property?.generalinfo?.PropertyCondition === 'Off Market';
   }
   
   navigateToDetail(): void {

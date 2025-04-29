@@ -13,16 +13,20 @@ class Booking
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['property:read'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['property:read'])]
     private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['property:read'])]
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'bookings')]
     #[ORM\JoinColumn(nullable: false)]
+    
     private ?Property $property = null;
 
     #[ORM\ManyToOne(inversedBy: 'bookings')]
@@ -30,6 +34,7 @@ class Booking
     private ?User $user = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['property:read'])]
     private ?string $approval = 'pending';
 
     #[ORM\OneToOne(mappedBy: 'booking', cascade: ['persist', 'remove'])]

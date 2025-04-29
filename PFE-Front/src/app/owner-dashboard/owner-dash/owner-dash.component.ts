@@ -55,7 +55,7 @@ export class OwnerDashComponent {
     // Apply each filter if it has a value
     if (this.currentFilters.dealType) {
       filtered = filtered.filter(p => 
-        p.generalinfo.dealType.toLowerCase() === this.currentFilters.dealType.toLowerCase());
+        p.generalinfo.deal_type.toLowerCase() === this.currentFilters.dealType.toLowerCase());
     }
     
     if (this.currentFilters.type) {
