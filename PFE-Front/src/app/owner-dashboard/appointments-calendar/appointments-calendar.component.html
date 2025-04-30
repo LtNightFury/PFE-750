@@ -1,0 +1,29 @@
+
+<div class="calendar-container">
+    <div class="calendar-header">
+      <h2>Appointment Calendar</h2>
+      <div class="view-options">
+        <button (click)="changeView('timeGridWeek')">Week</button>
+        <button (click)="changeView('dayGridMonth')">Month</button>
+        <button (click)="changeView('listWeek')">List</button>
+      </div>
+    </div>
+    <full-calendar [options]="calendarOptions"></full-calendar>
+    <div class="modal-overlay" [class.active]="isModalOpen" (click)="closeModal()"></div>
+
+<div class="modal" [class.active]="isModalOpen">
+  <div class="modal-content" *ngIf="selectedEvent">
+    <h3>{{ selectedEvent.title }}</h3>
+    <p><strong>Status:</strong>
+      <span [ngClass]="'status-' + selectedEvent.status">
+        {{ selectedEvent.status }}
+      </span>
+    </p>
+    <p><strong>Client:</strong> {{ selectedEvent.client }}</p>
+    <p><strong>Phone:</strong> {{ selectedEvent.phone }}</p>
+    <p><strong>Location:</strong> {{ selectedEvent.location }}</p>
+    <button class="close-button" (click)="closeModal()">Close</button>
+  </div>
+</div>
+
+  </div>

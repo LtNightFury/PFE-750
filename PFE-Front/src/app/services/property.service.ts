@@ -85,7 +85,7 @@ export class PropertyService {
     return this.http.get<Appointment[]>('http://backend.ddev.site/api/my-appointments');
   }
   getOwnerAppointments(): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(`http://backend.ddev.site/api/appointments/owner`);
+    return this.http.get<Appointment[]>(`http://backend.ddev.site/api/owner/appointments`);
   }
   
 }

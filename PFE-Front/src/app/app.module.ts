@@ -55,6 +55,14 @@ import { OwnerDashComponent } from './owner-dashboard/owner-dash/owner-dash.comp
 import { LucideAngularModule, Home, Building2, Calendar, MessageSquare, Wallet } from 'lucide-angular';
 import { PropertyCard2Component } from './owner-dashboard/property-card2/property-card2.component';
 import { PropertyListDashComponent } from './owner-dashboard/property-list-dash/property-list-dash.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AppointmentsCalendarComponent } from './owner-dashboard/appointments-calendar/appointments-calendar.component';
+import { BootstrapModalComponent } from './owner-dashboard/bootstrap-modal/bootstrap-modal.component';
+
 
 
 
@@ -101,6 +109,9 @@ import { PropertyListDashComponent } from './owner-dashboard/property-list-dash/
     OwnerDashComponent,
     PropertyCard2Component,
     PropertyListDashComponent,
+  
+    AppointmentsCalendarComponent,
+        BootstrapModalComponent,
     
     ],
   imports: [
@@ -119,6 +130,11 @@ import { PropertyListDashComponent } from './owner-dashboard/property-list-dash/
     MatSelectModule,
     MatIconModule,
     MatButtonModule,
+    MatButtonToggleModule,
+    MatProgressSpinnerModule,
+    FullCalendarModule,
+    MatDialogModule,
+    MatSnackBarModule,
     LucideAngularModule.pick({ Home, Building2, Calendar, MessageSquare, Wallet }),
    
    
