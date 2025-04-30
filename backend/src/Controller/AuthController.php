@@ -66,19 +66,20 @@ public function register(Request $request): JsonResponse
     $user = new User();
     $user->setEmail($data['email']);
     $user->setPassword($this->passwordHasher->hashPassword($user, $data['password']));
-    if (!empty($data['role'])) {
-        $user->setRoles([$data['role']]);
-    }else {
-            $user->setRoles(['ROLE_USER']);
-        }
+    if ($data['role']=='owner') {
+        $user->setRoles(['ROLE_OWNER']);
+    }else  {
+        $user->setRoles(['ROLE_USER']);   
+    }
     
-    
-    $user->setPhoneNumber($data['phoneNumber']); // Set default profile image or handle it later
+    $user->setPhoneNumber($data['phoneNumber']);
+
     
     // Add the name field
-    if (isset($data['name'])) {
+   
         $user->setName($data['name']);
-    }
+        $user->setLastName($data['lastName']);
+
     
     // Validate user entity
     $errors = $this->validator->validate($user);

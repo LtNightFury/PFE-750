@@ -80,13 +80,16 @@ class PropertyRepository extends ServiceEntityRepository
 //    }
 public function createProperty($data,$user): Property
 {
+    
 
     
     $general = $this->generalRepository->addGeneral($data['general']);
     $location = $this->locationRepository->addLocation($data['location']);
     $specification = $this->SpecificationRepository->addSpecification($data['specification']);
     $price = $this->priceRepository->addPrice($data['price']);
-    $amenities = $this->amenitiesRepository->addAmenities($data['amenities']['amenities']);
+
+    $amenitiesData = $data['amenities'] ?? [];
+    $amenities = $this->amenitiesRepository->addAmenities($amenitiesData['amenities'] ?? []);
     $contacts = $this->contactsRepository->addContact($data['contacts']);
     $media = $this->MediaRepository->createMediaWithPhotos($data['mediaFiles']);
     
