@@ -167,6 +167,46 @@ public function getUserAppointments(): JsonResponse
     return new JsonResponse($data, Response::HTTP_OK);
 }
 
+#[Route('api/owner/appointments', name: 'get_owner_appointments', methods: ['GET'])]
+public function getOwnerAppointments(): JsonResponse
+{
+    $user = $this->getUser();
+
+    if (!$user) {
+        return new JsonResponse(['error' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    // Get properties owned by this user
+    $properties = $this->propertyRepository->findBy(['user' => $user]);
+
+    if (!$properties) {
+        return new JsonResponse([], Response::HTTP_OK);
+    }
+
+    $appointments = [];
+
+    foreach ($properties as $property) {
+        foreach ($property->getAppointments() as $appointment) {
+            $appointments[] = [
+                'id' => $appointment->getId(),
+                'status' => $appointment->getStatus(),
+                'appointmentDate' => $appointment->getAppointmentDate()?->format('Y-m-d'),
+                'appointmentTime' => $appointment->getAppointmentTime()?->format('H:i'),
+                'message' => $appointment->getMessage(),
+                'userId' => $appointment->getUser()?->getId(),
+                'name' => $appointment->getUser()?->getName(), 
+                'lastName' => $appointment->getUser()?->getLastName(),
+                'userPhone' => $appointment->getUser()?->getPhoneNumber(),
+                'propertyId' => $property->getId(),
+                'propertyTitle' => $property->getGeneralinfo()?->getTitle(),
+                'propertycity' => $property->getLocation()?->getCity(),
+                'propertysubcity' => $property->getLocation()?->getSubcity(),
+            ];
+        }
+    }
+
+    return new JsonResponse($appointments, Response::HTTP_OK);
+}
 
 
 }

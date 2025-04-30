@@ -42,11 +42,10 @@ security:
         - { path: ^/api/properties, methods: [GET], roles: PUBLIC_ACCESS }
         - { path: ^/api/properties/\d+, methods: [GET], roles: PUBLIC_ACCESS }
         - { path: ^/api/user, roles: PUBLIC_ACCESS }
-        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
-
-        
-
+       
+        - { path: ^/api/properties/\d+, methods: ['PUT', 'PATCH','DELETE','POST'], roles: ROLE_OWNER }
         - { path: ^/api/admin, roles: ROLE_ADMIN }
+        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
 
 

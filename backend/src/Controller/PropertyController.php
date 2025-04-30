@@ -233,44 +233,6 @@ public function getUserProperties(PropertyRepository $propertyRepository, Serial
 }
 
 
-#[Route('/owner/appointments', name: 'get_owner_appointments', methods: ['GET'])]
-public function getOwnerAppointments(): JsonResponse
-{
-    $user = $this->getUser();
-
-    if (!$user) {
-        return new JsonResponse(['error' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
-    }
-
-    // Get properties owned by this user
-    $properties = $this->propertyRepository->findBy(['user' => $user]);
-
-    if (!$properties) {
-        return new JsonResponse([], Response::HTTP_OK);
-    }
-
-    $appointments = [];
-
-    foreach ($properties as $property) {
-        foreach ($property->getAppointments() as $appointment) {
-            $appointments[] = [
-                'id' => $appointment->getId(),
-                'status' => $appointment->getStatus(),
-                'appointmentDate' => $appointment->getAppointmentDate()?->format('Y-m-d'),
-                'appointmentTime' => $appointment->getAppointmentTime()?->format('H:i'),
-                'message' => $appointment->getMessage(),
-                'userId' => $appointment->getUser()?->getId(),
-                'username' => $appointment->getUser()?->getname(), // or getUsername(), depending on your User entity
-                'propertyId' => $property->getId(),
-                'propertyTitle' => $property->getGeneralinfo()?->getTitle(),
-                'propertycity' => $property->getLocation()?->getCity(),
-                'propertysubcity' => $property->getLocation()?->getSubcity(),
-            ];
-        }
-    }
-
-    return new JsonResponse($appointments, Response::HTTP_OK);
-}
 
 
 }
