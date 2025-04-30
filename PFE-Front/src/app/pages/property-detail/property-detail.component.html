@@ -201,6 +201,9 @@
   <div class="card-section">
     <div class="label">Price</div>
     <div class="price">TND{{property.price.price| number}}</div>
+    <div *ngIf="property.generalinfo.deal_type === 'rent'">
+      <div class="rent-price">{{property.price.priceunit}}</div>
+    </div>
     
   </div>
   

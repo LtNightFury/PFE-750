@@ -27,6 +27,20 @@
               </div>
               <p class="input_hint mt-1"*ngIf="isInvalid('price')" class="error-message">Required</p>
             </div>
+            <div class="input"
+              *ngIf="isRental">
+              <label for="inputref" class="input_label">select unit</label>
+              
+                <app-dropdown
+      [options]="priceunit"
+      formControlName="priceunit"
+      [placeholder]="'Select a unit'"
+      [selectedValue]="selectedPriceUnit"
+      (optionSelected)="onPriceUnitSelected($event)">
+    </app-dropdown>
+       
+              <p class="input_hint mt-1"*ngIf="isInvalid('pricepermonth')" class="error-message">Required</p>
+            </div>
           </div>
           <div class="grid" *ngIf="!isRental">
               <div class="input">

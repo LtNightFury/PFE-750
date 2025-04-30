@@ -41,6 +41,10 @@ class Price
 
     private ?string $servicecharge = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['property:read'])]
+    private ?string $priceunit = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -114,6 +118,18 @@ class Price
     public function setServicecharge(?string $servicecharge): static
     {
         $this->servicecharge = $servicecharge;
+
+        return $this;
+    }
+
+    public function getPriceunit(): ?string
+    {
+        return $this->priceunit;
+    }
+
+    public function setPriceunit(?string $priceunit): static
+    {
+        $this->priceunit = $priceunit;
 
         return $this;
     }
