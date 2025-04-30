@@ -61,6 +61,7 @@ class PriceRepository extends ServiceEntityRepository
         $price->setOriginalprice($priceData['originalprice']);
         $price->setHideprice($priceData['hideprice']);
         $price->setCharges($priceData['charges']);
+        $price->setPriceunit($priceData['priceunit']);
         $price->setServicecharge($priceData['servicecharge']);
 
 

@@ -33,6 +33,18 @@ export class PriceTabComponent implements OnInit, OnChanges {
     return this.dealType === 'rent';
   }
 
+  priceunit = [
+    { value: 'per month', label: 'per month' },
+    { value: 'per day', label: 'per day' },
+   
+  ]
+  selectedPriceUnit: string | null = null;
+
+onPriceUnitSelected(unit: string) {
+  this.selectedPriceUnit = unit;
+  this.parentForm.get('priceunit')?.setValue(unit);
+}
+
 
   
 }

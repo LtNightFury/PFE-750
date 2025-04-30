@@ -51,6 +51,7 @@ export interface Property {
     hideprice: boolean;
     charges: string | null;
     servicecharge: string | null;
+    priceunit: string | null;
   }
   
   export interface Amenities {

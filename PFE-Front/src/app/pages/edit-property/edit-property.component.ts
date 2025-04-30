@@ -71,6 +71,7 @@ export class EditPropertyComponent implements OnInit {
       }),
       price: this.fb.group({
         price: [, Validators.required],
+        priceunit: [''],
         pricesqft: [],
         originalprice: [],
         hideprice: [false, ], 
