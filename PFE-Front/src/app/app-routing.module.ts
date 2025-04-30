@@ -18,6 +18,10 @@ import { MyAppointmentsComponent } from './components/my-appointments/my-appoint
 import { MyBookingsComponent } from './components/my-bookings/my-bookings.component';
 import { OwnerDashComponent } from './owner-dashboard/owner-dash/owner-dash.component';
 
+import { PropertyListDashComponent } from './owner-dashboard/property-list-dash/property-list-dash.component';
+import { AuthGuard } from './login-register-verif/guards/auth.guard';
+import { AppointmentsCalendarComponent } from './owner-dashboard/appointments-calendar/appointments-calendar.component';
+
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -35,10 +39,37 @@ const routes: Routes = [
   { path: 'settings', component:UserSettingsComponent},
   { path: 'my-appointments', component: MyAppointmentsComponent },
   { path: 'my-bookings', component: MyBookingsComponent },
-  {path: 'owner-dashboard', component: OwnerDashComponent}, 
+  {path: 'owner-dashboard', component: OwnerDashComponent},
+  /*{ 
+    path: 'appointments', 
+    component: AppointmentsCalendarComponent 
+  },*/
+  //dont workzekfhezfh//
+  {
+    path: 'owner',
+    component: OwnerDashComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'properties',
+        pathMatch: 'full'
+      },
+      {
+        path: 'properties',
+        component: PropertyListDashComponent
+      },
+      {
+        path: 'calendar',
+        component: AppointmentsCalendarComponent
+      }
+    ]
+  },
+
   
   //lena bech nhot el route ta3 el dashboard//
   { path: '', redirectTo: '/home', pathMatch: 'full' }
+  
 ];
 
 @NgModule({

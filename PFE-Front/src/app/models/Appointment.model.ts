@@ -5,6 +5,8 @@ export interface Appointment {
     name: string;
     email: string;
     phone: string;
+    lastName: string;
+    userPhone: string;
     appointmentDate: string; // ISO string format
     appointmentTime: string; // Format: "HH:MM"
     message?: string;
