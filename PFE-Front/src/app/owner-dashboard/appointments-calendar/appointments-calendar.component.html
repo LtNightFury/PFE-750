@@ -2,28 +2,40 @@
 <div class="calendar-container">
     <div class="calendar-header">
       <h2>Appointment Calendar</h2>
-      <div class="view-options">
-        <button (click)="changeView('timeGridWeek')">Week</button>
-        <button (click)="changeView('dayGridMonth')">Month</button>
-        <button (click)="changeView('listWeek')">List</button>
+      
+    </div>
+    <div class="legend mb-3">
+      <span class="legend-item me-3"><span class="legend-color" style="background-color:#FFC107;"></span> Pending</span>
+      <span class="legend-item me-3"><span class="legend-color" style="background-color:#4CAF50;"></span> Approved</span>
+      <span class="legend-item"><span class="legend-color" style="background-color:#F44336;"></span> Canceled</span>
+    </div>
+    
+    <full-calendar  class="aaa" [options]="calendarOptions"></full-calendar>
+    
+    <!-- Bootstrap Modal -->
+
+
+    
+  </div>
+  <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm"> <!-- Use modal-lg or modal-xl for bigger size -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="eventModalLabel">{{ selectedEvent?.title }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p><strong>Status:</strong> <span [ngClass]="'status-' + selectedEvent?.status">{{ selectedEvent?.status }}</span></p>
+          <p><strong>Client:</strong> {{ selectedEvent?.client }}</p>
+          <p><strong>Phone:</strong> {{ selectedEvent?.phone }}</p>
+          <p><strong>Location:</strong> {{ selectedEvent?.location }}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" ng *ngIf="selectedEvent?.status==='pending'" class="btn btn-success" (click)="updateStatus('approved')">Accept</button>
+          <button type="button" class="btn btn-danger" (click)="updateStatus('canceled')">Decline</button>
+          
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
-    <full-calendar [options]="calendarOptions"></full-calendar>
-    <div class="modal-overlay" [class.active]="isModalOpen" (click)="closeModal()"></div>
-
-<div class="modal" [class.active]="isModalOpen">
-  <div class="modal-content" *ngIf="selectedEvent">
-    <h3>{{ selectedEvent.title }}</h3>
-    <p><strong>Status:</strong>
-      <span [ngClass]="'status-' + selectedEvent.status">
-        {{ selectedEvent.status }}
-      </span>
-    </p>
-    <p><strong>Client:</strong> {{ selectedEvent.client }}</p>
-    <p><strong>Phone:</strong> {{ selectedEvent.phone }}</p>
-    <p><strong>Location:</strong> {{ selectedEvent.location }}</p>
-    <button class="close-button" (click)="closeModal()">Close</button>
-  </div>
-</div>
-
   </div>

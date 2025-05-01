@@ -7,6 +7,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import { Appointment } from '../../models/Appointment.model';
 import { User } from 'src/app/models/user.model';
+declare var bootstrap: any;
 
 @Component({
   selector: 'app-appointments-calendar',
@@ -14,17 +15,7 @@ import { User } from 'src/app/models/user.model';
   styleUrls: ['./appointments-calendar.component.css']
 })
 export class AppointmentsCalendarComponent implements OnInit {
-  selectedEvent: {
-  title: string;
-  status: string;
-  client: string;
-  phone: string;
-  location: string;
-  
-} | null = null;
-
-isModalOpen: boolean = false;
-
+  selectedEvent: any = null;
   calendarOptions: CalendarOptions = {
     initialView: 'timeGridWeek',
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin],
@@ -35,12 +26,38 @@ isModalOpen: boolean = false;
     },
     nowIndicator: true,
     slotMinTime: '08:00:00',
-    slotMaxTime: '20:00:00',
+    slotMaxTime: '18:00:00',
     weekends: false,
+    allDaySlot: false,
+    eventTimeFormat: {
+      hour: 'numeric',
+      minute: '2-digit',
+      meridiem: 'short',
+      hour12: true
+    },
     editable: true,
     eventClick: this.handleEventClick.bind(this),
-    events: []
+    events: [],
+
+    eventDidMount: (info) => {
+      const tooltip = new bootstrap.Tooltip(info.el, {
+        title: `
+          <div class="calendar-tooltip">
+            <div><strong>Client:</strong> ${info.event.extendedProps['client']}</div>
+            <div><strong>Phone:</strong> ${info.event.extendedProps['phone']}</div>
+            <div><strong>Property:</strong> ${info.event.extendedProps['property']}</div>
+            <div><strong>Status:</strong> ${info.event.extendedProps['status']}</div>
+          </div>
+        `,
+        placement: 'top',
+        trigger: 'hover',
+        html: true
+      });
+    }
+    
+    
   };
+  
 
   constructor(private propertyService: PropertyService) {}
 
@@ -83,19 +100,39 @@ isModalOpen: boolean = false;
 
   handleEventClick(clickInfo: EventClickArg) {
     const event = clickInfo.event;
+
     this.selectedEvent = {
+      id: event.id,
       title: event.title,
       status: event.extendedProps['status'],
       client: event.extendedProps['client'],
       phone: event.extendedProps['phone'],
       location: event.extendedProps['location']
     };
-    this.isModalOpen = true;
+
+    const modal = new bootstrap.Modal(document.getElementById('eventModal'));
+    modal.show();
   }
-  
-  
-  
-  
+
+//accept appointment or decline lena 
+
+updateStatus(status: 'approved' | 'canceled') {
+  const appointmentId = this.selectedEvent?.id;
+  if (!appointmentId) return;
+
+  this.propertyService.updateAppointmentStatus(+appointmentId, status).subscribe({
+    next: () => {
+      // Optionally show toast
+      this.loadAppointments(); // Refresh calendar
+      bootstrap.Modal.getInstance(document.getElementById('eventModal'))?.hide();
+    },
+    error: err => {
+      console.error('Failed to update status', err);
+    }
+  });
+}
+
+
 
   // Optional view change handler
   changeView(viewName: string) {
@@ -104,9 +141,6 @@ isModalOpen: boolean = false;
   conso() {
     
     console.log(this.calendarOptions.events);
-  }
-  closeModal() {
-    this.isModalOpen = false;
   }
   
 }
