@@ -114,7 +114,7 @@ export interface Property {
   }
 
   export interface userprofile {
-    
+    id: number;
     name: string;
     lastname: string;
     email: string;

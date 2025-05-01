@@ -61,7 +61,9 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AppointmentsCalendarComponent } from './owner-dashboard/appointments-calendar/appointments-calendar.component';
-import { BootstrapModalComponent } from './owner-dashboard/bootstrap-modal/bootstrap-modal.component';
+import { EmailModalComponent } from './components/email-modal/email-modal.component';
+
+
 
 
 
@@ -111,7 +113,9 @@ import { BootstrapModalComponent } from './owner-dashboard/bootstrap-modal/boots
     PropertyListDashComponent,
   
     AppointmentsCalendarComponent,
-        BootstrapModalComponent,
+        EmailModalComponent,
+        
+       
     
     ],
   imports: [

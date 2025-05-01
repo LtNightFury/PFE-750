@@ -13,6 +13,8 @@ import { Appointment } from 'src/app/models/Appointment.model';
 export class PropertyDetailComponent implements OnInit {
   @ViewChild(DateRangePickerComponent)
   dateRangePicker!: DateRangePickerComponent;
+  showEmailModal = false;
+  emailSent = false;
   
   property!: Property;
   allImages: string[] = [];
@@ -145,5 +147,40 @@ onAppointmentScheduled(appointment: Appointment): void {
 closeAppointmentForm(): void {
   this.showAppointmentForm = false;
 }
+// New methods for WhatsApp and Email functionality
+  
+  // Open WhatsApp chat with agent
+  callAgent(): void {
+    if (this.property && this.property.user && this.property.user.phoneNumber) {
+      // Format phone number for WhatsApp (remove spaces, dashes, etc.)
+      const formattedPhone = this.property.user.phoneNumber.replace(/\D/g, '');
+      
+      // Create WhatsApp web link
+      // The international format should include country code
+      const whatsappUrl = `https://wa.me/${formattedPhone}`;
+      
+      // Open in new tab
+      window.open(whatsappUrl, '_blank');
+    } else {
+      console.error('Agent phone number not available');
+      // You could show an alert or message to the user here
+    }
+  }
+  
+  // Open email modal
+  openEmailModal(): void {
+    this.showEmailModal = true;
+    this.emailSent = false;
+  }
+  
+  // Close email modal
+  closeEmailModal(): void {
+    this.showEmailModal = false;
+  }
+  
+  // Handle email sent event
+  onEmailSent(success: boolean): void {
+    this.emailSent = success;
+  }
 
 }

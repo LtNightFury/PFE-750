@@ -4,6 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Appointment } from '../models/Appointment.model';
 
+export interface EmailData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+  propertyId: number;
+  recipientId: number;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -11,6 +19,7 @@ export class PropertyService {
   
   private apiUrl2 = 'http://backend.ddev.site/api/user/properties';  // Symfony API endpoint
   private apiUrl = 'http://backend.ddev.site/api/properties/';  // Symfony API endpoint
+  private baseApiUrl = 'http://backend.ddev.site/api';
 
   constructor(private http: HttpClient) {}
 
@@ -86,6 +95,15 @@ export class PropertyService {
   }
   getOwnerAppointments(): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(`http://backend.ddev.site/api/owner/appointments`);
+  }
+
+  updateAppointmentStatus(appointmentId: number, status: 'approved' | 'canceled'): Observable<any> {
+    return this.http.patch(`http://backend.ddev.site/api/appointments/${appointmentId}/status`, { status });
+  }
+  
+  // New method for sending email to property owner/agent
+  sendEmailToOwner(emailData: EmailData): Observable<any> {
+    return this.http.post(`${this.baseApiUrl}/send-email`, emailData);
   }
   
 }
