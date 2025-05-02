@@ -32,7 +32,7 @@ class General
     private ?string $PropertyCondition = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['property:read'])]
+    #[Groups(['property:list', 'property:read'])]
     private ?string $propertyType = null;
 
     #[ORM\Column(length: 255, nullable: true)]

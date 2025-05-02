@@ -106,10 +106,13 @@ class AppointmentController extends AbstractController
    
    
    
-    #[Route('/api/appointments/{id}/approve', name: 'approve_appointment', methods: ['PUT'])]
-public function approveAppointment(int $id): JsonResponse
+    #[Route('/api/appointments/{id}/approve', name: 'approve_appointment', methods: ['PATCH'])]
+public function approveAppointment(int $id,request $request): JsonResponse
 {
+    $data = json_decode($request->getContent(), true);
+
     $user = $this->getUser();
+   
 
     if (!$user) {
         return new JsonResponse(['error' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
@@ -128,7 +131,7 @@ public function approveAppointment(int $id): JsonResponse
         return new JsonResponse(['error' => 'You are not authorized to approve this appointment'], Response::HTTP_FORBIDDEN);
     }
 
-    $appointment->setStatus('approved');
+    $appointment->setStatus($data['status']); // Default to 'approved' if not provided
     $this->em->flush();
 
     return new JsonResponse(['message' => 'Appointment approved successfully'], Response::HTTP_OK);
@@ -167,7 +170,7 @@ public function getUserAppointments(): JsonResponse
     return new JsonResponse($data, Response::HTTP_OK);
 }
 
-#[Route('api/owner/appointments', name: 'get_owner_appointments', methods: ['GET'])]
+#[Route('/api/owner/appointments', name: 'get_owner_appointments', methods: ['GET'])]
 public function getOwnerAppointments(): JsonResponse
 {
     $user = $this->getUser();
