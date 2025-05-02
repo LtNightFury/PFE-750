@@ -129,19 +129,20 @@
     color: #d32f2f;
   }
   .left-sidebar {
-    display: flex;
-    
-;
-    flex-direction: column;
+     
     flex-shrink: 0;
-    
-    height: 100%;
-    padding: 0;
-    background: var(--bg-primary);
-    border-right: 0.0625rem solid var(--border-primary);
-    transition: var(--transition-duration);
-}
+    background-color: #fff; /* ou une couleur spécifique */
+    border-right: 1px solid #ddd;
+    transition: all 0.3s ease;
+  }
+  
+  
 .page-body {
     display: flex;
     min-height: 100vh;
+}
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
 }

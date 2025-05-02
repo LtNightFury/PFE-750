@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Property } from 'src/app/models/property.model';
 import { PropertyService } from 'src/app/services/property.service';
 import { UserService } from 'src/app/services/user.service';
+import { Appointment } from 'src/app/models/Appointment.model';
 
 @Component({
   selector: 'app-owner-dash',
@@ -10,10 +11,17 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./owner-dash.component.css']
 })
 export class OwnerDashComponent {
+
   properties: Property[] = [];
+  appointments: Appointment[] = [];
   filteredProperties: Property[] = [];
   isLoading: boolean = true;
   error: string | null = null;
+  totalViews: number = 0;
+  approvedPropertiesCount: number = 0;
+  pendingRequestsCount: number = 2; // Placeholder until you wire messaging
+  newMessagesCount: number = 1;     // Placeholder
+  upcomingAppointmentsCount: number = 0;
   
   // Filter state
   currentFilters: any = {};
@@ -26,20 +34,35 @@ export class OwnerDashComponent {
 
   ngOnInit(): void {
     this.loadProperties();
+    this.loadAppointments();
   }
 
   loadProperties(): void {
     this.isLoading = true;
     this.propertyService.getAllProperties().subscribe({
       next: (data) => {
-        this.properties = data;
-        this.filteredProperties = data;
+        this.totalViews = data.reduce((sum, p) => sum + (Number(p.views) || 0), 0);
+        this.approvedPropertiesCount = data.filter(p => p.approval === 'approved' || this.appointments.some(a => a.status === 'confirmed')).length;
+        this.properties = data;        this.filteredProperties = data;
         this.isLoading = false;
       },
       error: (err) => {
         this.error = 'Failed to load properties. Please try again.';
         this.isLoading = false;
         console.error('Error loading properties:', err);
+      }
+    });
+  }
+
+  loadAppointments(): void {
+    this.propertyService.getOwnerAppointments().subscribe({
+      next: (data) => {
+        this.appointments = data;
+        const now = new Date();
+        this.upcomingAppointmentsCount = data.filter(a => new Date(a.appointmentDate) >= now).length;
+      },
+      error: (err) => {
+        console.error('Error loading appointments:', err);
       }
     });
   }

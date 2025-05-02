@@ -119,13 +119,17 @@ export class AppointmentsCalendarComponent implements OnInit {
 updateStatus(status: 'approved' | 'canceled') {
   const appointmentId = this.selectedEvent?.id;
   if (!appointmentId) return;
+  console.log('Updating status for appointment ID:', appointmentId, 'to', status);
+ 
 
   this.propertyService.updateAppointmentStatus(+appointmentId, status).subscribe({
     next: () => {
       // Optionally show toast
       this.loadAppointments(); // Refresh calendar
       bootstrap.Modal.getInstance(document.getElementById('eventModal'))?.hide();
+      
     },
+    
     error: err => {
       console.error('Failed to update status', err);
     }

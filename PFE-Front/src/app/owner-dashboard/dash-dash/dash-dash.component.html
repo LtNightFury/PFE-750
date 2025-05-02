@@ -1,0 +1,76 @@
+
+<div class="container my-4" >
+    <div class="row g-3">
+      <div class="col-md-4" *ngIf="properties">
+        <div class="card text-white bg-primary h-100">
+          <div class="card-body">
+            <h5 class="card-title">📦 Total Properties</h5>
+            <p class="card-text fs-4">{{ properties.length }}</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-4">
+        <div class="card text-white bg-success h-100">
+          <div class="card-body">
+            <h5 class="card-title">📅 Upcoming Appointments</h5>
+            <p class="card-text fs-4">{{ upcomingAppointments.length}}</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-4">
+        <div class="card text-white bg-info h-100">
+          <div class="card-body">
+            <h5 class="card-title">👀 Total Views</h5>
+            <p class="card-text fs-4">{{ totalViews}}</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-4">
+        <div class="card text-white bg-warning h-100">
+          <div class="card-body">
+            <h5 class="card-title">🧾 Pending Requests</h5>
+            <p class="card-text fs-4">{{ pendingRequestsCount }}</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-4">
+        <div class="card text-white bg-secondary h-100">
+          <div class="card-body">
+            <h5 class="card-title">💬 New Messages</h5>
+            <p class="card-text fs-4">{{ newMessagesCount }}</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-4">
+        <div class="card text-white bg-dark h-100">
+          <div class="card-body">
+            <h5 class="card-title">✅ Approved / Rented</h5>
+            <p class="card-text fs-4">{{ approvedPropertiesCount }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          Upcoming Appointments
+        </div>
+        <div class="card-body">
+          <ul *ngIf="upcomingAppointments.length > 0; else noAppointments">
+            <li *ngFor="let appointment of upcomingAppointments" class="list-group-item">
+              <strong>{{ appointment.name}}</strong><br>
+              <small>{{ appointment.appointmentDate | date: 'short' }}</small><br>
+              <em>{{ appointment.propertyTitle }}</em>
+            </li>
+          </ul>
+          <ng-template #noAppointments>
+            <p>No upcoming appointments.</p>
+          </ng-template>
+        </div>
+      </div>
+      
+    </div>
+  </div>

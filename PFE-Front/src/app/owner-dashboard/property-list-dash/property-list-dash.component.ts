@@ -15,6 +15,11 @@ export class PropertyListDashComponent {
   isLoading: boolean = true;
   error: string | null = null;
   currentFilters: any = {};
+  currentPage: number = 1;
+  itemsPerPage: number = 2; // You can adjust this as needed
+  Math = Math;
+
+  paginatedProperties: Property[] = [];
   constructor(
     private propertyService: PropertyService,
     private userService: UserService,
@@ -31,6 +36,7 @@ export class PropertyListDashComponent {
       next: (data) => {
         this.properties = data;
         this.filteredProperties = data;
+        this.updatePaginatedProperties(); // Call to update the paginated list
         this.isLoading = false;
       },
       error: (err) => {
@@ -86,7 +92,21 @@ export class PropertyListDashComponent {
     }
     
     this.filteredProperties = filtered;
+    this.updatePaginatedProperties();
   }
+  updatePaginatedProperties(): void {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    this.paginatedProperties = this.filteredProperties.slice(start, end);
+  }
+  onPageChange(page: number): void {
+    this.currentPage = page;
+    this.updatePaginatedProperties(); // Update the displayed properties on page change
+  }
+  get totalPages(): number {
+    return Math.ceil(this.filteredProperties.length / this.itemsPerPage);
+  }
+  
 
   addNewProperty(): void {
     this.router.navigate(['/properties/add']);

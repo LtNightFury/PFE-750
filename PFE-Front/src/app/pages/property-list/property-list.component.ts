@@ -23,6 +23,10 @@ export class PropertyListComponent implements OnInit {
   }
 
   onFiltersChanged(filters: any) {
+    console.log('FILTER TYPE:', filters.type);
+    console.log('ACTUAL TYPES:', this.allProperties.map(p => p.generalinfo.propertyType));
+
+
     this.filteredProperties = this.allProperties.filter(prop => {
       const matchesDealType = filters.dealType ? prop.generalinfo.deal_type.toLowerCase() === filters.dealType.toLowerCase() : true;
       const matchesType = filters.type ? prop.generalinfo.propertyType === filters.type : true;

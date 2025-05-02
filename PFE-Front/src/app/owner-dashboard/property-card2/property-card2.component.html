@@ -11,32 +11,37 @@
             <h3 class="property-title">{{property.generalinfo.title}}</h3>
             <div class="property-status"></div> 
         </div>
+        
         <div class="property-card-adress">
+          <div class="label ttext">Property Type:</div>
            <div class="property-card-adress-item">
             <p>{{property.generalinfo.propertyType}}</p>
            </div>
+           <div class="label ttext">Deal Type:</div>
            <div class="property-card-adress-item">
-            <p>{{property.generalinfo.deal_type}}</p>
+            <p>{{property.generalinfo.dealType}}</p>
            </div>
+           <div class="label ttext">Property Condition:</div>
            <div class="property-card-adress-item">
-            <p>{{property.generalinfo.PropertyCondition}}</p>
+            <p>{{property.generalinfo.propertyCondition}}</p>
            </div>
         </div>
+        <div class="label ttext">Location:</div>
         <div class="property-card-adress">
             <p>{{property.location.country}}, {{property.location.city}}, {{property.location.subcity}}</p>
            </div>
            <ul class="property-data">
             <li class="property-data-item">
-                <div class="property-card-value">{{property.price.price}}</div>
-                <p class="property-card-caption">Price</p>
+                <div class="property-card-value para">{{property.price.price|number}}TND</div>
+                <p class="property-card-caption ">Price</p>
             </li>
             <li class="property-data-item">
-                <div class="property-card-value"></div>{{property.Specification.size}}</li>
-            <li class="property-data-item"><div class="property-card-value">{{property.Specification.bathrooms}}</div>
-                <p class="property-card-caption">Bathrooms</p>
+                <div class="property-card-value para"></div>{{property.Specification.size}}</li>
+            <li class="property-data-item"><div class="property-card-value para">{{property.Specification.bathrooms}}</div>
+                <p class="property-card-caption ttext">Bathrooms</p>
             </li>
-            <li class="property-data-item"><div class="property-card-value">{{property.Specification.bedrooms}}</div>
-            <p class="property-card-caption">Bedrooms</p></li>
+            <li class="property-data-item"><div class="property-card-value para">{{property.Specification.bedrooms }} </div>
+            <p class="property-card-caption ttext">Bedrooms</p></li>
            </ul>
         
 

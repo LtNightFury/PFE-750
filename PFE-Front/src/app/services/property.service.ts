@@ -98,12 +98,21 @@ export class PropertyService {
   }
 
   updateAppointmentStatus(appointmentId: number, status: 'approved' | 'canceled'): Observable<any> {
-    return this.http.patch(`http://backend.ddev.site/api/appointments/${appointmentId}/status`, { status });
+    return this.http.patch(`http://backend.ddev.site/api/appointments/${appointmentId}/approve`, { status });
   }
   
   // New method for sending email to property owner/agent
   sendEmailToOwner(emailData: EmailData): Observable<any> {
-    return this.http.post(`${this.baseApiUrl}/send-email`, emailData);
+    return this.http.post(`${this.baseApiUrl}/properties/${emailData.propertyId}/send-email`, emailData);
   }
+  getEmailMessages(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseApiUrl}/owner/messages`);
+  }
+  recordView(propertyId: number): Observable<any> {
+    return this.http.post(`${this.baseApiUrl}/properties/${propertyId}/view`, {});
+  }
+  getPropertyViews(propertyId: number): Observable<number> {
+    return this.http.get<number>(`${this.baseApiUrl}/properties/${propertyId}/views`);
+  }  
   
 }

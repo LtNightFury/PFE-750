@@ -20,6 +20,9 @@ export class PropertyCard2Component {
     // Determine property status
     this.propertyStatus = this.determinePropertyStatus();
     this.isOffMarket = this.checkIfOffMarket();
+    console.log(this.property);
+
+    
   }
   
   determinePropertyStatus(): string {
