@@ -14,12 +14,12 @@ class Property
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['property:list', 'property:read'])]
+    #[Groups(['property:list', 'property:read','message:read'])]
     private ?int $id = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['property:list', 'property:read'])]
+    #[Groups(['property:list', 'property:read','message:read'])]
     private ?General $generalinfo = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
@@ -68,10 +68,17 @@ class Property
     #[ORM\OneToMany(mappedBy: 'property', targetEntity: Appointment::class)]
     private Collection $appointments;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $viewCount = 0;
+
+    #[ORM\OneToMany(mappedBy: 'Property', targetEntity: Message::class, orphanRemoval: true)]
+    private Collection $messages;
+
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
         $this->appointments = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
     
 
@@ -79,6 +86,10 @@ class Property
     {
         return $this->id;
     }
+    public function incrementViewCount(): void
+{
+    $this->viewCount++;
+}
 
     public function getGeneralinfo(): ?General
     {
@@ -242,6 +253,48 @@ class Property
             // set the owning side to null (unless already changed)
             if ($appointment->getProperty() === $this) {
                 $appointment->setProperty(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getViewCount(): ?int
+    {
+        return $this->viewCount;
+    }
+
+    public function setViewCount(?int $viewCount): static
+    {
+        $this->viewCount = $viewCount;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): static
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages->add($message);
+            $message->setProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): static
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getProperty() === $this) {
+                $message->setProperty(null);
             }
         }
 

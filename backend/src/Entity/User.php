@@ -28,7 +28,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank]
     #[Assert\Email]
-    #[Groups(['admin:read', 'property:read'])]
+    #[Groups(['admin:read', 'property:read','message:read'])]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -43,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $resetToken = null;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    #[Groups(['admin:read', 'property:read'])]
+    #[Groups(['admin:read', 'property:read','message:read'])]
     private ?string $profileImage = null;
 
     #[Vich\UploadableField(mapping: 'User', fileNameProperty: 'profileImage')]
@@ -75,18 +75,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $contracts;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['admin:read', 'property:read'])]
+    #[Groups(['admin:read', 'property:read','message:read'])]
     private ?string $phoneNumber = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Appointment::class)]
     private Collection $appointments;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['admin:read', 'property:read'])]
+    #[Groups(['admin:read', 'property:read','message:read'])]
     private ?string $lastname = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Contactus::class)]
     private Collection $contactuses;
+
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Message::class, orphanRemoval: true)]
+    private Collection $messages;
 
 
     public function __construct()
@@ -97,6 +100,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->contracts = new ArrayCollection();
         $this->appointments = new ArrayCollection();
         $this->contactuses = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     public function getName(): ?string
@@ -405,6 +409,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($contactus->getUser() === $this) {
                 $contactus->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): static
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages->add($message);
+            $message->setOwner($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): static
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getOwner() === $this) {
+                $message->setOwner(null);
             }
         }
 
