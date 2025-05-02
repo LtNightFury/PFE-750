@@ -231,6 +231,28 @@ public function getUserProperties(PropertyRepository $propertyRepository, Serial
 
     return new JsonResponse($json, 200, [], true);
 }
+#[Route('/properties/{id}/view', name: 'property_add_view', methods: ['POST'])]
+public function addView(int $id, EntityManagerInterface $em): JsonResponse
+
+{
+    $property = $em->getRepository(Property::class)->find($id);
+    $property->incrementViewCount(); 
+    $em->persist($property);
+    $em->flush();
+
+    return new JsonResponse(['message' => 'View recorded'], Response::HTTP_OK);
+}
+#[Route('/properties/{id}/views', name: 'property_get_view_count', methods: ['GET'])]
+public function getViewCount(int $id, EntityManagerInterface $em): JsonResponse
+{
+    $property = $em->getRepository(Property::class)->find($id);
+
+    if (!$property) {
+        return new JsonResponse(['error' => 'Property not found'], Response::HTTP_NOT_FOUND);
+    }
+
+    return new JsonResponse(['viewCount' => $property->getViewCount()], Response::HTTP_OK);
+}
 
 
 

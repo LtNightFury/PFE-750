@@ -20,7 +20,7 @@ class General
     private ?string $deal_type = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['property:list', 'property:read'])]
+    #[Groups(['property:list','message:read', 'property:read'])]
     private ?string $title = null;
 
     #[ORM\Column(length: 1000)]
