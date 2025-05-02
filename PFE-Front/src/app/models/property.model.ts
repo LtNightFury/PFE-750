@@ -8,15 +8,19 @@ export interface Property {
     contacts: Contacts;
     Media: Media;
     bookings: Booking[];
-      user: userprofile;
+    user: userprofile;
+    approval: string;
+    views: string;
   }
   
   export interface GeneralInfo {
     id: number;
     deal_type: string;
     title: string;
+    dealType: string;
     description: string;
     PropertyCondition: string;
+    propertyCondition: string;
     propertyType: string;
     availabilityDate: string | null;
   }

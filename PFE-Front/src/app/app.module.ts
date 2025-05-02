@@ -62,6 +62,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AppointmentsCalendarComponent } from './owner-dashboard/appointments-calendar/appointments-calendar.component';
 import { EmailModalComponent } from './components/email-modal/email-modal.component';
+import { DashDashComponent } from './owner-dashboard/dash-dash/dash-dash.component';
 
 
 
@@ -114,6 +115,7 @@ import { EmailModalComponent } from './components/email-modal/email-modal.compon
   
     AppointmentsCalendarComponent,
         EmailModalComponent,
+        DashDashComponent,
         
        
     

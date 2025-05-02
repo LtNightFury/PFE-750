@@ -21,6 +21,7 @@ import { OwnerDashComponent } from './owner-dashboard/owner-dash/owner-dash.comp
 import { PropertyListDashComponent } from './owner-dashboard/property-list-dash/property-list-dash.component';
 import { AuthGuard } from './login-register-verif/guards/auth.guard';
 import { AppointmentsCalendarComponent } from './owner-dashboard/appointments-calendar/appointments-calendar.component';
+import { DashDashComponent } from './owner-dashboard/dash-dash/dash-dash.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -51,8 +52,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
+        path: 'owner-dash',
+        component: DashDashComponent
+      },
+      {
         path: '',
-        redirectTo: 'properties',
+        redirectTo: 'owner-dash',
         pathMatch: 'full'
       },
       {

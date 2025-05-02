@@ -21,7 +21,8 @@
     gap: 1rem;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 2rem;}
+    margin-bottom: 2rem;
+  }
 
     .table-panel-search{
         width: 22rem;
@@ -89,11 +90,12 @@
         display: flex;
         gap: 2rem;
         align-items: flex-start;
+        justify-content: space-between;
     }
     .properties-list-cards-items {
         flex-basis: 0;
         flex-grow: 1;
-        min-width: 0;
+        width: 20rem;
     }
     .properties-list-cards-item:not(:last-child) {
         margin-bottom: 2rem;

@@ -5,18 +5,19 @@
         <a routerLink="/property-list">Properties</a> &gt; Properties Cards
       </div>
       <div class="page-header-headline">
-        <h2 class="text-h1">{{ filteredProperties.length }} Properties</h2>
+        <h2 class="text-h1">{{ paginatedProperties.length }} Properties</h2>
       </div>
       <div class="page-header-end d-flex gap-1"></div>
     </div>
   </header>
+
   <div class="property-list-filter">
     <div class="table-panel">
       <div class="table-panel-search">
          <div class="search-box">
             <input type="text" placeholder="Search" [(ngModel)]="currentFilters.search" 
                    (input)="applyFilters()" class="search-input">
-                   <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
           </div>
         </div>
       </div>
@@ -24,29 +25,55 @@
       <button type="button" routerLink="/edit" class="btn"><span class="btn-text"> <i class="fa-solid fa-plus"></i>Add New property</span></button>
      </div>
   </div>
-  <div class="property-list-view">
-   <div class="property-list-cards">
-      <div class="property-list-cards-items">
-         <ng-container *ngIf="!isLoading && !error">
-            <app-property-card2 
-              *ngFor="let property of filteredProperties" 
-              [property]="property">
-            </app-property-card2>
-          </ng-container>
-      </div>
-      <div class="filter-sidebar"  *ngIf="filteredProperties.length > 0">
-         <div class="filter-header">
-           <h2>Filters</h2>
-           <!-- Clear all filters button -->
-           <button class="btn-clear" (click)="clearAllFilters()">clear all</button>
-         </div>
-         
-         <app-property-filter 
-           (filterChanged)="onFilterChanged($event)">
-         </app-property-filter>
-       </div>
-      
-   </div>
 
+  <div class="property-list-view">
+    <div class="property-list-cards">
+      <div class="property-list-cards-items">
+        <ng-container *ngIf="!isLoading && !error">
+          <app-property-card2 
+            *ngFor="let property of paginatedProperties" 
+            [property]="property">
+          </app-property-card2>
+        </ng-container>
+      </div>
+
+      <!-- Pagination Controls -->
+      
+
+      <div class="filter-sidebar" >
+        <div class="filter-header">
+          <h2>Filters</h2>
+          <!-- Clear all filters button -->
+          <button class="btn-clear" (click)="clearAllFilters()">clear all</button>
+        </div>
+        
+        <app-property-filter 
+          (filterChanged)="onFilterChanged($event)">
+        </app-property-filter>
+      </div>
+      
+    </div>
   </div>
+  <nav *ngIf="filteredProperties.length > itemsPerPage">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" 
+    [class.disabled]="currentPage === 1" 
+    (click)="currentPage > 1 && onPageChange(currentPage - 1)">
+  <a class="page-link">Previous</a>
+</li>
+
+
+      <li class="page-item" *ngFor="let page of [].constructor(Math.ceil(filteredProperties.length / itemsPerPage)); let i = index"
+          [class.active]="currentPage === i + 1" (click)="onPageChange(i + 1)">
+        <a class="page-link">{{ i + 1 }}</a>
+      </li>
+
+      <li class="page-item" 
+    [class.disabled]="currentPage >= totalPages" 
+    (click)="currentPage < totalPages && onPageChange(currentPage + 1)">
+  <a class="page-link">Next</a>
+</li>
+
+    </ul>
+  </nav>
 </div>

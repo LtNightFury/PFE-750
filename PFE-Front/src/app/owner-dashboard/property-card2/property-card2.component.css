@@ -5,12 +5,34 @@
   align-items: center;
   cursor: pointer;
   margin-bottom: 2rem;
-  border-bottom: #918f90 solid 0.0625rem;
+  border-bottom: lightgray solid 1px;
+  width: 65rem;
 }
-.properties-card:not(:last-child) {
-  margin-bottom: 2rem;
-  padding-bottom: 2rem;
-  border-bottom: .0625rem solid gray;
+h3{
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1F2744;
+}
+.ttext {
+  font-size: 1rem;
+  font-weight: 600;
+  color: lightslategray;
+}
+.para{
+  font-size: 1rem;
+  font-weight: 500;
+  color: green;
+  align-items: center;
+}
+p{
+  font-size: 1rem;
+  font-weight: 500;
+  color: green;
+  align-items: center;
+
+  
+  
+  
 }
 .property-card-image {  
     align-self: flex-start;
@@ -40,9 +62,10 @@ img {
 .property-card-adress {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem 2rem;
-  margin-bottom: 2rem;
+  gap: 1rem ;
+  margin-bottom: 1rem;
   color: #918f90;
+  
 }
 .property-card-adress-item{
   display: flex ;
@@ -59,7 +82,7 @@ img {
 .property-card-caption {
   font-size: .875rem;
   line-height: 1.43;
-  color: #918f90;
+  color: lightslategray;
 }
 .property-image-container {
   position: relative;
@@ -69,8 +92,8 @@ img {
   border-radius: 1rem;
 }
 .property-data {
-  display: flex
-;
+  display: flex;
   flex-wrap: wrap;
   gap: 1rem 2rem;
+  padding: 0;
 }

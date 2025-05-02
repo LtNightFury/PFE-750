@@ -122,6 +122,7 @@ export class PropertyFilterComponent {
    */
   applyFilters() {
     const filters = {
+      
       dealType: this.dealType,
       type: this.type,
       city: this.city,

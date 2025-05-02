@@ -39,7 +39,6 @@ export class EmailModalComponent implements OnInit {
       this.emailForm.markAllAsTouched();
       return;
     }
-    
     this.isSubmitting = true;
     this.hasError = false;
     
@@ -48,6 +47,12 @@ export class EmailModalComponent implements OnInit {
       propertyId: this.propertyId,
       recipientId: this.recipientId
     };
+    
+    console.log('Sending email data:', emailData);
+    console.log('Form value:', this.emailForm.value);
+    
+    this.isSubmitting = true;
+    this.hasError = false;
     
     this.propertyService.sendEmailToOwner(emailData).subscribe({
       next: (response) => {
@@ -61,8 +66,7 @@ export class EmailModalComponent implements OnInit {
         this.errorMessage = error.message || 'Failed to send email. Please try again.';
       }
     });
-  }
-  
+  }  
   closeModal(): void {
     this.close.emit();
   }

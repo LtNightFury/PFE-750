@@ -39,10 +39,18 @@ scheduledAppointment: Appointment | null = null;
   ) {}
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const id = Number(params.get('id'));
+      this.propertyService.getPropertyById(id).subscribe(property => {
+        this.property = property;
+        this.propertyService.recordView(property.id).subscribe(); // 👈 Add this call
+      });
+    });
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.propertyService.getPropertyById(id).subscribe({
       next: (data) => {
         this.property = data;
+        
 
         // Combine photos, floorPlans, and documents into a single array
         const baseUrl = 'http://backend.ddev.site';
@@ -182,5 +190,6 @@ closeAppointmentForm(): void {
   onEmailSent(success: boolean): void {
     this.emailSent = success;
   }
+  
 
 }
