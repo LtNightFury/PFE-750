@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { last } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -20,6 +21,7 @@ export class RegisterComponent {
       name: ['', Validators.required],
       role: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      lastName: ['', Validators.required],
        // Add default country code
   phoneNumber: ['', [
     Validators.required,
