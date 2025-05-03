@@ -16,7 +16,13 @@ export class PropertyViewsComponent {
   ngOnInit(): void {
     this.propertyService.getUserViews().subscribe({
       next: (response) => {
-        this.views = response.views;
+        const views = response?.views ?? [];
+  
+        // Sort by viewedAt descending (latest first)
+        this.views = views.sort((a, b) => {
+          return new Date(b.viewedAt).getTime() - new Date(a.viewedAt).getTime();
+        });
+  
         this.isLoading = false;
       },
       error: () => {
@@ -25,6 +31,7 @@ export class PropertyViewsComponent {
       }
     });
   }
+  
 
   getImageUrl(path: string): string {
     if (!path) return '/assets/default.jpg';
