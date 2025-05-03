@@ -3,6 +3,7 @@ import { Booking, Property } from '../models/property.model';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Appointment } from '../models/Appointment.model';
+import { PropertyView } from '../models/property-view.model';
 
 export interface EmailData {
   name: string;
@@ -114,5 +115,8 @@ export class PropertyService {
   getPropertyViews(propertyId: number): Observable<number> {
     return this.http.get<number>(`${this.baseApiUrl}/properties/${propertyId}/views`);
   }  
+  getUserViews(): Observable<{ views: PropertyView[] }> {
+    return this.http.get<{ views: PropertyView[] }>(`${this.baseApiUrl}/user/views`);
+  }
   
 }

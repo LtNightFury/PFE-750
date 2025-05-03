@@ -91,6 +91,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Message::class, orphanRemoval: true)]
     private Collection $messages;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: PropertyView::class)]
+    private Collection $propertyViews;
+
 
     public function __construct()
     {
@@ -101,6 +104,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->appointments = new ArrayCollection();
         $this->contactuses = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->propertyViews = new ArrayCollection();
     }
 
     public function getName(): ?string
@@ -439,6 +443,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($message->getOwner() === $this) {
                 $message->setOwner(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PropertyView>
+     */
+    public function getPropertyViews(): Collection
+    {
+        return $this->propertyViews;
+    }
+
+    public function addPropertyView(PropertyView $propertyView): static
+    {
+        if (!$this->propertyViews->contains($propertyView)) {
+            $this->propertyViews->add($propertyView);
+            $propertyView->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePropertyView(PropertyView $propertyView): static
+    {
+        if ($this->propertyViews->removeElement($propertyView)) {
+            // set the owning side to null (unless already changed)
+            if ($propertyView->getUser() === $this) {
+                $propertyView->setUser(null);
             }
         }
 

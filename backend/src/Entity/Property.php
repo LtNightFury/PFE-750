@@ -74,11 +74,15 @@ class Property
     #[ORM\OneToMany(mappedBy: 'Property', targetEntity: Message::class, orphanRemoval: true)]
     private Collection $messages;
 
+    #[ORM\OneToMany(mappedBy: 'Property', targetEntity: PropertyView::class)]
+    private Collection $propertyViews;
+
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
         $this->appointments = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->propertyViews = new ArrayCollection();
     }
     
 
@@ -295,6 +299,36 @@ class Property
             // set the owning side to null (unless already changed)
             if ($message->getProperty() === $this) {
                 $message->setProperty(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PropertyView>
+     */
+    public function getPropertyViews(): Collection
+    {
+        return $this->propertyViews;
+    }
+
+    public function addPropertyView(PropertyView $propertyView): static
+    {
+        if (!$this->propertyViews->contains($propertyView)) {
+            $this->propertyViews->add($propertyView);
+            $propertyView->setProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function removePropertyView(PropertyView $propertyView): static
+    {
+        if ($this->propertyViews->removeElement($propertyView)) {
+            // set the owning side to null (unless already changed)
+            if ($propertyView->getProperty() === $this) {
+                $propertyView->setProperty(null);
             }
         }
 
