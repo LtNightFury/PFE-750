@@ -210,6 +210,45 @@ public function getOwnerAppointments(): JsonResponse
 
     return new JsonResponse($appointments, Response::HTTP_OK);
 }
+#[Route('/api/owner/countappointments', name: 'get_owner_pending_appointments_count', methods: ['GET'])]
+public function getOwnerpendingAppointments(): JsonResponse
+{
+    $user = $this->getUser();
+
+    if (!$user) {
+        return new JsonResponse(['error' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    
+    $properties = $this->propertyRepository->findBy(['user' => $user]);
+
+    if (!$properties) {
+        return new JsonResponse([], Response::HTTP_OK);
+    }
+
+    
+    $pendingAppointmentsCount = 0; // Variable to store the count of pending appointments
+
+    foreach ($properties as $property) {
+        // Get appointments for each property
+        foreach ($property->getAppointments() as $appointment) {
+            // Count pending appointments
+            if ($appointment->getStatus() === 'pending') {
+                $pendingAppointmentsCount++;
+            }
+
+            
+            
+        }
+    }
+
+   
+    return new JsonResponse([
+    
+        'pendingAppointmentsCount' => $pendingAppointmentsCount
+    ], Response::HTTP_OK);
+}
+
 
 
 }

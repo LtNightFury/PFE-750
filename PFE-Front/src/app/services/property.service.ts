@@ -118,5 +118,21 @@ export class PropertyService {
   getUserViews(): Observable<{ views: PropertyView[] }> {
     return this.http.get<{ views: PropertyView[] }>(`${this.baseApiUrl}/user/views`);
   }
+  getTotalViewsForOwner(): Observable<{ totalViews: number }> {
+    return this.http.get<{ totalViews: number }>('http://backend.ddev.site/api/owner/allviews');
+  }
+  getApprovedPropertiesCount(): Observable<{ approvedProperties: number }> {
+    return this.http.get<{ approvedProperties: number }>(`${this.baseApiUrl}/owner/approved-properties`);
+  }
+  getAllPropertiesCount(): Observable<{ allProperties: number }> {
+    return this.http.get<{ allProperties: number }>(`${this.baseApiUrl}/owner/all-properties-count`);
+  }
+  getPendingAppointmentsCount(): Observable<{ pendingAppointmentsCount: number }> {
+    return this.http.get<{ pendingAppointmentsCount: number }>(`${this.baseApiUrl}/owner/countappointments`);
+  }
+  // In property.service.ts or a new message.service.ts
+getUnreadMessageCount(): Observable<number> {
+  return this.http.get<number>(`${this.baseApiUrl}/messagescount`);
+}
   
 }

@@ -90,5 +90,41 @@ public function sendMessage(
         $em->flush();
         return $this->json( 'message read');
     }
+
+    #[Route('api/messagescount', name: 'COUNT_message', methods: ['GET'])]
+    public function getMessageCount(EntityManagerInterface $em): JsonResponse
+    {
+        $user = $this->getUser();
+        if (!$user) {
+            return new JsonResponse(['error' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
+        }
+
+        $messages = $em->getRepository(Message::class)->findBy(['owner' => $user, 'isRead' => false]);
+
+
+        return $this->json(count($messages), 200, [], []);
 }
 
+
+    #[Route('api/messages/{id}', name: 'delete_message', methods: ['DELETE'])]
+    public function deleteMessage(int $id, EntityManagerInterface $em): JsonResponse
+    {
+        $message = $em->getRepository(Message::class)->find($id);
+        if (!$message) {
+            return new JsonResponse(['error' => 'Message not found'], Response::HTTP_NOT_FOUND);
+        }
+        $user = $this->getUser();
+        if (!$user) {
+            return new JsonResponse(['error' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
+        }
+        $owner = $message->getOwner();
+        if ($owner !== $user) {
+            return new JsonResponse(['error' => 'You are not authorized to delete this message'], Response::HTTP_FORBIDDEN);
+        }
+
+        $em->remove($message);
+        $em->flush();
+
+        return new JsonResponse(['status' => 'Message deleted successfully.']);
+}
+}
