@@ -15,6 +15,7 @@ use App\Repository\GeneralRepository;
 use App\Repository\PropertyRepository;
 use App\Entity\Booking;
 use App\Repository\BookingRepository;
+use App\Entity\PropertyView;
 
 
 use Symfony\Component\Serializer\SerializerInterface;
@@ -235,10 +236,22 @@ public function getUserProperties(PropertyRepository $propertyRepository, Serial
 public function addView(int $id, EntityManagerInterface $em): JsonResponse
 
 {
+    $user = $this->getUser();
     $property = $em->getRepository(Property::class)->find($id);
+    
+    $view = new PropertyView();
+    $view->setUser($user);
+    $view->setProperty($property);
+    $view->setViewedAt(new \DateTime());
+
+
+
+    
     $property->incrementViewCount(); 
+    $em->persist($view);
     $em->persist($property);
     $em->flush();
+   
 
     return new JsonResponse(['message' => 'View recorded'], Response::HTTP_OK);
 }
@@ -253,8 +266,52 @@ public function getViewCount(int $id, EntityManagerInterface $em): JsonResponse
 
     return new JsonResponse(['viewCount' => $property->getViewCount()], Response::HTTP_OK);
 }
+#[Route('/user/views', name: 'user_views', methods: ['GET'])]
+public function getUserViews(EntityManagerInterface $em): JsonResponse
+{
+    $user = $this->getUser();
+    if (!$user) {
+        return new JsonResponse(['error' => 'Authentication required'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    $views = $em->getRepository(PropertyView::class)->findBy(['user' => $user]);
+
+    $result = [];
+    foreach ($views as $view) {
+        $result[] = [
+            'propertyId' => $view->getProperty()->getId(),
+            'propertyTitle' => $view->getProperty()->getGeneralinfo()->getTitle(),
+            'propertyCity' => $view->getProperty()->getLocation()->getCity(),
+            'propertySubCity' => $view->getProperty()->getLocation()->getSubcity(),
+            'propertyPrice' => $view->getProperty()->getPrice()->getPrice(),
+            'propertyImage' => $view->getProperty()->getMedia()->getPhotos()[0]->getImageName(), 
+            'propertyType' => $view->getProperty()->getGeneralinfo()->getPropertyType(),
+            'viewedAt' => $view->getViewedAt()->format('Y-m-d H:i:s')
+        ];
+    }
+
+    return new JsonResponse(['views' => $result], Response::HTTP_OK);
+}
+
+#[Route('/owner/allviews', name: 'views_perowner', methods: ['GET'])]
+public function getViewsPerOwner(EntityManagerInterface $em): JsonResponse
+{
+    $user = $this->getUser();
+    if (!$user) {
+        return new JsonResponse(['error' => 'Authentication required'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    $properties = $em->getRepository(Property::class)->findBy(['user' => $user]);
+    $viewsCount = [];
+
+    foreach ($properties as $property) {
+        $viewsCount[$property->getId()] = count($property->getPropertyViews());
+    }
+
+    return new JsonResponse(['viewsCount' => $viewsCount], Response::HTTP_OK);
 
 
 
 
+}
 }

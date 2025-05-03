@@ -22,6 +22,7 @@ import { PropertyListDashComponent } from './owner-dashboard/property-list-dash/
 import { AuthGuard } from './login-register-verif/guards/auth.guard';
 import { AppointmentsCalendarComponent } from './owner-dashboard/appointments-calendar/appointments-calendar.component';
 import { DashDashComponent } from './owner-dashboard/dash-dash/dash-dash.component';
+import { PropertyViewsComponent } from './components/property-views/property-views.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'my-appointments', component: MyAppointmentsComponent },
   { path: 'my-bookings', component: MyBookingsComponent },
   {path: 'owner-dashboard', component: OwnerDashComponent},
+  {path: 'propertyview', component: PropertyViewsComponent},
   /*{ 
     path: 'appointments', 
     component: AppointmentsCalendarComponent 

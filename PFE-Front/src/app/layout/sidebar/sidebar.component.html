@@ -31,9 +31,9 @@
     <div class="sidebar-section">
       <div class="section-title">Workspace</div>
       <ul class="menu-list">
-        <li class="menu-item">
-          <i class="menu-icon general-icon"></i>
-          <span>General</span>
+        <li class="menu-item" [ngClass]="{'active':activePage==='my History'}" routerLink="/propertyview" >
+          <i class="menu-icon blocked-icon"></i>
+          <span>My history</span>
         </li>
         <li class="menu-item">
           <i class="menu-icon members-icon"></i>
