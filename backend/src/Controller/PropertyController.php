@@ -234,25 +234,42 @@ public function getUserProperties(PropertyRepository $propertyRepository, Serial
 }
 #[Route('/properties/{id}/view', name: 'property_add_view', methods: ['POST'])]
 public function addView(int $id, EntityManagerInterface $em): JsonResponse
-
 {
     $user = $this->getUser();
+    if (!$user) {
+        return new JsonResponse(['error' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
+    }
+    
     $property = $em->getRepository(Property::class)->find($id);
+    if (!$property) {
+        return new JsonResponse(['error' => 'Property not found'], Response::HTTP_NOT_FOUND);
+    }
     
-    $view = new PropertyView();
-    $view->setUser($user);
-    $view->setProperty($property);
-    $view->setViewedAt(new \DateTime());
-
-
-
+    // Check if a view record already exists for this user and property
+    $existingView = $em->getRepository(PropertyView::class)->findOneBy([
+        'user' => $user,
+        'Property' => $property
+    ]);
     
-    $property->incrementViewCount(); 
-    $em->persist($view);
-    $em->persist($property);
+    if ($existingView) {
+        // Update the existing view's timestamp
+        $existingView->setViewedAt(new \DateTime());
+        // No need to persist again, just flush the changes
+    } else {
+        // Create a new view record
+        $view = new PropertyView();
+        $view->setUser($user);
+        $view->setProperty($property);
+        $view->setViewedAt(new \DateTime());
+        $em->persist($view);
+        
+        // Only increment the view count for new views
+        $property->incrementViewCount();
+        $em->persist($property);
+    }
+    
     $em->flush();
-   
-
+    
     return new JsonResponse(['message' => 'View recorded'], Response::HTTP_OK);
 }
 #[Route('/properties/{id}/views', name: 'property_get_view_count', methods: ['GET'])]
@@ -302,16 +319,43 @@ public function getViewsPerOwner(EntityManagerInterface $em): JsonResponse
     }
 
     $properties = $em->getRepository(Property::class)->findBy(['user' => $user]);
-    $viewsCount = [];
+    $totalViews = 0;
 
     foreach ($properties as $property) {
-        $viewsCount[$property->getId()] = count($property->getPropertyViews());
+        $totalViews += count($property->getPropertyViews());
     }
 
-    return new JsonResponse(['viewsCount' => $viewsCount], Response::HTTP_OK);
-
-
-
-
+    return new JsonResponse(['totalViews' => $totalViews], Response::HTTP_OK);
 }
+#[Route('/owner/approved-properties', name: 'approved_properties_count', methods: ['GET'])]
+public function getApprovedPropertiesCount(EntityManagerInterface $em): JsonResponse
+{
+    $user = $this->getUser();
+
+    if (!$user) {
+        return new JsonResponse(['error' => 'Authentication required'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    $approvedCount = $em->getRepository(Property::class)->count([
+        'user' => $user,
+        'approval' => 'approved'
+    ]);
+
+    return new JsonResponse(['approvedProperties' => $approvedCount], Response::HTTP_OK);
+}
+#[Route('/owner/all-properties-count', name: 'all_properties_count', methods: ['GET'])]
+public function getAllPropertiesCount(EntityManagerInterface $em): JsonResponse
+{
+    $user = $this->getUser();
+    if (!$user) {
+        return new JsonResponse(['error' => 'Authentication required'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    $properties = $em->getRepository(Property::class)->findBy(['user' => $user]);
+    $count = count($properties);
+
+    return new JsonResponse(['allProperties' => $count], Response::HTTP_OK);
+}
+
+
 }

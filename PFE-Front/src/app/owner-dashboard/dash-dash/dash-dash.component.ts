@@ -13,17 +13,18 @@ import { Appointment } from 'src/app/models/Appointment.model';
 })
 export class DashDashComponent {
 
-    properties: Property[] = [];
+  properties: Property[] = [];
   appointments: Appointment[] = [];
   filteredProperties: Property[] = [];
   isLoading: boolean = true;
   error: string | null = null;
   totalViews: number = 0;
   approvedPropertiesCount: number = 0;
-  pendingRequestsCount: number = 2; // Placeholder until you wire messaging
-  newMessagesCount: number = 1;     // Placeholder
+  pendingRequestsCount: number =0; // Placeholder until you wire messaging
+  newMessagesCount: number = 0;     // Placeholder
   upcomingAppointmentsCount: number = 0;
   upcomingAppointments: Appointment[] = [];
+  allPropertiesCount: number = 0;
 
   // Filter state
   currentFilters: any = {};
@@ -34,29 +35,34 @@ export class DashDashComponent {
     private router: Router
   ) {}
   ngOnInit(): void {
-    this.loadProperties();
+    this.isLoading = true;
+    this.loadAllProperties();
+    this.loadappProperties();
+    this.loadpendingrequest();
     this.loadAppointments();
     this.loadUpcomingAppointments();
+    this.loadMessages();
+
     let totalViews = 0;
-this.propertyService.getAllPropertiesByOwnerId().subscribe(properties => {
-  totalViews = properties.reduce((sum, p) => sum + (Number(p.views) || 0), 0);  this.totalViews = totalViews;
+    this.propertyService.getTotalViewsForOwner().subscribe({
+      next: (res) => {
+        this.totalViews = res.totalViews;
+        this.isLoading = false;
+      },
 });
 
   }
-  loadProperties(): void {
+  loadappProperties(): void {
     this.isLoading = true;
-    this.propertyService.getAllProperties().subscribe({
+    this.propertyService.getApprovedPropertiesCount().subscribe({
       next: (data) => {
-        
-        this.approvedPropertiesCount = data.filter(p => p.approval === 'approved' || this.appointments.some(a => a.status === 'confirmed')).length;
-        this.properties = data;        this.filteredProperties = data;
-        this.isLoading = false;
+        this.approvedPropertiesCount = data.approvedProperties;
       },
       error: (err) => {
-        this.error = 'Failed to load properties. Please try again.';
-        this.isLoading = false;
-      }
+        console.error('Failed to fetch approved properties count:', err);
+      },
     });
+  
   }
   loadAppointments(): void {
     this.propertyService.getUserAppointments().subscribe({
@@ -80,4 +86,33 @@ this.propertyService.getAllPropertiesByOwnerId().subscribe(properties => {
       }
     });
   }
+  loadAllProperties(): void {
+    this.isLoading = true;
+    this.propertyService.getAllPropertiesCount().subscribe({
+      next: (data) => this.allPropertiesCount = data.allProperties,
+      error: (err) => console.error('Error fetching all properties count:', err),
+    });
+
+}
+loadpendingrequest(): void {
+  this.propertyService.getPendingAppointmentsCount().subscribe({
+    next: (data) => {
+      
+      this.pendingRequestsCount = data.pendingAppointmentsCount;
+    },
+    error: (err) => {
+      console.error('Error fetching owner appointments:', err);
+    }
+  });
+}
+loadMessages(): void {
+  this.propertyService.getUnreadMessageCount().subscribe({
+    next: (count) => {
+      this.newMessagesCount = count;
+    },
+    error: (err) => {
+      console.error('Error fetching unread messages count:', err);
+    }
+  });
+}
 }
