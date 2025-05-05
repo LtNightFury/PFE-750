@@ -66,11 +66,13 @@ public function register(Request $request): JsonResponse
     $user = new User();
     $user->setEmail($data['email']);
     $user->setPassword($this->passwordHasher->hashPassword($user, $data['password']));
-    if ($data['role']=='owner') {
+    $role = strtolower(trim($data['role'] ?? ''));
+    if ($role === 'owner') {
         $user->setRoles(['ROLE_OWNER']);
-    }else  {
-        $user->setRoles(['ROLE_USER']);   
+    } else {
+        $user->setRoles(['ROLE_USER']);
     }
+    
     
     $user->setPhoneNumber($data['phoneNumber']);
 
