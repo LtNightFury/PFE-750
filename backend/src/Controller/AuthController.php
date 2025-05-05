@@ -377,4 +377,18 @@ public function createContact(Request $request, EntityManagerInterface $em): Jso
         'id' => $contact->getId()
     ], Response::HTTP_CREATED);
 }
+
+#[Route('/user/check-auth', name: 'check_auth', methods: ['GET'])]
+public function checkAuth(): JsonResponse
+{
+    if (!$this->getUser()) {
+        return new JsonResponse(['authenticated' => false], 200); // 200 OK, not 401
+    }
+    
+    return new JsonResponse([
+        'authenticated' => true,
+        // Optionally include minimal user info like roles
+        'roles' => $this->getUser()->getRoles(),
+    ], 200);
+}
 }

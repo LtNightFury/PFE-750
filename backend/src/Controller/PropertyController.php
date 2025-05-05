@@ -237,7 +237,7 @@ public function addView(int $id, EntityManagerInterface $em): JsonResponse
 {
     $user = $this->getUser();
     if (!$user) {
-        return new JsonResponse(['error' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
+        return new JsonResponse(['error' => 'Property not found'], Response::HTTP_NOT_FOUND);
     }
     
     $property = $em->getRepository(Property::class)->find($id);

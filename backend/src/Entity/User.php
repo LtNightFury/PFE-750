@@ -62,7 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Groups(['admin:read', 'property:read'])]
+    #[Groups(['admin:read', 'property:read',['message:read']])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Property::class)]
@@ -149,13 +149,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+{
+    $roles = $this->roles;
 
-        return array_unique($roles);
+    // If the user is an admin, they already have access to ROLE_USER through the hierarchy, no need to add it
+    if (!in_array('ROLE_ADMIN', $roles)) {
+        $roles[] = 'ROLE_USER';  // Ensure every user at least has ROLE_USER
     }
+
+    return array_unique($roles);
+}
 
     public function setRoles(array $roles): static
     {

@@ -1,6 +1,9 @@
 security:
-
     enable_authenticator_manager: true
+
+    role_hierarchy:
+        ROLE_OWNER: [ROLE_USER]
+        ROLE_ADMIN: [ROLE_OWNER, ROLE_USER]
 
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
@@ -34,17 +37,31 @@ security:
             provider: app_user_provider
 
     access_control:
-        - { path: ^/api/login, roles: PUBLIC_ACCESS }
-        - { path: ^/api/register, roles: PUBLIC_ACCESS }
-        - { path: ^/api/forgot-password, roles: PUBLIC_ACCESS }
-        - { path: ^/api/reset-password, roles: PUBLIC_ACCESS }
-        - { path: ^/api/properties/\d+/send-email, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/api/properties/\d+/view, methods: [POST], roles: PUBLIC_ACCESS } # <-- Add this
-        - { path: ^/api/properties, methods: [GET], roles: PUBLIC_ACCESS }
-        - { path: ^/api/properties/\d+, methods: [GET], roles: PUBLIC_ACCESS }
-        - { path: ^/api/user, roles: PUBLIC_ACCESS }
-        - { path: ^/api/properties/\d+, methods: ['PUT', 'PATCH','DELETE','POST'], roles: ROLE_OWNER }
-        - { path: ^/api/admin, roles: ROLE_ADMIN }
-        - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
-
-
+         # Public routes     
+    - { path: ^/api/login, roles: PUBLIC_ACCESS }
+    - { path: ^/api/register, roles: PUBLIC_ACCESS }
+    - { path: ^/api/forgot-password, roles: PUBLIC_ACCESS }
+    - { path: ^/api/reset-password, roles: PUBLIC_ACCESS }
+    - { path: ^/api/properties$, methods: [GET], roles: PUBLIC_ACCESS }
+    - { path: ^/api/properties/\d+$, methods: [GET], roles: PUBLIC_ACCESS }
+    - { path: ^/api/properties/\d+/view, methods: [POST], roles: PUBLIC_ACCESS }
+    - { path: ^/api/user$, methods: [GET], roles: PUBLIC_ACCESS }
+    
+    # User profile - should require authentication
+    - { path: ^/api/user/update-password, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/api/user/remove-profile-picture, roles: IS_AUTHENTICATED_FULLY }
+    
+    # Owner-specific endpoints
+    - { path: ^/api/properties$, methods: [POST], roles: ROLE_OWNER }
+    - { path: ^/api/properties/\d+$, methods: ['PUT', 'PATCH', 'DELETE'], roles: ROLE_OWNER }
+    - { path: ^/api/owner/, roles: ROLE_OWNER }
+    
+    # Booking & appointment endpoints
+    - { path: ^/api/booking/, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/api/appointments/, roles: IS_AUTHENTICATED_FULLY }
+    
+    # Admin routes
+    - { path: ^/api/admin/, roles: ROLE_ADMIN }
+    
+    # Default protection for all other API routes
+    - { path: ^/api/, roles: IS_AUTHENTICATED_FULLY }
