@@ -51,7 +51,7 @@
             </svg>
             <span>My Appointment</span>
           </a>
-          <a ng *ngIf="user?.roles?.includes('owner')||user?.roles?.includes('ROLE_ADMIN')"routerLink="/owner" class="dropdown-item">
+          <a ng *ngIf="user?.roles?.includes('ROLE_OWNER')||user?.roles?.includes('ROLE_ADMIN')"routerLink="/owner" class="dropdown-item">
             <i class="settings-icon"></i>
             <span>Owner Dashboard</span>
           </a>
