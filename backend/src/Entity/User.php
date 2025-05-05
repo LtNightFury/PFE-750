@@ -62,7 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Groups(['admin:read', 'property:read',['message:read']])]
+    #[Groups(['admin:read', 'property:read','message:read'])]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Property::class)]
