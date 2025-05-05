@@ -36,7 +36,7 @@ export class PropertyCard2Component {
   }
   
   navigateToDetail(): void {
-    this.router.navigate(['/properties', this.property.id]);
+    this.router.navigate(['/property', this.property.id]);
   }
   
   getPropertyImage(): string {

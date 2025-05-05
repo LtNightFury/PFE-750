@@ -1,0 +1,201 @@
+
+body, html {
+    
+    font-family: poppins, sans-serif;
+    background-color: whitesmoke;
+
+   
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: poppins, sans-serif;
+    color: #1F2744;
+    
+}
+.dashedboard-container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 1rem;
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.month-views-chart{
+    border: solid 1px lightgray;
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 1rem;
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.2),
+        0 3px 10px rgba(0, 0, 0, 0.19);
+        height: 300px;
+        width: 100%;
+}
+    
+.chat-1-container {
+    grid-column: span 2 / span 2;
+    grid-row: span 3 / span 3;
+    
+}
+
+.property-card{
+    grid-column-start: 3;
+    cursor: pointer;
+    
+    
+    
+    
+}
+.card-title{
+font-weight: bold;
+padding-bottom: 1rem;
+}
+.card-body{
+   
+    
+    
+}
+
+.upcoming-card {
+    grid-column-start: 3;
+    grid-row-start: 2;
+    cursor: pointer;
+}
+
+.div4 {
+    grid-column-start: 3;
+    grid-row-start: 3;
+}
+
+.div5 {
+    grid-row: span 2 / span 2;
+    grid-column-start: 3;
+    grid-row-start: 4;
+}
+.div6 {
+    grid-row: span 2 / span 2;
+    grid-column-start: 3;
+    grid-row-start: 5;
+}
+.div7 {
+    grid-row: span 2 / span 2;
+    grid-column-start: 3;
+    grid-row-start: 6;
+}
+
+.div8 {
+    grid-row: span 2 / span 2;
+    grid-column-start: 2;
+    grid-row-start: 4;
+}
+
+.div9 {
+    grid-row: span 2 / span 2;
+    grid-column-start: 1;
+    grid-row-start: 4;
+}
+/* alwen we fazet */
+.gradient-card {
+    background: linear-gradient(135deg, #F8FFAF, #45C5AC);
+    color: #1a1a1a; /* dark text for readability, adjust as needed */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 1rem;
+    transition: transform 0.2s ease;
+  }
+  
+  .gradient-card:hover {
+    transform: translateY(-3px);
+  }
+  
+  .gradient-card .card-header h5 {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #1F2744;
+  }
+  
+  .gradient-card .card-body .card-text {
+    margin: 0;
+  }
+  
+
+  .upcoming-card-2 {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+    background-color: #fff;
+    color: #1F2744;
+  }
+  
+  .upcoming-card-2:hover {
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
+  }
+  
+  .gradient-header {
+    background: linear-gradient(135deg, #F8FFAF, #45C5AC);
+    color: #1F2744;
+    font-weight: bold;
+    padding: 0.75rem 1.25rem;
+    font-size: 1.1rem;
+    border-bottom: none;
+  }
+  
+  .card-body {
+    padding: 1rem 1.25rem;
+    color: #1F2744;
+  }
+  
+  .appointment-block {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.75rem;
+    transition: background-color 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  .appointment-block:hover {
+    background-color: #eefefb;
+    cursor: pointer;
+  }
+  
+  .appointment-name {
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  
+  .appointment-date {
+    display: block;
+    color: #6c757d;
+    margin-top: 0.25rem;
+  }
+  
+  .appointment-title {
+    display: block;
+    margin-top: 0.25rem;
+    color: #333;
+    font-weight: 500;
+
+  }
+.month-booking-chart{
+    border: solid 1px lightgray;
+    border-radius: 10px;
+    padding: 0rem;
+    margin: 0rem;
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.2),
+        0 3px 10px rgba(0, 0, 0, 0.19);
+        height: 300px;
+        width: 100%;
+    }
+
+        
+        
+    .card-title-month-booking{
+        font-weight: bold;
+        margin: 0;
+        padding-bottom: 7px;
+       
+        color: #1F2744;
+        }           

@@ -13,6 +13,7 @@ export class HeaderComponent {
   showDropdown: boolean = false;
   showMobileMenu: boolean = false;
   user: any;
+  roles: string[] = [];
 
   constructor(private authService: AuthService, private userService: UserService) {}
   getImageUrl(path: string): string {
@@ -24,6 +25,8 @@ export class HeaderComponent {
     this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
       this.isLoggedIn = this.authService.isLoggedIn();
+      console.log(this.currentUser);
+      
        
     });
     this.userService.getUserProfile().subscribe(user => {

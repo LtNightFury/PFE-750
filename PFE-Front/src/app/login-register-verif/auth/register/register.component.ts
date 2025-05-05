@@ -91,7 +91,7 @@ export class RegisterComponent {
       console.log("Form submitted:", this.registerForm.value);
       
       const formData = this.registerForm.value;
-      this.authService.register(formData.name, formData.email, formData.password,formData.phoneNumber,formData.role).subscribe({
+      this.authService.register(formData.name, formData.email, formData.password,formData.phoneNumber,formData.role,formData.lastName ).subscribe({
         next: () => {
           this.router.navigate(['/login']);
         },
