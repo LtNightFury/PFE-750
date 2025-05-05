@@ -64,6 +64,7 @@ import { AppointmentsCalendarComponent } from './owner-dashboard/appointments-ca
 import { EmailModalComponent } from './components/email-modal/email-modal.component';
 import { DashDashComponent } from './owner-dashboard/dash-dash/dash-dash.component';
 import { PropertyViewsComponent } from './components/property-views/property-views.component';
+import { NgChartsModule } from 'ng2-charts';
 
 
 
@@ -144,6 +145,7 @@ import { PropertyViewsComponent } from './components/property-views/property-vie
     MatDialogModule,
     MatSnackBarModule,
     LucideAngularModule.pick({ Home, Building2, Calendar, MessageSquare, Wallet }),
+    NgChartsModule,
    
    
     

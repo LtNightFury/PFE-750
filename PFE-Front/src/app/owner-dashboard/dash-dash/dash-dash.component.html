@@ -1,5 +1,156 @@
 
-<div class="container my-4" >
+<div class="main-content">
+<div class="dashedboard-container">
+  <div class="chat-1-container">
+    <h5 class="mb-3 card-title" >📊 Monthly Property Views</h5>
+    <canvas class="month-views-chart"
+    width="600"
+    height="300"
+    baseChart
+    [data]="{ labels: viewChartLabels, datasets: viewChartData }"
+    [options]="chartOptions"
+    [type]="'bar'"
+    [legend]="true">
+  </canvas>
+
+  
+  </div>
+  <div class="property-card  " routerLink="/owner/properties" routerLinkActive="active-link">
+    <h5 class="card-title">📦 Total Properties</h5>
+    <div class="bodyy gradient-card">
+      
+    <div class="card-body">
+      <p class="card-text fs-4">You have</p>
+      
+      <p class="card-text fs-4">{{ allPropertiesCount }}</p>
+      <p class="card-text">Total properties listed on the platform.</p>
+    </div>
+  </div>
+  </div>
+
+  <div class="upcoming-card" routerLink="/owner/calendar" routerLinkActive="active-link">
+    <h5 class="card-title">📅 Upcoming Appointments</h5>
+    <div class="boddy gradient-card">
+      
+    <div class="card-body">
+      <p class="card-text fs-4">You have </p> 
+      <p class="card-text fs-4">{{ upcomingAppointments.length}}</p>
+      <p class="card-text">Total upcoming appointments.</p> 
+    </div>
+  </div>
+  </div>
+  <div class="div4">
+    <h5 class="card-title">👀 Total Views</h5>
+    <div class="boddy gradient-card">
+      
+    <div class="card-body">
+      <p class="card-text fs-4">You have </p> 
+        <p class="card-text fs-4">{{ totalViews}}</p>
+      <p class="card-text">Total views on your properties.</p>
+    </div>
+  </div>
+  </div>
+  <div class="div5">
+    <h5 class="card-title">🧾 Pending Requests</h5>
+    <div class="boddy gradient-card">
+      
+    <div class="card-body">
+      <p class="card-text fs-4">You have </p> 
+      <p class="card-text fs-4">{{ pendingRequestsCount }}</p>
+      <p class="card-text "> Total pending Requests</p>
+    </div>
+  </div>
+  </div>
+  
+  <div class="div6">
+    <h5 class="card-title">💬 New Messages</h5>
+    <div class="boddy gradient-card"> 
+    <div class="card-body">
+      <p class="card-text fs-4">You have </p> 
+      <p class="card-text fs-4">{{ newMessagesCount }}</p>
+      <p class="card-text">Total new messages.</p>
+    </div>
+  </div>
+  </div>
+  <div class="div7">
+    <h5 class="card-title">✅ Approved </h5>
+    
+    <div class="boddy gradient-card"> 
+    <div class="card-body">
+      <p class="card-text fs-4">You have </p> 
+      <p class="card-text fs-4">{{ approvedPropertiesCount }}</p>
+      <p class="card-text">Total approved properties.</p>
+    </div>
+  </div>
+  </div>
+  <div class="div8">
+    <h5 class="card-title-month-booking ">📊 Monthly Property Bookings</h5>
+    
+    <canvas class="month-booking-chart"
+    
+    baseChart
+    [data]="{ labels: bookingChartLabels, datasets: bookingChartData }"
+    [options]="chartOptions"
+    [type]="'line'"
+    [legend]="true">
+    </canvas>
+
+    
+
+  </div>
+
+
+
+  <div class="div9">
+
+    <div class="card upcoming-card-2">
+      <div class="card-header gradient-header">
+        Upcoming Appointments
+      </div>
+      <div class="card-body">
+        <div *ngIf="upcomingAppointments.length > 0; else noAppointments">
+          <div *ngFor="let appointment of upcomingAppointments" class="appointment-block">
+            <div class="appointment-info">
+              <p class="appointment-name">{{ appointment.name }} {{appointment.lastName}}</p>
+              <p class="appointment-date"> {{ appointment.appointmentDate | date: 'short' }} 
+                 {{ appointment.appointmentTime | date: 'short' }} <p>
+              <p class="appointment-title">{{ appointment.propertyTitle }}</p>
+              <p class="appointment-status">Status: {{ appointment.status }}</p>
+            </div>
+          </div>
+        </div>
+        <ng-template #noAppointments>
+          <p class="text-muted">No upcoming appointments.</p>
+        </ng-template>
+      </div>
+    </div>
+    
+    
+  </div>
+  
+</div>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<div class="container my-4" >
     <div class="row g-3">
       <div class="col-md-4" *ngIf="properties">
         <div class="card text-white bg-primary h-100">
@@ -73,4 +224,4 @@
       </div>
       
     </div>
-  </div>
+  </div> -->

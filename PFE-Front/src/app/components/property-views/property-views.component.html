@@ -1,51 +1,70 @@
 <div class="container-fluid">
-    <div class="row">
-      <!-- Sidebar -->
-      <div class="col-md-3 col-lg-2 p-0">
-        <app-sidebar [activePage]="'Property Views'"></app-sidebar>
+  <div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3 col-lg-2 p-0">
+      <app-sidebar [activePage]="'Property Views'"></app-sidebar>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9 col-lg-10 mt-4 px-4">
+      <h2>Recently Viewed Properties</h2>
+
+      <!-- Loading State -->
+      <div *ngIf="isLoading" class="loading-state">
+        <i class="bi bi-hourglass-split"></i>
+        <p>Loading your property history...</p>
       </div>
-  
-      <!-- Main Content -->
-      <div class="col-md-9 col-lg-10 mt-4 px-4">
-        <h2 class="mb-4">Recently Viewed Properties</h2>
-  
-        <div *ngIf="isLoading" class="text-center">Loading views...</div>
-        <div *ngIf="!isLoading && views?.length === 0" class="text-muted text-center">
-          No viewed properties found.
-        </div>
-  
+
+      <!-- Empty State -->
+      <div *ngIf="!isLoading && views?.length === 0" class="empty-state">
+        <i class="bi bi-house-heart"></i>
+        <p>You haven't viewed any properties yet. Start exploring to see your history here.</p>
+      </div>
+
+      <!-- Property Views Timeline -->
+      <div class="property-views-container">
         <div *ngFor="let view of views" class="timeline-item">
           <div class="timeline-marker">
             <div class="marker-confirmed"></div>
           </div>
-  
-          <div class="timeline-content card shadow-sm">
-            <div class="card-body">
-              <div class="d-flex justify-content-between align-items-center mb-2">
-                <div>
-                  <h5 class="card-title mb-0">{{ view.propertyTitle }}</h5>
-                  <small class="text-muted">
-                    {{ view.propertyCity }}
-                    <span *ngIf="view.propertySubCity"> - {{ view.propertySubCity }}</span>
-                  </small>
+
+          <div class="timeline-content">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2 mt-2">
+                  <div>
+                    <h5 class="card-title mb-2">{{ view.propertyTitle }}</h5>
+                    <div class="property-meta mb-2">
+                      <span class="property-location">
+                        <i class="bi bi-geo-alt"></i>
+                        {{ view.propertyCity }}
+                        <span *ngIf="view.propertySubCity"> - {{ view.propertySubCity }}</span>
+                      </span>
+                      <span class="property-id">ID: {{ view.propertyId }}</span>
+                    </div>
+                  </div>
+                  
+                  <span class="badge" 
+                        [ngClass]="'property-type-' + view.propertyType.toLowerCase()">
+                    {{ view.propertyType }}
+                  </span>
                 </div>
-                <span class="badge bg-secondary">
-                  {{ view.propertyType }}
-                </span>
-              </div>
-  
-              <div class="appointment-details">
-                <p class="mb-1">
-                  <i class="bi bi-calendar-check"></i>
-                  Viewed on {{ view.viewedAt | date:'medium' }}
-                </p>
-                <p class="mb-1">
-                  <i class="bi bi-cash"></i> {{ view.propertyPrice | currency:'TND':'symbol':'1.0-0' }}
-                </p>
-                <p class="mb-1">
-                  <i class="bi bi-house"></i> Property ID: {{ view.propertyId }}
-                </p>
-                <img *ngIf="view.propertyImage" [src]="getImageUrl(view.propertyImage)" class="img-thumbnail mt-2" style="max-width: 200px;">
+
+                <div class="appointment-details">
+                  <div class="property-detail-row">
+                    <i class="bi bi-calendar-check"></i>
+                    <span>Viewed on {{ view.viewedAt | date:'medium' }}</span>
+                  </div>
+                  
+                  <div class="property-detail-row">
+                    <i class="bi bi-cash-coin"></i>
+                    <span class="property-price">{{ view.propertyPrice | currency:'TND':'symbol':'1.0-0' }}</span>
+                  </div>
+                  
+                  <div *ngIf="view.propertyImage" class="property-image">
+                    <img [src]="getImageUrl(view.propertyImage)" class="img-thumbnail" alt="{{ view.propertyTitle }}">
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -53,4 +72,4 @@
       </div>
     </div>
   </div>
-  
+</div>

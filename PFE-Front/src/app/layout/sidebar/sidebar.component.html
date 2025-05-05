@@ -29,15 +29,15 @@
     </div>
   
     <div class="sidebar-section">
-      <div class="section-title">Workspace</div>
+      <div class="section-title">Quick links</div>
       <ul class="menu-list">
         <li class="menu-item" [ngClass]="{'active':activePage==='my History'}" routerLink="/propertyview" >
           <i class="menu-icon blocked-icon"></i>
           <span>My history</span>
         </li>
-        <li class="menu-item">
+        <li class="menu-item" [ngClass]="{'active':activePage==='Home'}" routerLink="/home" >
           <i class="menu-icon members-icon"></i>
-          <span>Members</span>
+          <span>Home</span>
         </li>
         <li class="menu-item">
           <i class="menu-icon groups-icon"></i>

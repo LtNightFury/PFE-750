@@ -16,7 +16,7 @@ export class PropertyListDashComponent {
   error: string | null = null;
   currentFilters: any = {};
   currentPage: number = 1;
-  itemsPerPage: number = 2; // You can adjust this as needed
+  itemsPerPage: number = 3; // You can adjust this as needed
   Math = Math;
 
   paginatedProperties: Property[] = [];
