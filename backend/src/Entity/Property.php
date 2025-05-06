@@ -265,8 +265,10 @@ class Property
 
     public function getViewCount(): ?int
     {
-        return $this->viewCount;
+        
+        return $this->propertyViews->count();
     }
+
 
     public function setViewCount(?int $viewCount): static
     {

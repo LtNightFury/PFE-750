@@ -10,7 +10,7 @@ export interface Property {
     bookings: Booking[];
     user: userprofile;
     approval: string;
-    views: string;
+    viewCount: string;
   }
   
   export interface GeneralInfo {

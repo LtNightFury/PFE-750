@@ -25,6 +25,11 @@
            <div class="property-card-adress-item">
             <p>{{property.generalinfo.propertyCondition}}</p>
            </div>
+            <div class="label ttext">Property Status:</div>
+            <div class="property-card-adress-item">
+            <p>{{property.approval}}</p>
+            </div>
+
         </div>
         <div class="label ttext">Location:</div>
         <div class="property-card-adress">
@@ -42,6 +47,8 @@
             </li>
             <li class="property-data-item"><div class="property-card-value para">{{property.Specification.bedrooms }} </div>
             <p class="property-card-caption ttext">Bedrooms</p></li>
+            <li class="property-data-item"><div class="property-card-value para">{{property.viewCount}}</div>
+                <p class="property-card-caption ttext">views</p></li>
            </ul>
         
 
