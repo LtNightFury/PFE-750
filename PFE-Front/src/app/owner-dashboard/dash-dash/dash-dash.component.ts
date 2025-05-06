@@ -144,7 +144,7 @@ loadMessages(): void {
 }
 
 loadMonthlyViews(): void {
-  this.propertyService.getUserViews().subscribe(response => {
+  this.propertyService.getmonthlyviews().subscribe(response => {
     const monthlyViews = this.aggregateMonthly(response.views, 'viewedAt');
     this.viewChartLabels = Object.keys(monthlyViews);
     this.viewChartData = [{ data: Object.values(monthlyViews), label: 'Views',

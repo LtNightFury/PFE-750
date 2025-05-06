@@ -135,4 +135,7 @@ getUnreadMessageCount(): Observable<number> {
   return this.http.get<number>(`${this.baseApiUrl}/messagescount`);
 }
   
+getmonthlyviews(): Observable<{ views: PropertyView[] }> {
+  return this.http.get<{ views: PropertyView[] }>(`${this.baseApiUrl}/owner/views`);
+}
 }

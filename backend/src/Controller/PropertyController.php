@@ -245,17 +245,9 @@ public function addView(int $id, EntityManagerInterface $em): JsonResponse
         return new JsonResponse(['error' => 'Property not found'], Response::HTTP_NOT_FOUND);
     }
     
-    // Check if a view record already exists for this user and property
-    $existingView = $em->getRepository(PropertyView::class)->findOneBy([
-        'user' => $user,
-        'Property' => $property
-    ]);
+   
     
-    if ($existingView) {
-        // Update the existing view's timestamp
-        $existingView->setViewedAt(new \DateTime());
-        // No need to persist again, just flush the changes
-    } else {
+    
         // Create a new view record
         $view = new PropertyView();
         $view->setUser($user);
@@ -266,7 +258,7 @@ public function addView(int $id, EntityManagerInterface $em): JsonResponse
         // Only increment the view count for new views
         $property->incrementViewCount();
         $em->persist($property);
-    }
+    
     
     $em->flush();
     
@@ -355,6 +347,34 @@ public function getAllPropertiesCount(EntityManagerInterface $em): JsonResponse
     $count = count($properties);
 
     return new JsonResponse(['allProperties' => $count], Response::HTTP_OK);
+}
+#[Route('/owner/views', name: 'get_owner_views', methods: ['GET'])]
+public function getOwnerViews(EntityManagerInterface $em): JsonResponse
+{
+    $user = $this->getUser();
+    if (!$user) {
+        return new JsonResponse(['error' => 'Authentication required'], JsonResponse::HTTP_UNAUTHORIZED);
+    }
+
+    $properties = $em->getRepository(Property::class)->findBy(['user' => $user]);
+
+    $views = [];
+    foreach ($properties as $property) {
+        foreach ($property->getPropertyViews() as $view) {
+            $views[] = [
+            'propertyId' => $view->getProperty()->getId(),
+            'propertyTitle' => $view->getProperty()->getGeneralinfo()->getTitle(),
+            'propertyCity' => $view->getProperty()->getLocation()->getCity(),
+            'propertySubCity' => $view->getProperty()->getLocation()->getSubcity(),
+            'propertyPrice' => $view->getProperty()->getPrice()->getPrice(),
+            'propertyImage' => $view->getProperty()->getMedia()->getPhotos()[0]->getImageName(), 
+            'propertyType' => $view->getProperty()->getGeneralinfo()->getPropertyType(),
+            'viewedAt' => $view->getViewedAt()->format('Y-m-d H:i:s')
+            ];
+        }
+    }
+
+    return new JsonResponse(['views' => $views], JsonResponse::HTTP_OK);
 }
 
 
