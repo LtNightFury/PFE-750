@@ -173,6 +173,21 @@ public function register(Request $request): JsonResponse
         
         return $this->json(['message' => 'Password has been reset successfully'], Response::HTTP_OK);
     }
+
+
+    #[Route('/authcheck', name: 'auth', methods: ['GET'])]
+    public function authCheck(): JsonResponse
+    {
+        $user = $this->getUser();
+    
+        if (!$user) {
+            return $this->json(['message' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+        }
+    
+        return $this->json('Authenticated', Response::HTTP_OK);
+    
+    }
+
     
     
     
