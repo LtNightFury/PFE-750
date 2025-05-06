@@ -41,7 +41,7 @@ export class OwnerDashComponent {
     this.isLoading = true;
     this.propertyService.getAllProperties().subscribe({
       next: (data) => {
-        this.totalViews = data.reduce((sum, p) => sum + (Number(p.views) || 0), 0);
+        this.totalViews = data.reduce((sum, p) => sum + (Number(p.viewCount) || 0), 0);
         this.approvedPropertiesCount = data.filter(p => p.approval === 'approved' || this.appointments.some(a => a.status === 'confirmed')).length;
         this.properties = data;        this.filteredProperties = data;
         this.isLoading = false;

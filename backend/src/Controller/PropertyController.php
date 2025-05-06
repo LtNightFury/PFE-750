@@ -227,7 +227,7 @@ public function getUserProperties(PropertyRepository $propertyRepository, Serial
         'circular_reference_handler' => function ($object) {
             return $object->getId();
         },
-        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__','user','contract']
+        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__','user','contract','messages']
     ]);
 
     return new JsonResponse($json, 200, [], true);
@@ -255,8 +255,7 @@ public function addView(int $id, EntityManagerInterface $em): JsonResponse
         $view->setViewedAt(new \DateTime());
         $em->persist($view);
         
-        // Only increment the view count for new views
-        $property->incrementViewCount();
+        
         $em->persist($property);
     
     
