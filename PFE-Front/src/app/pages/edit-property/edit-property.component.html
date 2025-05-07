@@ -54,7 +54,7 @@
         <app-amenities-tab 
         *ngIf="activeTab === 'amenities'" 
         [parentForm]="amenitiesGroup"
-        [amenitiesData]="property.Amenities">
+        [amenitiesData]="property?.Amenities||{}">
       </app-amenities-tab>
       
         <app-price-tab *ngIf="activeTab === 'price'" [parentForm]="priceGroup" [dealType]="generalGroup.get('deal_type')?.value"></app-price-tab>
