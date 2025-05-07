@@ -4,6 +4,7 @@ import { Booking, Property } from 'src/app/models/property.model';
 import { PropertyService } from 'src/app/services/property.service';
 import { DateRangePickerComponent } from 'src/app/components/date-range-picker/date-range-picker.component';
 import { Appointment } from 'src/app/models/Appointment.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-property-detail',
@@ -35,7 +36,8 @@ scheduledAppointment: Appointment | null = null;
 
   constructor(
     private route: ActivatedRoute,
-    private propertyService: PropertyService
+    private propertyService: PropertyService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -177,10 +179,18 @@ closeAppointmentForm(): void {
   
   // Open email modal
   openEmailModal(): void {
-    this.showEmailModal = true;
-    this.emailSent = false;
+    this.propertyService.getauthcheck().subscribe({
+      next: () => {
+        // User is authenticated
+        this.showEmailModal = true;
+        this.emailSent = false;
+      },
+      error: () => {
+        // User is not authenticated – redirect to login
+        this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url } });
+      }
+    });
   }
-  
   // Close email modal
   closeEmailModal(): void {
     this.showEmailModal = false;
@@ -189,6 +199,7 @@ closeAppointmentForm(): void {
   // Handle email sent event
   onEmailSent(success: boolean): void {
     this.emailSent = success;
+    
   }
   
 

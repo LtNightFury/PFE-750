@@ -21,7 +21,7 @@
   border-top-color: #FF4081;
 }
 .fc .fc-button {
-  background-color: #007bff;
+  background-color: #2A7B68;
   border: none;
   color: white;
   border-radius: 4px;
@@ -29,7 +29,7 @@
 }
 
 .fc .fc-button:hover {
-  background-color: #0056b3;
+  background-color: #2A7B68;
 }
 
 .fc .fc-event {
@@ -65,7 +65,7 @@
 
 .fc .fc-button-primary:not(:disabled).fc-button-active,
 .fc .fc-button-primary:not(:disabled):active {
-  background-color: #0056b3;
+  background-color:  #2A7B68;
   border-color: #F6F6FE;
   color: white;
 }
@@ -83,7 +83,7 @@
 }
 
 .fc .fc-day-today {
-  background-color: rgba(79, 70, 229, 0.05) !important;
+  background-color: rgba(102, 229, 70, 0.05) !important;
 }
 .fc .fc-day-sun{
   background-color: #f8f9fa;
@@ -140,7 +140,7 @@
 /* Current day highlight */
 
 .fc-day-today .fc-daygrid-day-frame {
-  border: 2px solid #4f46e5;
+  border: 2px solid #2A7B68;
   border-radius: 4px;
 }
 
@@ -186,7 +186,7 @@
   
   /* Customize the event appearance */
  .fc-event {
-  background-color: #007bff !important;
+  background-color: #2A7B68 !important;
   color: white !important;
   border: none;
   border-radius: 6px;
