@@ -43,6 +43,10 @@ const routes: Routes = [
   
   
   {path: 'owner-dashboard', component: OwnerDashComponent},
+
+  {path: 'propertyview', component: PropertyViewsComponent},
+  { path: 'editproperty/:id', component: EditPropertyComponent},
+
   
   /*{ 
     path: 'appointments', 

@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class AmenitiesTabComponent implements OnInit {
   @Input() parentForm!: FormGroup;
+  @Input() amenitiesData: any;
   amenitiesForm!: FormGroup;
   selectedAction: { [key: string]: string } = {};
   
@@ -61,16 +62,20 @@ export class AmenitiesTabComponent implements OnInit {
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    // Initialize the form group
     this.initForm();
-    
-    // Set default selected actions
+
+  if (this.amenitiesData) {
+    this.amenitiesForm.patchValue(this.amenitiesData);
+    Object.keys(this.amenitiesData).forEach(key => {
+      this.selectedAction[key] = this.amenitiesData[key] ? 'check' : 'delete';
+    });
+  } else {
     this.setDefaultSelectedActions();
-    
-    // Add the amenities form to the parent form
-    if (this.parentForm) {
-      this.parentForm.addControl('amenities', this.amenitiesForm);
-    }
+  }
+
+  if (this.parentForm) {
+    this.parentForm.addControl('amenities', this.amenitiesForm);
+  }
   }
   
   initForm(): void {

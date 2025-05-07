@@ -57,7 +57,7 @@ export class MapComponent implements AfterViewInit {
     // Initialize map
     this.map = new mapboxgl.Map({
       container: this.mapElement.nativeElement,
-      style: 'assets/style.json', 
+      style: '/assets/style.json', 
     center: this.defaultcenter,
       zoom: this.zoom,
       pitch: 60, 
