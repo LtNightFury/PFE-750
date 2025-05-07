@@ -109,6 +109,10 @@ export class PropertyService {
   getEmailMessages(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseApiUrl}/owner/messages`);
   }
+  sendOwnerReply(messageId: number, body: { message: string }): Observable<any> {
+    return this.http.post(`${this.baseApiUrl}/owner/messages/${messageId}/reply`, body);
+  }
+
   recordView(propertyId: number): Observable<any> {
     return this.http.post(`${this.baseApiUrl}/properties/${propertyId}/view`, {});
   }
@@ -138,4 +142,12 @@ getUnreadMessageCount(): Observable<number> {
 getmonthlyviews(): Observable<{ views: PropertyView[] }> {
   return this.http.get<{ views: PropertyView[] }>(`${this.baseApiUrl}/owner/views`);
 }
+getauthcheck(): Observable<any> {
+  return this.http.get<any>(`${this.baseApiUrl}/authcheck`);  
+}
+
+markMessageAsRead(messageId: number): Observable<any> {
+  return this.http.put(`${this.baseApiUrl}/messages/${messageId}`, {});
+}
+
 }
