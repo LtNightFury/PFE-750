@@ -1,64 +1,134 @@
-
 <!-- sidebar.component.html -->
-<div class="sidebar">
-    <div class="sidebar-section">
-      <div class="section-title">Your Account</div>
-      <ul class="menu-list">
-        <li class="menu-item" [ngClass]="{'active': activePage === 'profile'}" routerLink="/profile">
-          <i class="menu-icon user-icon"></i>
-          <span>Profile</span>
-        </li>
-        <li class="menu-item" [ngClass]="{'active': activePage === 'Profile Settings'}" routerLink="/settings">
-          <i class="menu-icon preferences-icon"></i>
-          <span>Profile Settings</span>
-        </li>
-        <li class="menu-item">
-          <i class="menu-icon notifications-icon"></i>
-          <!--Notification system lemba3ed-->
-          <span>Notifications</span>
-        </li>
-        <li [ngClass]="{'active':activePage==='My Appointments'}" routerLink="/my-appointments" class="menu-item">
-          <i class="menu-icon referrals-icon"></i>
-          <span>My Appointments</span>
-        </li>
-        <li class="menu-item" [ngClass]="{'active':activePage==='My Bookings'}" routerLink="/my-bookings" >
-          <i class="menu-icon blocked-icon"></i>
-          <span>My Bookings</span>
-        </li>
-      </ul>
+<div class="sidebar-wrapper">
+  <div class="sidebar-container" [class.collapsed]="isCollapsed">
+    <div class="sidebar-header">
+      <div class="logo-area" *ngIf="!isCollapsed">
+        
+        <span class="app-name">Welcome Back</span>
+      </div>
+      <button class="toggle-button" (click)="toggleSidebar()">
+        <i class="toggle-icon" [ngClass]="isCollapsed ? 'chevron-right' : 'chevron-left'"></i>
+      </button>
     </div>
-  
-    <div class="sidebar-section">
-      <div class="section-title">Quick links</div>
-      <ul class="menu-list">
-        <li class="menu-item" [ngClass]="{'active':activePage==='my History'}" routerLink="/propertyview" >
-          <i class="menu-icon blocked-icon"></i>
-          <span>My history</span>
-        </li>
-        <li class="menu-item" [ngClass]="{'active':activePage==='Home'}" routerLink="/home" >
-          <i class="menu-icon members-icon"></i>
-          <span>Home</span>
-        </li>
-        <li class="menu-item">
-          <i class="menu-icon groups-icon"></i>
-          <span>Groups</span>
-        </li>
-        <li class="menu-item">
-          <i class="menu-icon phone-icon"></i>
-          <span>Phone numbers</span>
-        </li>
-        <li class="menu-item">
-          <i class="menu-icon integrations-icon"></i>
-          <span>Integrations</span>
-        </li>
-        <li class="menu-item">
-          <i class="menu-icon plan-icon"></i>
-          <span>Plan & billing</span>
-        </li>
-        <li class="menu-item">
-          <i class="menu-icon contacts-icon"></i>
-          <span>Contacts</span>
-        </li>
-      </ul>
+
+    <div class="sidebar-content">
+      <div class="sidebar-section">
+        <div class="section-title" [class.collapsed-title]="isCollapsed">
+          <span *ngIf="!isCollapsed">Your Account</span>
+          <div *ngIf="isCollapsed" class="mini-title">AC</div>
+        </div>
+        <ul class="menu-list">
+          <li class="menu-item" routerLinkActive="active" routerLink="/user/profile">
+            <div class="icon-container">
+              <i class="menu-icon user-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Profile</span>
+            <div class="tooltip" *ngIf="isCollapsed">Profile</div>
+          </li>
+          <li class="menu-item" routerLinkActive="active" routerLink="/user/settings">
+            <div class="icon-container">
+              <i class="menu-icon preferences-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Profile Settings</span>
+            <div class="tooltip" *ngIf="isCollapsed">Profile Settings</div>
+          </li>
+          <li class="menu-item" routerLinkActive="active" routerLink="/user/messages">
+            <div class="icon-container">
+              <i class="menu-icon notifications-icon"></i>
+              <span class="badge">3</span>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Messages</span>
+            <div class="tooltip" *ngIf="isCollapsed">Messages</div>
+          </li>
+          <li class="menu-item" routerLinkActive="active" routerLink="/user/my-appointments">
+            <div class="icon-container">
+              <i class="menu-icon calendar-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">My Appointments</span>
+            <div class="tooltip" *ngIf="isCollapsed">My Appointments</div>
+          </li>
+          <li class="menu-item" routerLinkActive="active" routerLink="/user/my-bookings">
+            <div class="icon-container">
+              <i class="menu-icon booking-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">My Bookings</span>
+            <div class="tooltip" *ngIf="isCollapsed">My Bookings</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="section-title" [class.collapsed-title]="isCollapsed">
+          <span *ngIf="!isCollapsed">Quick Links</span>
+          <div *ngIf="isCollapsed" class="mini-title">QL</div>
+        </div>
+        <ul class="menu-list">
+          <li class="menu-item" routerLinkActive="active" routerLink="/user/history">
+            <div class="icon-container">
+              <i class="menu-icon history-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">My History</span>
+            <div class="tooltip" *ngIf="isCollapsed">My History</div>
+          </li>
+          <li class="menu-item" routerLinkActive="active" routerLink="/home">
+            <div class="icon-container">
+              <i class="menu-icon home-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Home</span>
+            <div class="tooltip" *ngIf="isCollapsed">Home</div>
+          </li>
+          <li class="menu-item">
+            <div class="icon-container">
+              <i class="menu-icon groups-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Groups</span>
+            <div class="tooltip" *ngIf="isCollapsed">Groups</div>
+          </li>
+          <li class="menu-item">
+            <div class="icon-container">
+              <i class="menu-icon phone-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Phone Numbers</span>
+            <div class="tooltip" *ngIf="isCollapsed">Phone Numbers</div>
+          </li>
+          <li class="menu-item">
+            <div class="icon-container">
+              <i class="menu-icon integrations-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Integrations</span>
+            <div class="tooltip" *ngIf="isCollapsed">Integrations</div>
+          </li>
+          <li class="menu-item">
+            <div class="icon-container">
+              <i class="menu-icon plan-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Plan & Billing</span>
+            <div class="tooltip" *ngIf="isCollapsed">Plan & Billing</div>
+          </li>
+          <li class="menu-item">
+            <div class="icon-container">
+              <i class="menu-icon contacts-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Contacts</span>
+            <div class="tooltip" *ngIf="isCollapsed">Contacts</div>
+          </li>
+        </ul>
+      </div>
     </div>
+    <!-- Sidebar Footer 
+    <div class="sidebar-footer" *ngIf="!isCollapsed">
+      <div class="user-profile">
+        <img src="/api/placeholder/40/40" alt="User" class="avatar" />
+        <div class="user-info">
+          <p class="user-name">John Doe</p>
+          <p class="user-email">johnexample.com</p>
+        </div>
+      </div>
+    </div>
+  </div>-->
+ <!---
+  <div class="user-mini-profile" *ngIf="isCollapsed">
+    <img src="/api/placeholder/30/30" alt="User" class="mini-avatar" />
   </div>
+-->
+</div>

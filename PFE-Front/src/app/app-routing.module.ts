@@ -23,6 +23,9 @@ import { AuthGuard } from './login-register-verif/guards/auth.guard';
 import { AppointmentsCalendarComponent } from './owner-dashboard/appointments-calendar/appointments-calendar.component';
 import { DashDashComponent } from './owner-dashboard/dash-dash/dash-dash.component';
 import { PropertyViewsComponent } from './components/property-views/property-views.component';
+import { OwnerMessagesComponent } from './owner-dashboard/owner-messages/owner-messages.component';
+import { UserMessagesComponent } from './pages/user-messages/user-messages.component';
+import { UserLayoutComponent } from './layout/user-layout/user-layout.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -37,19 +40,52 @@ const routes: Routes = [
   { path: 'contact', component: ContactComponent },
   { path: 'about-us',component:AboutUsComponent},
   { path: 'service', component:ServiceComponent},
-  { path: 'profile', component: ProfileComponent },
-  { path: 'settings', component:UserSettingsComponent},
-  { path: 'my-appointments', component: MyAppointmentsComponent },
-  { path: 'my-bookings', component: MyBookingsComponent },
+  
+  
   {path: 'owner-dashboard', component: OwnerDashComponent},
+
   {path: 'propertyview', component: PropertyViewsComponent},
   { path: 'editproperty/:id', component: EditPropertyComponent},
+
   
   /*{ 
     path: 'appointments', 
     component: AppointmentsCalendarComponent 
   },*/
   //dont workzekfhezfh//
+  {
+    path:'user', component:UserLayoutComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'profile',
+        component: ProfileComponent
+      },
+      {
+        path: 'settings',
+        component: UserSettingsComponent
+      },
+      { 
+      path: 'my-appointments',
+        component: MyAppointmentsComponent
+      },
+      {
+        path: 'my-bookings',
+        component: MyBookingsComponent
+      },
+      {
+        path: 'messages',
+        component: UserMessagesComponent
+      } ,
+      {
+        path: 'history',
+        component: PropertyViewsComponent
+      },
+      {path: '', redirectTo: 'profile', pathMatch: 'full'}
+    ]
+
+  },
+
   {
     path: 'owner',
     component: OwnerDashComponent,
@@ -71,6 +107,10 @@ const routes: Routes = [
       {
         path: 'calendar',
         component: AppointmentsCalendarComponent
+      },
+      {
+        path: 'messages',
+        component:OwnerMessagesComponent
       }
     ]
   },

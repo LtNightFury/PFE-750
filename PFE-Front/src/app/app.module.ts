@@ -65,6 +65,9 @@ import { EmailModalComponent } from './components/email-modal/email-modal.compon
 import { DashDashComponent } from './owner-dashboard/dash-dash/dash-dash.component';
 import { PropertyViewsComponent } from './components/property-views/property-views.component';
 import { NgChartsModule } from 'ng2-charts';
+import { OwnerMessagesComponent } from './owner-dashboard/owner-messages/owner-messages.component';
+import { UserMessagesComponent } from './pages/user-messages/user-messages.component';
+import { UserLayoutComponent } from './layout/user-layout/user-layout.component';
 
 
 
@@ -119,6 +122,9 @@ import { NgChartsModule } from 'ng2-charts';
         EmailModalComponent,
         DashDashComponent,
         PropertyViewsComponent,
+        OwnerMessagesComponent,
+        UserMessagesComponent,
+        UserLayoutComponent,
         
        
     

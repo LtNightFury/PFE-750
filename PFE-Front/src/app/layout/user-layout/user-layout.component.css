@@ -1,0 +1,13 @@
+.page-layout__content{
+    display: flex ;
+    gap: 2rem;
+}
+.main-content{
+    flex: 1;
+}
+.page-layout{
+   
+  
+    
+    background-color: #f9f9f9;
+}
