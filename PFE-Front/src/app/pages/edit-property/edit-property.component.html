@@ -25,7 +25,7 @@
         
     </div>
     
-    <form [formGroup]="propertyForm" class="property-form" (ngSubmit)="onSubmit()">
+    <form *ngIf="propertyForm" [formGroup]="propertyForm" (ngSubmit)="onSubmit()" class="property-form">
       <!-- Tab navigation -->
       <div class="form_tab_view d-flex gap-3 mt-4 overflow-auto">
         <div class="form_tab" *ngFor="let tab of tabs" [class.active]="activeTab === tab.id" (click)="setActiveTab(tab.id)">
@@ -51,7 +51,12 @@
          
         <app-specification-tab *ngIf="activeTab === 'specification'" [parentForm]="specificationGroup"></app-specification-tab>
            
-        <app-amenities-tab *ngIf="activeTab === 'amenities'" [parentForm]="amenitiesGroup"></app-amenities-tab>
+        <app-amenities-tab 
+        *ngIf="activeTab === 'amenities'" 
+        [parentForm]="amenitiesGroup"
+        [amenitiesData]="property.Amenities">
+      </app-amenities-tab>
+      
         <app-price-tab *ngIf="activeTab === 'price'" [parentForm]="priceGroup" [dealType]="generalGroup.get('deal_type')?.value"></app-price-tab>
         <app-media-tab *ngIf="activeTab === 'media'" [parentForm]="mediaGroup"></app-media-tab>
                  

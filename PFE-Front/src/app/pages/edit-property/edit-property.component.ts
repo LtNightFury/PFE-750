@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { PropertyService } from 'src/app/services/property.service';
+import { Property } from 'src/app/models/property.model';
 
 @Component({
   selector: 'app-edit-property',
@@ -11,6 +14,8 @@ export class EditPropertyComponent implements OnInit {
   propertyForm!: FormGroup;
   isSubmitting = false;
   submitError: string = '';
+  property!: Property;
+  
   
   // Define tabs
   tabs = [
@@ -27,12 +32,14 @@ export class EditPropertyComponent implements OnInit {
   activeTab = 'general'; // Default active tab
   
   constructor(
-    private fb: FormBuilder,
-    private http: HttpClient
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private propertyService: PropertyService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
-    // Initialize the parent form with groups for each tab
+    // 1. Initialize the form first
     this.propertyForm = this.fb.group({
       general: this.fb.group({
         deal_type: ['sale', Validators.required],
@@ -40,11 +47,9 @@ export class EditPropertyComponent implements OnInit {
         description: ['', Validators.required],
         PropertyCondition: ['', Validators.required],
         propertyType: ['', Validators.required],
-        
-        availabilityDate: [],  // Only required if deal_type is 'rent'
-         // Only required if deal_type is 'rent'
-       
-       
+        availabilityDate: [],
+        frequency: [],
+        cheques: []
       }),
       location: this.fb.group({
         latitude: ['', Validators.required],
@@ -52,31 +57,27 @@ export class EditPropertyComponent implements OnInit {
         country: ['', Validators.required],
         state: ['', Validators.required],
         subcity: ['', Validators.required],
-
-
       }),
       specification: this.fb.group({
-      bedrooms: [, Validators.required],
-      bathrooms: [, Validators.required],
-      parkingSpots: [, Validators.required],
-      size: [],
-      plotSize: [],
-      builtUpArea: [],
-      constructionYear: [],
-      Renovationyear: [],
-      Furnishing: []
+        bedrooms: [null, Validators.required],
+        bathrooms: [null, Validators.required],
+        parkingSpots: [null, Validators.required],
+        size: [],
+        plotSize: [],
+        builtUpArea: [],
+        constructionYear: [],
+        Renovationyear: [],
+        Furnishing: []
       }),
-      amenities: this.fb.group({
-        
-      }),
+      amenities: this.fb.group({}),
       price: this.fb.group({
-        price: [, Validators.required],
+        price: [null, Validators.required],
         priceunit: [''],
         pricesqft: [],
         originalprice: [],
-        hideprice: [false, ], 
-        charges: [ ], 
-        servicecharge: [ ], 
+        hideprice: [false],
+        charges: [],
+        servicecharge: [],
       }),
       media: this.fb.group({
         photos: this.fb.array([]),
@@ -84,16 +85,46 @@ export class EditPropertyComponent implements OnInit {
         documents: this.fb.array([]),
         videos: this.fb.array([]),
         virtualTours: this.fb.array([])
-       
       }),
-      
       contacts: this.fb.group({
         email: ['', [Validators.required, Validators.email]],
-        phone: [, Validators.required],
+        phone: [null, Validators.required],
       })
     });
+  
+    // 2. Add conditional validation
+    this.setConditionalValidation();
+  
+    // 3. Fetch the property and patch the form
+    this.route.paramMap.subscribe(params => {
+      const id = Number(params.get('id'));
+      this.propertyService.getPropertyById(id).subscribe(property => {
+        this.property = property;
+        this.propertyForm.patchValue({
+          general: this.property.generalinfo,
+          location: {
+            latitude: this.property.location.latitude,
+            longitude: this.property.location.longitude,
+            country: this.property.location.country,
+            state: this.property.location.city,
+            subcity: this.property.location.subcity
+          },
+          specification: this.property.Specification,
+          price: this.property.price,
+          amenities: this.property.Amenities,
+          contacts: this.property.contacts,
+          media: {
+            photos: this.property.Media.photos,
+            floorPlans: this.property.Media.floorPlans,
+            documents: this.property.Media.documents,
+            videos: [],
+            virtualTours: []
+          }
+        }); // ✅ Now this is safe
+      });
+    });
   }
-
+  
   get generalGroup(): FormGroup {
     return this.propertyForm.get('general') as FormGroup;
   }

@@ -43,6 +43,7 @@ const routes: Routes = [
   { path: 'my-bookings', component: MyBookingsComponent },
   {path: 'owner-dashboard', component: OwnerDashComponent},
   {path: 'propertyview', component: PropertyViewsComponent},
+  { path: 'editproperty/:id', component: EditPropertyComponent},
   /*{ 
     path: 'appointments', 
     component: AppointmentsCalendarComponent 
