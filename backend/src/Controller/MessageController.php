@@ -127,4 +127,100 @@ public function sendMessage(
 
         return new JsonResponse(['status' => 'Message deleted successfully.']);
 }
+#[Route('api/owner/messages/{id}/reply', name: 'reply_to_message', methods: ['POST'])]
+public function replyToMessage(int $id, Request $request, EntityManagerInterface $em): JsonResponse
+{
+    $owner = $this->getUser();
+    if (!$owner) {
+        return new JsonResponse(['error' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    $originalMessage = $em->getRepository(Message::class)->find($id);
+    if (!$originalMessage) {
+        return new JsonResponse(['error' => 'Original message not found'], Response::HTTP_NOT_FOUND);
+    }
+
+    if ($originalMessage->getOwner() !== $owner) {
+        return new JsonResponse(['error' => 'You are not authorized to reply to this message'], Response::HTTP_FORBIDDEN);
+    }
+
+    $data = json_decode($request->getContent(), true);
+    $replyContent = $data['message'] ?? null;
+
+    if (!$replyContent) {
+        return new JsonResponse(['error' => 'Reply message content is required.'], Response::HTTP_BAD_REQUEST);
+    }
+
+    $reply = new Message();
+    $reply->setSubject('RE: ' . $originalMessage->getSubject());
+    $reply->setMessage($replyContent);
+    $reply->setCreatedAt(new \DateTimeImmutable());
+    $reply->setSender($owner);
+    $reply->setOwner($originalMessage->getSender());
+    $reply->setProperty($originalMessage->getProperty());
+    $reply->setIsRead(false);
+
+    $em->persist($reply);
+    $em->flush();
+
+    return new JsonResponse(['status' => 'Reply sent successfully.']);
+}
+#[Route('api/user/messages/{id}/reply', name: 'user_reply_to_message', methods: ['POST'])]
+public function userReplyToMessage(int $id, Request $request, EntityManagerInterface $em): JsonResponse
+{
+    $user = $this->getUser();
+    if (!$user) {
+        return new JsonResponse(['error' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    $originalMessage = $em->getRepository(Message::class)->find($id);
+    if (!$originalMessage) {
+        return new JsonResponse(['error' => 'Original message not found'], Response::HTTP_NOT_FOUND);
+    }
+
+    if ($originalMessage->getSender() !== $user) {
+        return new JsonResponse(['error' => 'You are not authorized to reply to this message'], Response::HTTP_FORBIDDEN);
+    }
+
+    $data = json_decode($request->getContent(), true);
+    $replyContent = $data['message'] ?? null;
+
+    if (!$replyContent) {
+        return new JsonResponse(['error' => 'Reply message content is required.'], Response::HTTP_BAD_REQUEST);
+    }
+
+    $reply = new Message();
+    $reply->setSubject('RE: ' . $originalMessage->getSubject());
+    $reply->setMessage($replyContent);
+    $reply->setCreatedAt(new \DateTimeImmutable());
+    $reply->setSender($user);
+    $reply->setOwner($originalMessage->getOwner()); // sending back to property owner
+    $reply->setProperty($originalMessage->getProperty());
+    $reply->setIsRead(false);
+
+    $em->persist($reply);
+    $em->flush();
+
+    return new JsonResponse(['status' => 'Reply sent successfully.']);
+}
+#[Route('api/user/messages', name: 'get_user_messages', methods: ['GET'])]
+public function getUserMessages(EntityManagerInterface $em): JsonResponse
+{
+    $user = $this->getUser();
+    if (!$user) {
+        return new JsonResponse(['error' => 'User not authenticated'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    $messages = $em->getRepository(Message::class)->createQueryBuilder('m')
+    ->where('m.sender = :user OR m.owner = :user')
+    ->setParameter('user', $user)
+    ->orderBy('m.createdAt', 'DESC')
+    ->getQuery()
+    ->getResult();
+
+
+    return $this->json($messages, 200, [], ['groups' => ['message:read']]);
+}
+
+
 }
