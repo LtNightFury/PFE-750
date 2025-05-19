@@ -78,8 +78,13 @@ class Property
     #[ORM\OneToMany(mappedBy: 'Property', targetEntity: PropertyView::class)]
     private Collection $propertyViews;
 
+    #[ORM\Column(type: 'datetime_immutable')]
+    
+    private ?\DateTimeImmutable $createdAt = null;
+
     public function __construct()
     {
+        $this->createdAt = new \DateTimeImmutable();
         $this->bookings = new ArrayCollection();
         $this->appointments = new ArrayCollection();
         $this->messages = new ArrayCollection();
@@ -337,4 +342,15 @@ class Property
 
         return $this;
     }
+    public function getCreatedAt(): ?\DateTimeImmutable
+{
+    return $this->createdAt;
+}
+
+public function setCreatedAt(\DateTimeImmutable $createdAt): self
+{
+    $this->createdAt = $createdAt;
+    return $this;
+}
+
 }

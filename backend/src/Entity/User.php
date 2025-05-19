@@ -94,9 +94,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: PropertyView::class)]
     private Collection $propertyViews;
 
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['admin:read'])]
+    private ?\DateTimeInterface $createdAt = null;
+
 
     public function __construct()
     {
+        $this->createdAt = new \DateTime();
 
         $this->properties = new ArrayCollection();
         $this->bookings = new ArrayCollection();
@@ -481,4 +486,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    public function getCreatedAt(): ?\DateTimeInterface
+{
+    return $this->createdAt;
+}
+
+public function setCreatedAt(\DateTimeInterface $createdAt): static
+{
+    $this->createdAt = $createdAt;
+    return $this;
+}
 }
