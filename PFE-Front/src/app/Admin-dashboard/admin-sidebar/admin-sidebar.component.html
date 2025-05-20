@@ -1,0 +1,123 @@
+<!-- sidebar.component.html -->
+<div class="sidebar-wrapper">
+  <div class="sidebar-container" [class.collapsed]="isCollapsed">
+    <div class="sidebar-header">
+      <div class="logo-area" *ngIf="!isCollapsed">
+        <img src="/api/placeholder/40/40" alt="Logo" class="logo" />
+        <span class="app-name">AppName</span>
+      </div>
+      <button class="toggle-button" (click)="toggleSidebar()">
+        <i class="toggle-icon" [ngClass]="isCollapsed ? 'chevron-right' : 'chevron-left'"></i>
+      </button>
+    </div>
+
+    <div class="sidebar-content">
+      <div class="sidebar-section">
+        <div class="section-title" [class.collapsed-title]="isCollapsed">
+          <span *ngIf="!isCollapsed">Your Account</span>
+          <div *ngIf="isCollapsed" class="mini-title">AC</div>
+        </div>
+        <ul class="menu-list">
+          <li class="menu-item" routerLinkActive="active" routerLink="/user/profile">
+            <div class="icon-container">
+              <i class="menu-icon user-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Profile</span>
+            <div class="tooltip" *ngIf="shouldShowTooltip()">Profile</div>
+          </li>
+          <li class="menu-item" routerLinkActive="active" routerLink="/user/settings">
+            <div class="icon-container">
+              <i class="menu-icon preferences-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Profile Settings</span>
+            <div class="tooltip" *ngIf="shouldShowTooltip()">Profile Settings</div>
+          </li>
+          <li class="menu-item" routerLinkActive="active" routerLink="/user/messages">
+            <div class="icon-container">
+              <i class="menu-icon notifications-icon"></i>
+              <span class="badge">3</span>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Messages</span>
+            <div class="tooltip" *ngIf="shouldShowTooltip()">Messages</div>
+          </li>
+          <li class="menu-item" routerLinkActive="active" routerLink="/user/my-appointments">
+            <div class="icon-container">
+              <i class="menu-icon calendar-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">My Appointments</span>
+            <div class="tooltip" *ngIf="shouldShowTooltip()">My Appointments</div>
+          </li>
+          <li class="menu-item" routerLinkActive="active" routerLink="/user/my-bookings">
+            <div class="icon-container">
+              <i class="menu-icon booking-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">My Bookings</span>
+            <div class="tooltip" *ngIf="shouldShowTooltip()">My Bookings</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="section-title" [class.collapsed-title]="isCollapsed">
+          <span *ngIf="!isCollapsed">Quick Links</span>
+          <div *ngIf="isCollapsed" class="mini-title">QL</div>
+        </div>
+        <ul class="menu-list">
+          <li class="menu-item" routerLinkActive="active" routerLink="/user/history">
+            <div class="icon-container">
+              <i class="menu-icon history-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">My History</span>
+            <div class="tooltip" *ngIf="isCollapsed">My History</div>
+          </li>
+          <li class="menu-item" routerLinkActive="active" routerLink="/home">
+            <div class="icon-container">
+              <i class="menu-icon home-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Home</span>
+            <div class="tooltip" *ngIf="isCollapsed">Home</div>
+          </li>
+          <li class="menu-item">
+            <div class="icon-container">
+              <i class="menu-icon groups-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Groups</span>
+            <div class="tooltip" *ngIf="isCollapsed">Groups</div>
+          </li>
+          <li class="menu-item">
+            <div class="icon-container">
+              <i class="menu-icon phone-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Phone Numbers</span>
+            <div class="tooltip" *ngIf="isCollapsed">Phone Numbers</div>
+          </li>
+          <li class="menu-item">
+            <div class="icon-container">
+              <i class="menu-icon integrations-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Integrations</span>
+            <div class="tooltip" *ngIf="isCollapsed">Integrations</div>
+          </li>
+          <li class="menu-item">
+            <div class="icon-container">
+              <i class="menu-icon plan-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Plan & Billing</span>
+            <div class="tooltip" *ngIf="isCollapsed">Plan & Billing</div>
+          </li>
+          <li class="menu-item">
+            <div class="icon-container">
+              <i class="menu-icon contacts-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">Contacts</span>
+            <div class="tooltip" *ngIf="isCollapsed">Contacts</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+   
+  </div>
+  
+  
+</div>

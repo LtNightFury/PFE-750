@@ -1,231 +1,247 @@
 <app-header></app-header>
 
-<div class="detail-container">
-  <!-- LEFT SIDE -->
-  <div class="left-side">
-    <!-- Carousel for Images -->
-   <!-- Gallery layout directly in property-detail.component.html -->
-<div class="property-gallery-container" *ngIf="!isLoading && allImages.length > 0">
-  <!-- Main image on the left -->
-  <div class="main-image">
-    <img [src]="allImages[selectedImageIndex]" alt="Property Image" class="featured-image">
-    <div class="image-navigation">
-      <button class="nav-btn prev-btn" (click)="prevImage()">
-        <i class="bi bi-chevron-left"></i>
-      </button>
-      <button class="nav-btn next-btn" (click)="nextImage()">
-        <i class="bi bi-chevron-right"></i>
-      </button>
+<div class="property-container" *ngIf="!isLoading">
+  <!-- Property Title Section -->
+  <div class="title-section">
+    <h1>{{ property.generalinfo.title }}</h1>
+    <div class="property-location">
+      <i class="fas fa-map-marker-alt"></i>
+      <span>{{property.location.city}}, {{property.location.country}}</span>
     </div>
   </div>
-  
-  <!-- Thumbnails grid on the right -->
-  <div class="thumbnails-grid">
-    <div class="thumbnail-item" *ngFor="let img of allImages.slice(0, 4); let i = index" 
-         (click)="selectImage(i)" 
-         [class.selected]="selectedImageIndex === i">
-      <img [src]="img" alt="Property Thumbnail">
-    </div>
-    
-    <!-- Show more photos button -->
-    <div class="thumbnail-item show-more" (click)="openFullGallery()" *ngIf="allImages.length > 4">
-      <img [src]="allImages[4]" alt="More Photos" class="more-photos-img">
-      <div class="overlay">
-        <span>View all {{allImages.length}} photos</span>
+
+  <!-- Gallery Section -->
+  <div class="gallery-section" *ngIf="allImages.length > 0">
+    <div class="gallery-grid">
+      <div class="main-image" (click)="openFullGallery()">
+        <img [src]="allImages[0]" alt="Main Property Image">
+      </div>
+      <div class="gallery-grid-secondary">
+        <div class="secondary-image" *ngFor="let img of allImages.slice(1, 5); let i = index" (click)="openFullGallery(); selectImage(i+1)">
+          <img [src]="img" alt="Property Image">
+          <div class="show-all-overlay" *ngIf="i === 3 && allImages.length > 5">
+            <span>+{{ allImages.length - 5 }} more</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  
+
   <!-- Full gallery modal -->
   <div class="gallery-modal" *ngIf="showFullGallery">
-    <div class="modal-header">
-      <h3>All Photos ({{allImages.length}})</h3>
-      <button class="close-btn" (click)="closeFullGallery()">
-        <i class="bi bi-x-lg"></i>
-      </button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-image-container">
-        <img [src]="allImages[selectedImageIndex]" alt="Property Image" class="modal-main-image">
-        <button class="modal-nav-btn modal-prev-btn" (click)="prevImage()">
-          <i class="bi bi-chevron-left"></i>
-        </button>
-        <button class="modal-nav-btn modal-next-btn" (click)="nextImage()">
-          <i class="bi bi-chevron-right"></i>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>All Photos ({{allImages.length}})</h3>
+        <button class="close-btn" (click)="closeFullGallery()">
+          <i class="bi bi-x-lg"></i>
         </button>
       </div>
-      <div class="modal-thumbnails">
-        <div class="modal-thumbnail" 
-             *ngFor="let img of allImages; let i = index" 
-             (click)="selectImage(i)"
-             [class.active]="selectedImageIndex === i">
-          <img [src]="img" alt="Thumbnail">
+      <div class="modal-body">
+        <div class="modal-image-container">
+          <img [src]="allImages[selectedImageIndex]" alt="Property Image" class="modal-main-image">
+          <button class="modal-nav-btn modal-prev-btn" (click)="prevImage()">
+            <i class="bi bi-chevron-left"></i>
+          </button>
+          <button class="modal-nav-btn modal-next-btn" (click)="nextImage()">
+            <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+        <div class="modal-thumbnails">
+          <div class="modal-thumbnail" 
+               *ngFor="let img of allImages; let i = index" 
+               (click)="selectImage(i)"
+               [class.active]="selectedImageIndex === i">
+            <img [src]="img" alt="Thumbnail">
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Show loading indicator or error message when appropriate -->
-<div *ngIf="isLoading" class="loading-spinner">
-  Loading property details...
-</div>
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Left Side: Property Details -->
+    <div class="details-section">
+      <div class="description-section">
+        <h2>About this property</h2>
+        <p>{{ property.generalinfo.description }}</p>
+      </div>
 
-<div *ngIf="!isLoading && error" class="error-message">
-  {{ error }}
-</div>
+      <div class="key-details">
+        <div class="key-detail-item">
+          <i class="fas fa-house"></i>
+          <div>
+            <div class="detail-value">{{ property.generalinfo.propertyType }}</div>
+            <div class="detail-label">Type</div>
+          </div>
+        </div>
+        <div class="key-detail-item">
+          <i class="fas fa-bed"></i>
+          <div>
+            <div class="detail-value">{{ property.Specification.bedrooms }}</div>
+            <div class="detail-label">Bedrooms</div>
+          </div>
+        </div>
+        <div class="key-detail-item">
+          <i class="fas fa-bath"></i>
+          <div>
+            <div class="detail-value">{{ property.Specification.bathrooms }}</div>
+            <div class="detail-label">Bathrooms</div>
+          </div>
+        </div>
+        <div class="key-detail-item">
+          <i class="fas fa-expand"></i>
+          <div>
+            <div class="detail-value">{{ property.Specification.size }}</div>
+            <div class="detail-label">Size (m²)</div>
+          </div>
+        </div>
+      </div>
 
-<div *ngIf="!isLoading && allImages.length === 0" class="no-images">
-  No images available for this property.
-</div>
+      <!-- Amenities Section -->
+      <div class="amenities-section" *ngIf="property.Amenities">
+        <h2>What this place offers</h2>
+        <div class="amenities-grid">
+          <div class="amenity-item" *ngIf="property.Amenities.centralAC">
+            <i class="fas fa-snowflake"></i> Central A/C
+          </div>
+          <div class="amenity-item" *ngIf="property.Amenities.parking">
+            <i class="fas fa-car"></i> Parking
+          </div>
+          <div class="amenity-item" *ngIf="property.Amenities.elevator">
+            <i class="fas fa-elevator"></i> Elevator
+          </div>
+          <div class="amenity-item" *ngIf="property.Amenities.petsAllowed">
+            <i class="fas fa-paw"></i> Pets Allowed
+          </div>
+          <div class="amenity-item" *ngIf="property.Amenities.conciergeService">
+            <i class="fas fa-bell-concierge"></i> Concierge
+          </div>
+          <div class="amenity-item" *ngIf="property.Amenities.securityService">
+            <i class="fas fa-shield-alt"></i> Security
+          </div>
+          <div class="amenity-item" *ngIf="property.Amenities.balcony">
+            <i class="fas fa-umbrella-beach"></i> Balcony
+          </div>
+          <div class="amenity-item" *ngIf="property.Amenities.walkInCloset">
+            <i class="fas fa-tshirt"></i> Walk-in Closet
+          </div>
+          <div class="amenity-item" *ngIf="property.Amenities.sharedGym || property.Amenities.privateGym">
+            <i class="fas fa-dumbbell"></i> Gym
+          </div>
+          <div class="amenity-item" *ngIf="property.Amenities.sharedPool || property.Amenities.privatePool">
+            <i class="fas fa-swimming-pool"></i> Pool
+          </div>
+          <div class="amenity-item" *ngIf="property.Amenities.nearbySchools">
+            <i class="fas fa-school"></i> Nearby Schools
+          </div>
+          <div class="amenity-item" *ngIf="property.Amenities.nearbyShopping">
+            <i class="fas fa-shopping-cart"></i> Nearby Shopping
+          </div>
+        </div>
+        <button class="show-all-amenities" *ngIf="hasMoreAmenities()" (click)="toggleAllAmenities()">
+          Show all amenities
+        </button>
+      </div>
 
-    <!-- Property Details -->
-    <div class="detail-header">
-      <h2>{{ property.generalinfo.title }}</h2>
-      <p>{{ property.generalinfo.description }}</p>
+      <!-- Location Section -->
+      <div class="location-section">
+        <h2>Where you'll be</h2>
+        <div class="map-container">
+          <app-map2
+            [latitude]="property.location.latitude"
+            [longitude]="property.location.longitude"
+            [propertyTitle]="property.generalinfo.title">
+          </app-map2>
+        </div>
+        <div class="location-details">
+          <i class="fas fa-map-marked-alt"></i>
+          <span>{{property.location.country}}, {{property.location.city}}, {{property.location.subcity}}</span>
+        </div>
+      </div>
     </div>
-    <h5>Property Details:</h5>
-    <div class="details">
+
+    <!-- Right Side: Booking Card -->
+    <div class="booking-card">
+      <div class="price-section">
+        <div class="price">
+          <span class="price-amount">TND {{property.price.price | number}}</span>
+          <span class="price-period" *ngIf="property.generalinfo.deal_type === 'rent'">
+            {{property.price.priceunit}}
+          </span>
+        </div>
+        <div class="deal-type">
+          <span class="deal-badge">{{ property.generalinfo.deal_type === 'rent' ? 'For Rent' : 'For Sale' }}</span>
+          <span class="condition-badge">{{ property.generalinfo.PropertyCondition }}</span>
+        </div>
+      </div>
+
+      <!-- Calendar for rental properties -->
+      <div class="calendar-section" *ngIf="property.generalinfo.deal_type === 'rent'">
+        <h3>Select your dates</h3>
+        <app-date-range-picker
+          [bookings]="property.bookings"
+          (dateRangeChange)="onDateRangeChange($event)">
+        </app-date-range-picker>
+        
+        <div class="booking-summary" *ngIf="selectedDateRange.startDate">
+          <div class="date-range">
+            <div>
+              <div class="date-label">Check in</div>
+              <div class="date-value">{{ selectedDateRange.startDate | date:'mediumDate' }}</div>
+            </div>
+            <div>
+              <div class="date-label">Check out</div>
+              <div class="date-value" *ngIf="selectedDateRange.endDate">{{ selectedDateRange.endDate | date:'mediumDate' }}</div>
+              <div class="date-value empty" *ngIf="!selectedDateRange.endDate">Select date</div>
+            </div>
+          </div>
+        </div>
+        
+        <button 
+          class="book-now-btn"
+          [disabled]="!selectedDateRange.startDate || !selectedDateRange.endDate"
+          (click)="submitBooking()">
+          Book Now
+        </button>
+      </div>
       
-      <div class="mini-left">
-        <ul>
-          <li><i class="fas fa-house icon"></i><span class="text"> Type : {{ property.generalinfo.propertyType }}</span>
-          </li>
-          <li><i class="fa-solid fa-hammer icon"></i><span class="text">Condition : {{ property.generalinfo.PropertyCondition
-              }}</span></li>
-          <li><i class="fas fa-bed icon"></i><span class="text">Bedrooms {{ property.Specification.bedrooms }} </span>
-          </li>
-          <li><i class="fas fa-bath icon"></i><span class="text">Bathrooms {{ property.Specification.bathrooms }} </span>
-          </li>
-          <li><i class="fas fa-expand icon"></i><span class="text">Size : {{ property.Specification.size }} m²</span>
-          </li>
-          
-        </ul>
-        <h6><i class="fas fa-handshake"></i> Deal Type: {{ property.generalinfo.deal_type }}</h6>
-
-        <div class="amenities-section" *ngIf="property.Amenities">
-          <h6><i class="fas fa-check-circle"></i> Amenities:</h6>
-          <!-- Display amenities here -->
-          <ul class="amenities-list">
-            <li *ngIf="property.Amenities.centralAC">
-              <i class="fas fa-snowflake"></i> Central A/C
-            </li>
-            <li *ngIf="property.Amenities.parking">
-              <i class="fas fa-car"></i> Parking
-            </li>
-            <li *ngIf="property.Amenities.elevator">
-              <i class="fas fa-elevator"></i> Elevator
-            </li>
-            <li *ngIf="property.Amenities.petsAllowed">
-              <i class="fas fa-paw"></i> Pets Allowed
-            </li>
-            <li *ngIf="property.Amenities.conciergeService">
-              <i class="fas fa-bell-concierge"></i> Concierge
-            </li>
-            <li *ngIf="property.Amenities.securityService">
-              <i class="fas fa-shield-alt"></i> Security
-            </li>
-            <li *ngIf="property.Amenities.lobbyInBuilding">
-              <i class="fas fa-building"></i> Lobby
-            </li>
-            <li *ngIf="property.Amenities.maidsRoom">
-              <i class="fas fa-broom"></i> Maid's Room
-            </li>
-            <li *ngIf="property.Amenities.studyRoom">
-              <i class="fas fa-book-reader"></i> Study Room
-            </li>
-            <li *ngIf="property.Amenities.balcony">
-              <i class="fas fa-umbrella-beach"></i> Balcony
-            </li>
-            <li *ngIf="property.Amenities.walkInCloset">
-              <i class="fas fa-tshirt"></i> Walk-in Closet
-            </li>
-            <li *ngIf="property.Amenities.childrensPlayArea">
-              <i class="fas fa-baby"></i> Children's Play Area
-            </li>
-            <li *ngIf="property.Amenities.garden">
-              <i class="fas fa-seedling"></i> Garden
-            </li>
-            <li *ngIf="property.Amenities.barbecueArea">
-              <i class="fas fa-drumstick-bite"></i> Barbecue Area
-            </li>
-            <li *ngIf="property.Amenities.jacuzzi">
-              <i class="fas fa-hot-tub"></i> Jacuzzi
-            </li>
-            <li *ngIf="property.Amenities.sauna">
-              <i class="fas fa-water"></i> Sauna
-            </li>
-            <li *ngIf="property.Amenities.sharedGym">
-              <i class="fas fa-dumbbell"></i> Shared Gym
-            </li>
-            <li *ngIf="property.Amenities.privateGym">
-              <i class="fas fa-dumbbell"></i> Private Gym
-            </li>
-            <li *ngIf="property.Amenities.sharedPool">
-              <i class="fas fa-swimming-pool"></i> Shared Pool
-            </li>
-            <li *ngIf="property.Amenities.privatePool">
-              <i class="fas fa-swimming-pool"></i> Private Pool
-            </li>
-            <li *ngIf="property.Amenities.spa">
-              <i class="fas fa-spa"></i> Spa
-            </li>
-            <li *ngIf="property.Amenities.viewOfWater">
-              <i class="fas fa-water"></i> View of Water
-            </li>
-            <li *ngIf="property.Amenities.viewOfLandmark">
-              <i class="fas fa-monument"></i> View of Landmark
-            </li>
-            <li *ngIf="property.Amenities.nearbyHospitals">
-              <i class="fas fa-hospital"></i> Nearby Hospitals
-            </li>
-            <li *ngIf="property.Amenities.nearbyPublicTransport">
-              <i class="fas fa-bus"></i> Public Transport
-            </li>
-            <li *ngIf="property.Amenities.nearbySchools">
-              <i class="fas fa-school"></i> Nearby Schools
-            </li>
-            <li *ngIf="property.Amenities.nearbyShopping">
-              <i class="fas fa-shopping-cart"></i> Nearby Shopping
-            </li>
-            <!-- Add more amenities as needed -->
-          </ul>
+      <!-- Contact Agent Section -->
+      <div class="agent-section">
+        <div class="agent-info">
+          <img [src]="getImageUrl(property.user.profileImage || '')" alt="Agent" class="agent-photo" onerror="this.src='/assets/default-profile-image.png'" />
+          <div class="agent-details">
+            <div class="agent-label">Hosted by</div>
+            <div class="agent-name">{{property.user.name || 'Property Owner'}} {{property.user.lastname}}</div>
+          </div>
+        </div>
+        <div class="contact-buttons">
+          <button class="contact-btn message-btn" (click)="openEmailModal()">
+            <i class="bi bi-envelope"></i> Message
+          </button>
+          <button class="contact-btn call-btn" (click)="callAgent()">
+            <i class="bi bi-telephone"></i> Call
+          </button>
         </div>
       </div>
 
-     
-      <div class="mini-right">
-        <!-- Owner/Agent Card -->
-<div class="agent-card">
-  <!-- Price Section -->
-  <div class="card-section">
-    <div class="label">Price</div>
-    <div class="price">TND{{property.price.price| number}}</div>
-    <div *ngIf="property.generalinfo.deal_type === 'rent'">
-      <div class="rent-price">{{property.price.priceunit}}</div>
-    </div>
-    
-  </div>
-  
-  <!-- Agent Detail Section -->
-  <div class="card-section">
-    <div class="label">Owner Detail</div>
-    <div class="agent-info">
-      <img src="/assets/person.png" alt="Agent" class="agent-photo">
-      <div class="agent-details">
-        <div class="agent-name">{{property.user.name || 'Agent Name'}}</div>
+      <!-- Inspection Times Section -->
+      <div class="inspection-section">
+        <h3>Schedule a Visit</h3>
+        <div class="inspection-times">
+          <div class="inspection-days">Monday - Friday</div>
+          <div class="inspection-hours">10:00am - 5:00pm</div>
+        </div>
+        <button class="schedule-btn" (click)="openAppointmentForm()">
+          <i class="bi bi-calendar-check"></i> Make Appointment
+        </button>
       </div>
     </div>
-    <div class="contact-buttons">
-      <button class="action-button primary-button" (click)="openEmailModal()">
-        <i class="bi bi-envelope"></i> Mail Agent
-      </button>
-      <button class="action-button outline-button" (click)="callAgent()">
-        <i class="bi bi-telephone"></i> Call Agent
-      </button>
-    </div>
   </div>
-  <app-email-modal 
+</div>
+
+<!-- Email Modal -->
+<app-email-modal 
   *ngIf="showEmailModal"
   [propertyId]="property.id"
   [recipientId]="property.user.id"  
@@ -233,88 +249,40 @@
   (close)="closeEmailModal()"
   (emailSent)="onEmailSent($event)">
 </app-email-modal>
-  
-  <!-- Inspection Times Section -->
-  <div class="card-section">
-    <div class="label">Inspection Times</div>
-    <div class="inspection-note">Live inspections only available on:</div>
-    <div class="inspection-time">
-      <strong>Monday - Friday</strong> at 10:00am - 5:00pm
-    </div>
-    <button class="action-button primary-button" (click)="openAppointmentForm()">
-      <i class="bi bi-calendar-check" ></i> Make Appointment
-    </button>
+
+<!-- Appointment Form Modal -->
+<div class="modal-overlay" *ngIf="showAppointmentForm">
+  <div class="modal-container">
+    <app-appointment-form
+      [propertyId]="property.id"
+      (appointmentScheduled)="onAppointmentScheduled($event)"
+      (formClosed)="closeAppointmentForm()">
+    </app-appointment-form>
   </div>
-    <!-- FIXME: here modal -->
-    <div *ngIf="appointmentSuccess" class="alert alert-success mt-3">
+</div>
+
+<!-- Success Messages -->
+<div class="success-toast" *ngIf="appointmentSuccess">
+  <div class="success-content">
+    <i class="bi bi-check-circle"></i>
+    <div>
       <h4>Appointment Scheduled!</h4>
-      <p>Your appointment has been scheduled successfully for 
+      <p>Your visit has been booked for 
         {{ scheduledAppointment?.appointmentDate | date:'longDate' }} at 
         {{ scheduledAppointment?.appointmentTime }}.
       </p>
-      <p>We'll send you a confirmation email with details.</p>
     </div>
-    
-    <!-- Appointment form modal overlay -->
-    <div class="modal-overlay" *ngIf="showAppointmentForm">
-      <div class="modal-container">
-        <app-appointment-form
-          [propertyId]="property.id"
-          (appointmentScheduled)="onAppointmentScheduled($event)"
-          (formClosed)="closeAppointmentForm()"
-        ></app-appointment-form>
-      </div>
-    </div>
-     
+    <button class="close-toast" (click)="appointmentSuccess = false">×</button>
+  </div>
 </div>
-         <!-- <h5>Owner details:</h5>
-          <h6>{{ property.userName }}</h6>  -->    
-    </div>
-    <div class="calender-mini">
-      <div *ngIf="property.generalinfo.deal_type === 'rent'">
-        <h5>Select rental period:</h5>
-        <app-date-range-picker
-          [bookings]="property.bookings"
-          (dateRangeChange)="onDateRangeChange($event)">
-        </app-date-range-picker>
-        
-        <div class="booking-summary" *ngIf="selectedDateRange.startDate">
-          <h4>Selected Dates:</h4>
-          <p>From: {{ selectedDateRange.startDate | date:'mediumDate' }}</p>
-          <p *ngIf="selectedDateRange.endDate">To: {{ selectedDateRange.endDate | date:'mediumDate' }}</p>
-          <p *ngIf="!selectedDateRange.endDate">Please select an end date</p>
-        </div>
-        
-        <button 
-          class="submit-booking"
-          [disabled]="!selectedDateRange.startDate || !selectedDateRange.endDate"
-          (click)="submitBooking()">
-          Book Now
-        </button>
-      </div>
-    </div>
 
-    </div>
-    <!-- calender lena -->
-    
+<!-- Loading Indicator -->
+<div *ngIf="isLoading" class="loading-container">
+  <div class="loading-spinner"></div>
+  <p>Loading property details...</p>
+</div>
 
-  </div>
-
-
-  <!-- RIGHT SIDE map here  -->
-  <div class="right-side">
-    <div class="map-container" *ngIf="!isLoading && property && property.location">
-      
-      <app-map2
-        [latitude]="property.location.latitude"
-        [longitude]="property.location.longitude"
-        [propertyTitle]="property.generalinfo.title">
-      </app-map2>
-      
-      <div class="location-address">
-        <i class="fas fa-map-marked-alt"></i>
-        <span>{{property.location.country}}, {{property.location.city}}, {{property.location.subcity}}</span>
-      </div>
-    </div>
-  </div>
+<!-- Error Message -->
+<div *ngIf="!isLoading && error" class="error-message">
+  {{ error }}
 </div>

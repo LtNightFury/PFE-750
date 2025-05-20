@@ -11,6 +11,7 @@ export interface Property {
     user: userprofile;
     approval: string;
     viewCount: string;
+    createdAt: string; 
   }
   
   export interface GeneralInfo {

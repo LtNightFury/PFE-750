@@ -1,10 +1,7 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Booking, Property } from 'src/app/models/property.model';
-import { PropertyService } from 'src/app/services/property.service';
-import { DateRangePickerComponent } from 'src/app/components/date-range-picker/date-range-picker.component';
-import { Appointment } from 'src/app/models/Appointment.model';
-import { Router } from '@angular/router';
+import { PropertyService } from '../../services/property.service';
+import { Property } from '../../models/property.model';
 
 @Component({
   selector: 'app-property-detail',
@@ -12,24 +9,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./property-detail.component.css']
 })
 export class PropertyDetailComponent implements OnInit {
-  @ViewChild(DateRangePickerComponent)
-  dateRangePicker!: DateRangePickerComponent;
-  showEmailModal = false;
-  emailSent = false;
-  
-  property!: Property;
-  allImages: string[] = [];
-  isLoading = true;
+  property: any = {};
+  isLoading: boolean = true;
   error: string | null = null;
-  bookings: { startDate: Date; endDate: Date }[] = [];
-  selectedImageIndex = 0;
-showFullGallery = false;
-showAppointmentForm = false;
-appointmentSuccess = false;
-scheduledAppointment: Appointment | null = null;
-  
-  // Store selected dates
-  selectedDateRange: { startDate: Date | null; endDate: Date | null } = {
+  allImages: string[] = [];
+  selectedImageIndex: number = 0;
+  showFullGallery: boolean = false;
+  showEmailModal: boolean = false;
+  showAppointmentForm: boolean = false;
+  showAllAmenities: boolean = false;
+  appointmentSuccess: boolean = false;
+  scheduledAppointment: any = null;
+  selectedDateRange: any = {
     startDate: null,
     endDate: null
   };
@@ -37,170 +28,164 @@ scheduledAppointment: Appointment | null = null;
   constructor(
     private route: ActivatedRoute,
     private propertyService: PropertyService,
-    private router: Router
-  ) {}
+    
+  ) { }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const id = Number(params.get('id'));
-      this.propertyService.getPropertyById(id).subscribe(property => {
-        this.property = property;
-        this.propertyService.recordView(property.id).subscribe(); // 👈 Add this call
-      });
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      if (id) {
+        this.loadPropertyDetails(id);
+      } else {
+        this.error = 'Property ID not found';
+        this.isLoading = false;
+      }
     });
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.propertyService.getPropertyById(id).subscribe({
+  }
+
+  loadPropertyDetails(id: string): void {
+    this.isLoading = true;
+    this.error = null;
+
+    // Load property details
+    this.propertyService.getPropertyById(parseInt(id)).subscribe({
       next: (data) => {
         this.property = data;
-        
-
-        // Combine photos, floorPlans, and documents into a single array
-        const baseUrl = 'http://backend.ddev.site';
-        const photos = data.Media.photos.map(p => baseUrl + p.imageName);
-        const floorPlans = data.Media.floorPlans.map(p => baseUrl + p.imageName);
-        
-        this.allImages = [...photos, ...floorPlans]; // Combine all images
+        this.loadPropertyImages(id);
         this.isLoading = false;
       },
       error: (err) => {
-        this.error = 'Property not found.';
+        this.error = 'Failed to load property details. Please try again later.';
         this.isLoading = false;
+        console.error('Error loading property:', err);
       }
     });
   }
-
-  // Update to just store the date range
-  onDateRangeChange(range: { startDate: Date | null; endDate: Date | null }): void {
-    this.selectedDateRange = range;
-  }
-
-  // Method to handle form submission with all data
-  submitBooking(): void {
-    // Validate that we have a complete date range
-    if (!this.selectedDateRange.startDate || !this.selectedDateRange.endDate) {
-      console.error('Please select a complete date range');
-      return;
-    }
-
-    // Format dates for API request
-    const booking: Booking = {
-      startDate: this.selectedDateRange.startDate.toISOString(),
-      endDate: this.selectedDateRange.endDate.toISOString(),
-      propertyId: this.property.id
-      // Add any other data you need here
-    };
-
-    // Call the service to add the booking
-    this.propertyService.addBooking(this.property.id, booking).subscribe({
-      next: (response) => {
-        // Add the new booking to the local list
-        this.property.bookings.push(response);
-        console.log('Booking successful!', response);
-        
-        // Reset the selected range
-        this.selectedDateRange = { startDate: null, endDate: null };
-        
-        // You might want to show a success message
+  loadPropertyImages(propertyId: string): void {
+    // Assuming that your API returns an array of images. Modify as necessary.
+    this.propertyService.getPropertyById(parseInt(propertyId)).subscribe({
+      next: (data) => {
+        if (data.Media && data.Media.photos) {
+          this.allImages = data.Media.photos.map(photo => 'http://backend.ddev.site' + photo.imageName);
+        }
       },
-      error: (error) => {
-        console.error('Booking failed', error);
-        // Show error message
+      error: (err) => {
+        console.error('Error loading images:', err);
       }
     });
-
-
-
-
+  }
+  // Gallery methods
+  selectImage(index: number): void {
+    this.selectedImageIndex = index;
   }
 
-//el gallary lena 
-selectImage(index: number): void {
-  this.selectedImageIndex = index;
-}
-
-openFullGallery(): void {
-  this.showFullGallery = true;
-}
-
-closeFullGallery(): void {
-  this.showFullGallery = false;
-}
-
-nextImage(): void {
-  this.selectedImageIndex = (this.selectedImageIndex + 1) % this.allImages.length;
-}
-
-prevImage(): void {
-  this.selectedImageIndex = (this.selectedImageIndex - 1 + this.allImages.length) % this.allImages.length;
-}
-
-
-
-openAppointmentForm(): void {
-  this.showAppointmentForm = true;
-}
-
-// Handle appointment scheduling
-onAppointmentScheduled(appointment: Appointment): void {
-  this.showAppointmentForm = false;
-  this.appointmentSuccess = true;
-  this.scheduledAppointment = appointment;
-  
-  
-  // Optional: Hide success message after a few seconds
-  setTimeout(() => {
-    this.appointmentSuccess = false;
-  }, 5000);
-}
-
-// Close the appointment form
-closeAppointmentForm(): void {
-  this.showAppointmentForm = false;
-}
-// New methods for WhatsApp and Email functionality
-  
-  // Open WhatsApp chat with agent
-  callAgent(): void {
-    if (this.property && this.property.user && this.property.user.phoneNumber) {
-      // Format phone number for WhatsApp (remove spaces, dashes, etc.)
-      const formattedPhone = this.property.user.phoneNumber.replace(/\D/g, '');
-      
-      // Create WhatsApp web link
-      // The international format should include country code
-      const whatsappUrl = `https://wa.me/${formattedPhone}`;
-      
-      // Open in new tab
-      window.open(whatsappUrl, '_blank');
-    } else {
-      console.error('Agent phone number not available');
-      // You could show an alert or message to the user here
-    }
+  prevImage(): void {
+    this.selectedImageIndex = (this.selectedImageIndex - 1 + this.allImages.length) % this.allImages.length;
   }
-  
-  // Open email modal
+
+  nextImage(): void {
+    this.selectedImageIndex = (this.selectedImageIndex + 1) % this.allImages.length;
+  }
+
+  openFullGallery(): void {
+    this.showFullGallery = true;
+    document.body.style.overflow = 'hidden'; // Prevent scrolling when gallery is open
+  }
+
+  closeFullGallery(): void {
+    this.showFullGallery = false;
+    document.body.style.overflow = ''; // Restore scrolling
+  }
+
+  // Amenities handling
+  hasMoreAmenities(): boolean {
+    const amenitiesCount = Object.values(this.property.Amenities || {}).filter(value => value === true).length;
+    return amenitiesCount > 12;
+  }
+
+  toggleAllAmenities(): void {
+    this.showAllAmenities = !this.showAllAmenities;
+  }
+
+  // Contact agent methods
   openEmailModal(): void {
-    this.propertyService.getauthcheck().subscribe({
-      next: () => {
-        // User is authenticated
-        this.showEmailModal = true;
-        this.emailSent = false;
-      },
-      error: () => {
-        // User is not authenticated – redirect to login
-        this.router.navigate(['/login'], { queryParams: { returnUrl: this.router.url } });
-      }
-    });
+    this.showEmailModal = true;
   }
-  // Close email modal
+
   closeEmailModal(): void {
     this.showEmailModal = false;
   }
-  
-  // Handle email sent event
-  onEmailSent(success: boolean): void {
-    this.emailSent = success;
-    
-  }
-  
 
+  onEmailSent(result: any): void {
+    this.closeEmailModal();
+    // Success handling here
+  }
+
+  callAgent(): void {
+    if (this.property && this.property.user && this.property.user.phoneNumber) {
+      window.location.href = `tel:${this.property.user.phoneNumber}`;
+    } else {
+      alert('Phone number not available');
+    }
+  }
+
+  // Appointment methods
+  openAppointmentForm(): void {
+    this.showAppointmentForm = true;
+  }
+
+  closeAppointmentForm(): void {
+    this.showAppointmentForm = false;
+  }
+
+  onAppointmentScheduled(appointment: any): void {
+    this.closeAppointmentForm();
+    this.appointmentSuccess = true;
+    this.scheduledAppointment = appointment;
+    
+    // Auto-hide the success message after 5 seconds
+    setTimeout(() => {
+      this.appointmentSuccess = false;
+    }, 5000);
+  }
+
+  // Date range selection for rentals
+  onDateRangeChange(dateRange: any): void {
+    this.selectedDateRange = dateRange;
+  }
+
+  submitBooking(): void {
+    if (!this.selectedDateRange.startDate || !this.selectedDateRange.endDate) {
+      return;
+    }
+    
+    const bookingData = {
+      propertyId: this.property.id,
+      startDate: this.selectedDateRange.startDate,
+      endDate: this.selectedDateRange.endDate
+    };
+    
+    this.propertyService.addBooking(this.property.id, bookingData).subscribe({
+      next: (response) => {
+        alert('Booking successful!');
+      },
+      error: (err) => {
+        console.error('Booking error:', err);
+        alert('Failed to book. Please try again.');
+      }
+    });
+  }
+  getImageUrl(path: string): string {
+    if (!path) return '/assets/default-avatar.png';
+    if (path.startsWith('http')) return path;
+    return `http://backend.ddev.site${path.startsWith('/') ? path : '/' + path}`;
+  }
+
+  reload(): void {
+    if (this.property && this.property.id) {
+      this.loadPropertyDetails(this.property.id);
+    } else {
+      window.location.reload();
+    }
+  }
 }

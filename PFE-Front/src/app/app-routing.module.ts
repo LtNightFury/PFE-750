@@ -26,6 +26,8 @@ import { PropertyViewsComponent } from './components/property-views/property-vie
 import { OwnerMessagesComponent } from './owner-dashboard/owner-messages/owner-messages.component';
 import { UserMessagesComponent } from './pages/user-messages/user-messages.component';
 import { UserLayoutComponent } from './layout/user-layout/user-layout.component';
+import { AdminDashLayoutComponent } from './Admin-dashboard/admin-dash-layout/admin-dash-layout.component';
+import { AdminDashboardComponent } from './Admin-dashboard/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -43,12 +45,11 @@ const routes: Routes = [
   
   
   {path: 'owner-dashboard', component: OwnerDashComponent},
-
+  
   {path: 'propertyview', component: PropertyViewsComponent},
   { path: 'editproperty/:id', component: EditPropertyComponent},
 
-  
-  /*{ 
+    /*{ 
     path: 'appointments', 
     component: AppointmentsCalendarComponent 
   },*/
@@ -115,6 +116,16 @@ const routes: Routes = [
     ]
   },
 
+  {
+  path: 'admin',
+  component: AdminDashLayoutComponent,
+  children: [
+    
+    { path: 'dashboard', component: AdminDashboardComponent },
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+    // Add more admin routes here
+  ]
+},
   
   //lena bech nhot el route ta3 el dashboard//
   { path: '', redirectTo: '/home', pathMatch: 'full' }

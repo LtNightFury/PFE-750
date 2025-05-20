@@ -1,8 +1,7 @@
 /* date-range-picker.component.css */
 .date-range-picker {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  max-width: 340px;
-  max-width: 430px;
+  font-family: poppins, sans-serif;
+  width: 100%;
   border: 1px solid #e0e0e0;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
@@ -33,7 +32,7 @@
   cursor: pointer;
   text-align: left;
   font-size: 14px;
-  color: #495057;
+  color: #81CDB7;
   transition: all 0.2s ease;
 }
 
@@ -55,8 +54,8 @@
 
 .btn {
   padding: 10px 14px;
-  border: 1px solid #e9ecef;
-  background-color: #f8f9fa;
+  border: 1px solid #81CDB7;
+  background-color: #3A8E7B;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
@@ -65,7 +64,7 @@
 }
 
 .btn:hover:not(:disabled) {
-  background-color: #e9ecef;
+  background-color: #3A8E7B;
   color: #212529;
 }
 
@@ -155,7 +154,7 @@
 }
 
 .today {
-  border: 2px solid #4dabf7;
+  border: 2px solid #3A8E7B;
   font-weight: 600;
 }
 
@@ -176,14 +175,14 @@
 }
 
 .selected {
-  background-color: #4dabf7;
+  background-color: #3A8E7B;
   color: white;
   font-weight: 600;
 }
 
 .in-range {
-  background-color: rgba(77, 171, 247, 0.2);
-  border-radius: 0;
+background: #81CDB7;
+ border-radius: 10px;
 }
 
 .start-date {

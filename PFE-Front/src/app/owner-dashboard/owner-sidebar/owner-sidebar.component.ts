@@ -35,7 +35,7 @@ export class OwnerSidebarComponent {
   }
 
   getImageUrl(path: string): string {
-    if (!path) return 'assets/default-avatar.png';
+    if (!path) return '/assets/default-avatar.png';
     if (path.startsWith('http')) return path;
     return `http://backend.ddev.site${path.startsWith('/') ? path : '/' + path}`;
   }
