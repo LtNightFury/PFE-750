@@ -6,6 +6,8 @@ export interface User {
     roles: string[];
     phoneNumber: string;
     profileImage: string;
+    createdAt: string; 
+    lastname: string;
 
   }
   

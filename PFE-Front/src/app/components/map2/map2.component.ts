@@ -72,7 +72,7 @@ export class Map2Component implements  OnChanges, AfterViewInit {
     // Create the map
     this.map = L.map('map', {
       center: [lng, lat],
-      zoom: 14
+      zoom: 13
     });
 
     // Add the tile layer (OpenStreetMap)

@@ -6,9 +6,9 @@
   }
   
   #map {
-    height: 1200px;
+    height: auto;
     width: 100%;
-    min-height: 900px;
+    min-height: 470px;
     border-radius: 8px;
     z-index: 0;
   }

@@ -68,6 +68,10 @@ import { NgChartsModule } from 'ng2-charts';
 import { OwnerMessagesComponent } from './owner-dashboard/owner-messages/owner-messages.component';
 import { UserMessagesComponent } from './pages/user-messages/user-messages.component';
 import { UserLayoutComponent } from './layout/user-layout/user-layout.component';
+import { AdminDashLayoutComponent } from './Admin-dashboard/admin-dash-layout/admin-dash-layout.component';
+import { AdminSidebarComponent } from './Admin-dashboard/admin-sidebar/admin-sidebar.component';
+import { AdminDashboardComponent } from './Admin-dashboard/admin-dashboard/admin-dashboard.component';
+
 
 
 
@@ -125,6 +129,9 @@ import { UserLayoutComponent } from './layout/user-layout/user-layout.component'
         OwnerMessagesComponent,
         UserMessagesComponent,
         UserLayoutComponent,
+        AdminDashLayoutComponent,
+        AdminSidebarComponent,
+        AdminDashboardComponent,
         
        
     

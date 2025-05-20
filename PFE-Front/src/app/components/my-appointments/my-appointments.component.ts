@@ -51,7 +51,7 @@ export class MyAppointmentsComponent {
       case 'confirmed':
       case 'approved': // treat approved as confirmed
         return 'confirmed';
-      case 'cancelled':
+      case 'canceled':
         return 'cancelled';
       default:
         return '';
@@ -62,7 +62,7 @@ export class MyAppointmentsComponent {
     return `marker-${status === 'approved' ? 'confirmed' : status}`;
   }
   getImageUrl(path: string): string {
-    if (!path) return 'assets/default-avatar.png';
+    if (!path) return '/assets/default-avatar.png';
     if (path.startsWith('http')) return path;
     return `http://backend.ddev.site${path.startsWith('/') ? path : '/' + path}`;
   }

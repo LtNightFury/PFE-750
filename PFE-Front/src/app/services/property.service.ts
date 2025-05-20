@@ -150,4 +150,24 @@ markMessageAsRead(messageId: number): Observable<any> {
   return this.http.put(`${this.baseApiUrl}/messages/${messageId}`, {});
 }
 
+//for admin dashbhoard
+getPendingPropertiesCount(): Observable<{ pendingProperties: number }> {
+  return this.http.get<{ pendingProperties: number }>(`${this.baseApiUrl}/admin/pending-properties`);
+
+}
+
+getTotalUsersCount() {
+  return this.http.get<{ totalUsersCount: number }>('http://backend.ddev.site/api/admin/total-users');
+}
+
+getTotalOwnersCount() {
+  return this.http.get<{ totalOwnersCount: number }>('http://backend.ddev.site/api/admin/total-owners');
+}
+getallusers(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.baseApiUrl}/admin/users`);
+
+}
+getallowners(): Observable<any[]> {
+  return this.http.get<any[]>(`${this.baseApiUrl}/admin/allowners`);
+}
 }

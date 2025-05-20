@@ -1,0 +1,129 @@
+<div class="page-body">
+    <div class="dashboard-header">
+        <header>
+             <h2 class="dashboard-title">Dashboard</h2>
+      <p class="subtitle">Here is today's report and performances</p>
+        </header>
+    </div>
+    <div class="dashboard-content">
+        
+    <div class="parent">
+    <div class="div1 stats-card hoverable hoverable">
+        <div class="stats-header">
+            <h6>Total Users</h6>
+            <i class="fa-solid fa-arrow-right"></i>
+        </div>
+        <div class="stats-body">
+            <span class="stats-value">{{ totalUsers }}</span>            
+        </div>
+        <p class="description">Total users registred in the platform</p>
+    </div>
+
+    <div class="div2 stats-card hoverable">
+        <div class="stats-header">
+            <h6>Total owners</h6>
+            <i class="fa-solid fa-arrow-right"></i>
+        </div>
+        <div class="stats-body">
+            <span class="stats-value">{{ totalOwners }}</span>
+            </div>
+            <p class="description">Total owners registred in the platform</p>
+
+        
+    </div>
+
+    <div class="div3 stats-card hoverable">
+        <div class="stats-header">
+            <h6>Total Properties listed</h6>
+            <i class="fa-solid fa-arrow-right"></i>
+        </div>
+        <div class="stats-body">
+            <span class="stats-value">{{ totalProperties }}</span>
+            </div>
+            <p class="description">Total properties listed in the platform</p>
+
+    </div>
+    <div class="div4 stats-card hoverable">
+        <div class="stats-header">
+            <h6>Pending Properties</h6>
+            <i class="fa-solid fa-arrow-right"></i>
+        </div>
+        <div class="stats-body">
+            <span class="stats-value">{{ pendingProperties }}</span>
+            </div>
+            <p class="description">Total properties pending in the platform</p>
+    </div>
+
+    
+    <div class="div5">
+  5
+    </div>
+    <div class="div6">
+              6
+    </div>
+
+
+    <div class="div7">
+        <div class="chart-container">
+  <h3>Users Distribution</h3>
+  <canvas baseChart
+          [data]="pieChartData"
+          type="doughnut"
+          [options]="pieChartOptions">
+  </canvas>
+</div>
+    </div>
+    
+
+
+    <div class="div8">
+        
+<div class="table-responsive shadow-sm rounded overflow-hidden">
+  <table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light text-center table mb-2 dark text-white fw-bold">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Profile</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Roles</th>
+      </tr>
+    </thead>
+    <tbody class="text-center">
+      <tr *ngFor="let user of users" class="border-bottom">
+        <td class="fw-semibold">USR {{ user.id }}</td>
+        <td>
+          <img
+            [src]="user.profileImage ? getFullImageUrl(user.profileImage) : '/assets/default-avatar.png'"
+            alt="Profile"
+            width="45"
+            height="45"
+            class="rounded-circle shadow-sm"
+          />
+        </td>
+        <td class="fw-semibold text-capitalize">
+          {{ user.name }} {{ user.lastname }}
+        </td>
+        <td class="text-muted">{{ user.email }}</td>
+        <td class="text-muted">{{ user.phoneNumber }}</td>
+        <td>
+          <span 
+  *ngFor="let role of user.roles" 
+  class="badge me-1"
+  [ngClass]="getRoleBadgeClass(role)">
+  {{ role.replace('ROLE_', '') }}
+</span>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+    </div>
+    
+        
+    </div>
+</div>
