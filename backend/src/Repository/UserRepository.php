@@ -36,4 +36,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         return $this->findOneBy(['resetToken' => $token]);
     }
+    public function countUsersPerMonth(): array
+{
+    $conn = $this->getEntityManager()->getConnection();
+
+    $sql = "
+        SELECT 
+            DATE_FORMAT(created_at, '%Y-%m') AS date,
+            COUNT(*) AS count
+        FROM user
+        GROUP BY date
+        ORDER BY date ASC
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $resultSet = $stmt->executeQuery();
+
+    return $resultSet->fetchAllAssociative();
+}
 }
