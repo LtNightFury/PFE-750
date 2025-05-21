@@ -116,12 +116,11 @@ public function listProperties(PropertyRepository $propertyRepository, Serialize
 {
     $properties = $propertyRepository->findBy(['approval' => 'pending']);
 
-    // Serialize with circular reference handler
     $json = $serializer->serialize($properties, 'json', [
+        'groups' => ['property:read'],
         'circular_reference_handler' => function ($object) {
             return $object->getId();
         },
-        'ignored_attributes' => ['__initializer__', '__cloner__', '__isInitialized__','user','bookings','contracts','appointments']
     ]);
 
     return new JsonResponse($json, 200, [], true);
@@ -148,6 +147,21 @@ public function getContactUs(ContactusRepository $contactusRepository, Serialize
 
 
 
+
+}
+#[Route('/analytics/user-growth', name: 'admin_user_growth')]
+public function userGrowth(UserRepository $userRepository): JsonResponse
+{
+    $data = $userRepository->countUsersPerMonth();
+    return $this->json($data);
+}
+
+
+#[Route('/analytics/property-growth', name: 'admin_property_growth')]
+public function propertyGrowth(PropertyRepository $propertyRepository): JsonResponse
+{
+    $data = $propertyRepository->countPropertiesPerMonth();
+    return $this->json($data);
 
 }
 }

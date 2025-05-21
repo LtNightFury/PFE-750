@@ -66,7 +66,7 @@ class Property
     #[Groups(['property:read'])]
     private Collection $bookings;
 
-    #[ORM\OneToMany(mappedBy: 'property', targetEntity: Appointment::class)]
+  #[ORM\OneToMany(mappedBy: 'property', targetEntity: Appointment::class, cascade: ['remove'], orphanRemoval: true)]
     private Collection $appointments;
 
     #[ORM\Column(nullable: true)]
@@ -75,8 +75,9 @@ class Property
     #[ORM\OneToMany(mappedBy: 'Property', targetEntity: Message::class, orphanRemoval: true)]
     private Collection $messages;
 
-    #[ORM\OneToMany(mappedBy: 'Property', targetEntity: PropertyView::class)]
+   #[ORM\OneToMany(mappedBy: 'Property', targetEntity: PropertyView::class, cascade: ['remove'], orphanRemoval: true)]
     private Collection $propertyViews;
+
 
     #[ORM\Column(type: 'datetime_immutable')]
     

@@ -153,6 +153,25 @@ public function updateProperty(Property $property, $data, $user): Property
     
     return $property;
 }
+public function countPropertiesPerMonth(): array
+{
+    $conn = $this->getEntityManager()->getConnection();
+
+    $sql = "
+        SELECT 
+            DATE_FORMAT(created_at, '%Y-%m') AS date,
+            COUNT(*) AS count
+        FROM property
+        GROUP BY date
+        ORDER BY date ASC
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $resultSet = $stmt->executeQuery();
+
+    return $resultSet->fetchAllAssociative();
+}
+
 
 
 }
