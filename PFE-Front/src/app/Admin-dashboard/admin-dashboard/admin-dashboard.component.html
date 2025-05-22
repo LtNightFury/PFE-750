@@ -8,16 +8,36 @@
     <div class="dashboard-content">
         
     <div class="parent">
-    <div class="div1 stats-card hoverable hoverable">
-        <div class="stats-header">
-            <h6>Total Users</h6>
-            <i class="fa-solid fa-arrow-right"></i>
-        </div>
-        <div class="stats-body">
-            <span class="stats-value">{{ totalUsers }}</span>            
-        </div>
-        <p class="description">Total users registred in the platform</p>
+    <div class="hover-wrapper" 
+     (mouseenter)="showUserChart = true" 
+     (mouseleave)="showUserChart = false">
+
+  <!-- Stats Card -->
+  <div class="div1 stats-card hoverable">
+    <div class="stats-header">
+      <h6>Total Users</h6>
+      <i class="fa-solid fa-arrow-right"></i>
     </div>
+    <div class="stats-body">
+      <span class="stats-value">{{ totalUsers }}</span>            
+    </div>
+    <p class="description">Total users registered on the platform</p>
+  </div>
+
+  <!-- Chart on hover -->
+  <div class="div7 chart-hover" *ngIf="showUserChart">
+    <div class="chart-container">
+      <h3>Users Distribution</h3>
+      <canvas baseChart
+              [data]="pieChartData"
+              type="doughnut"
+              [options]="pieChartOptions">
+      </canvas>
+    </div>
+  </div>
+
+</div>
+
 
     <div class="div2 stats-card hoverable">
         <div class="stats-header">
@@ -56,23 +76,31 @@
 
     
     <div class="div5">
-  5
-    </div>
-    <div class="div6">
-              6
+  
+  <div class="chart-container">
+    <h5>User Growth Over Time</h5>
+    <canvas baseChart 
+      [data]="userGrowthData"
+      [options]="lineChartOptions"
+      type="line">
+    </canvas>
+  </div>
     </div>
 
 
-    <div class="div7">
-        <div class="chart-container">
-  <h3>Users Distribution</h3>
-  <canvas baseChart
-          [data]="pieChartData"
-          type="doughnut"
-          [options]="pieChartOptions">
-  </canvas>
-</div>
+    <div class="div6 property-growth">
+              <div class="chart-container">
+    <h5>Property Growth Over Time</h5>
+    <canvas baseChart 
+      [data]="propertyGrowthData"
+      [options]="lineChartOptions"
+      type="line">
+    </canvas>
+  </div>
     </div>
+
+
+   
     
 
 

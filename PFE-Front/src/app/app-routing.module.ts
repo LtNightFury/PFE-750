@@ -28,6 +28,9 @@ import { UserMessagesComponent } from './pages/user-messages/user-messages.compo
 import { UserLayoutComponent } from './layout/user-layout/user-layout.component';
 import { AdminDashLayoutComponent } from './Admin-dashboard/admin-dash-layout/admin-dash-layout.component';
 import { AdminDashboardComponent } from './Admin-dashboard/admin-dashboard/admin-dashboard.component';
+import { AdminUserListComponent } from './Admin-dashboard/admin-user-list/admin-user-list.component';
+import { AdminPropertyListComponent } from './Admin-dashboard/admin-property-list/admin-property-list.component';
+import { AdminPropertyDeleteListComponent } from './Admin-dashboard/admin-property-delete-list/admin-property-delete-list.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -122,6 +125,9 @@ const routes: Routes = [
   children: [
     
     { path: 'dashboard', component: AdminDashboardComponent },
+    { path: 'users', component: AdminUserListComponent },
+    {path: 'properties-list',component: AdminPropertyListComponent},
+    {path: 'properties',component: AdminPropertyDeleteListComponent},
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     // Add more admin routes here
   ]

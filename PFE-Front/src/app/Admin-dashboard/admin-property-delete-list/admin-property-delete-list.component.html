@@ -1,0 +1,50 @@
+<div class="container py-4">
+  <h2 class="mb-4">Delete Properties</h2>
+
+  <input type="text" class="form-control mb-3" placeholder="Search by title" [(ngModel)]="searchTerm" (input)="filterProperties()" />
+
+  <div *ngFor="let property of filteredProperties" class="card shadow-sm mb-3">
+    <div class="card-body">
+      <h5 class="card-title">{{ property.generalinfo.title }}</h5>
+      <p class="card-text">{{ property.generalinfo.description }}</p>
+
+      <div class="mb-2">
+        <strong>City:</strong> {{ property.location.city }} |
+        <strong>Price:</strong> {{ property.price.price }} |
+        <strong>Status:</strong>
+        <span class="badge bg-secondary">{{ property.approval }}</span>
+      </div>
+
+      <div class="mb-2">
+        <strong>Photos:</strong>
+        <div class="d-flex flex-wrap gap-2">
+          <img *ngFor="let photo of property.Media.photos"
+               [src]="'http://backend.ddev.site'+ photo.imageName"
+               class="rounded"
+               style="height: 100px; object-fit: cover;" />
+        </div>
+      </div>
+
+      <button class="btn btn-danger mt-3" (click)="openConfirmModal(property)">Delete</button>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title" id="confirmModalLabel">Confirm Deletion</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure you want to delete <strong>{{ selectedProperty?.generalinfo.title }}</strong>?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" (click)="AdminDeleteProperty()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

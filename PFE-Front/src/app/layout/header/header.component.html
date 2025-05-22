@@ -53,15 +53,19 @@
             <i class="settings-icon"></i>
             <span>Account settings</span>
           </a>
-          <a routerLink="/my-appointments" class="dropdown-item">
+          <a routerLink="/user/my-appointments" class="dropdown-item">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-check-fill" viewBox="0 0 16 16">
               <path d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2m-5.146-5.146-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708"/>
             </svg>
             <span>My Appointment</span>
           </a>
           <a ng *ngIf="user?.roles?.includes('ROLE_OWNER')||user?.roles?.includes('ROLE_ADMIN')"routerLink="/owner" class="dropdown-item">
-            <i class="settings-icon"></i>
+            <svg _ngcontent-ng-c392972002="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" id="dashboard"><path _ngcontent-ng-c392972002="" fill="none" d="M0 0h24v24H0V0z"></path><path _ngcontent-ng-c392972002="" d="M4 13h6c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1zm0 8h6c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1zm10 0h6c.55 0 1-.45 1-1v-8c0-.55-.45-1-1-1h-6c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1zM13 4v4c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1h-6c-.55 0-1 .45-1 1z"></path></svg>
             <span>Owner Dashboard</span>
+          </a>
+          <a ng *ngIf="user?.roles?.includes('ROLE_ADMIN')"routerLink="/admin" class="dropdown-item">
+            <svg _ngcontent-ng-c392972002="" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" id="dashboard"><path _ngcontent-ng-c392972002="" fill="none" d="M0 0h24v24H0V0z"></path><path _ngcontent-ng-c392972002="" d="M4 13h6c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1zm0 8h6c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1zm10 0h6c.55 0 1-.45 1-1v-8c0-.55-.45-1-1-1h-6c-.55 0-1 .45-1 1v8c0 .55.45 1 1 1zM13 4v4c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1h-6c-.55 0-1 .45-1 1z"></path></svg>
+            <span>Admin Dashboard</span>
           </a>
           <a (click)="logout()" class="dropdown-item">
             <i class="logout-icon"></i>
