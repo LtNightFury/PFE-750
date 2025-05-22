@@ -71,6 +71,10 @@ import { UserLayoutComponent } from './layout/user-layout/user-layout.component'
 import { AdminDashLayoutComponent } from './Admin-dashboard/admin-dash-layout/admin-dash-layout.component';
 import { AdminSidebarComponent } from './Admin-dashboard/admin-sidebar/admin-sidebar.component';
 import { AdminDashboardComponent } from './Admin-dashboard/admin-dashboard/admin-dashboard.component';
+import { AdminUserListComponent } from './Admin-dashboard/admin-user-list/admin-user-list.component';
+import { AdminPropertyListComponent } from './Admin-dashboard/admin-property-list/admin-property-list.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { AdminPropertyDeleteListComponent } from './Admin-dashboard/admin-property-delete-list/admin-property-delete-list.component';
 
 
 
@@ -132,6 +136,10 @@ import { AdminDashboardComponent } from './Admin-dashboard/admin-dashboard/admin
         AdminDashLayoutComponent,
         AdminSidebarComponent,
         AdminDashboardComponent,
+        AdminUserListComponent,
+        AdminPropertyListComponent,
+        AdminPropertyDeleteListComponent,
+       
         
        
     
@@ -159,6 +167,7 @@ import { AdminDashboardComponent } from './Admin-dashboard/admin-dashboard/admin
     MatSnackBarModule,
     LucideAngularModule.pick({ Home, Building2, Calendar, MessageSquare, Wallet }),
     NgChartsModule,
+     NgxPaginationModule,
    
    
     
@@ -166,5 +175,5 @@ import { AdminDashboardComponent } from './Admin-dashboard/admin-dashboard/admin
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }],
   bootstrap: [AppComponent]
-})
-export class AppModule { }
+
+})export class AppModule { }

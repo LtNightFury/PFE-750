@@ -6,7 +6,7 @@
   cursor: pointer;
   margin-bottom: 2rem;
   border-bottom: lightgray solid 1px;
-  width: 65rem;
+  
 }
 h3{
   font-size: 1.5rem;
@@ -96,4 +96,89 @@ img {
   flex-wrap: wrap;
   gap: 1rem 2rem;
   padding: 0;
+}
+@media (max-width: 1200px) {
+  .property-card {
+    gap: 1.5rem;
+  }
+  
+  .property-image-container {
+    width: 14rem;
+    height: 12rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .property-card {
+    gap: 1.25rem;
+  }
+  
+  .property-image-container {
+    width: 12rem;
+    height: 10rem;
+  }
+  
+  .property-data {
+    gap: 0.75rem 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .property-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .property-image-container {
+    width: 100%;
+    height: 16rem;
+    margin-bottom: 1rem;
+  }
+  
+  .property-card-info {
+    width: 100%;
+  }
+  
+  h3 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .property-card {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  .property-image-container {
+    height: 12rem;
+  }
+  
+  .property-card-adress {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .property-data {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .property-data-item {
+    flex: 0 0 calc(50% - 0.5rem);
+    margin-bottom: 0.5rem;
+  }
+  
+  h3 {
+    font-size: 1.125rem;
+  }
+  
+  .ttext, .para, p {
+    font-size: 0.9rem;
+  }
+  
+  .property-card-caption {
+    font-size: 0.8rem;
+  }
 }

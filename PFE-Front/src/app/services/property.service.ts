@@ -155,6 +155,14 @@ getPendingPropertiesCount(): Observable<{ pendingProperties: number }> {
   return this.http.get<{ pendingProperties: number }>(`${this.baseApiUrl}/admin/pending-properties`);
 
 }
+getUserGrowthOverTime(): Observable<{ date: string, count: number }[]> {
+  return this.http.get<{ date: string, count: number }[]>('http://backend.ddev.site/api/admin/analytics/user-growth');
+}
+
+getPropertyGrowthOverTime(): Observable<{ date: string, count: number }[]> {
+  return this.http.get<{ date: string, count: number }[]>('http://backend.ddev.site/api/admin/analytics/property-growth');
+}
+
 
 getTotalUsersCount() {
   return this.http.get<{ totalUsersCount: number }>('http://backend.ddev.site/api/admin/total-users');
@@ -170,4 +178,18 @@ getallusers(): Observable<any[]> {
 getallowners(): Observable<any[]> {
   return this.http.get<any[]>(`${this.baseApiUrl}/admin/allowners`);
 }
+deleteUser(id: number): Observable<any> {
+  return this.http.delete<any>(`${this.baseApiUrl}/admin/user/${id}/delete`);
+}
+updatePropertyApproval(id: number, status: string): Observable<any> {
+  return this.http.patch(`http://backend.ddev.site/api/admin/properties/${id}/approval`, { approval: status });
+}
+getAdminProperties(): Observable<Property[]> {
+  return this.http.get<Property[]>('http://backend.ddev.site/api/admin/properties');
+}
+AdminDeleteProperty(id: number): Observable<any> {
+  return this.http.delete(`http://backend.ddev.site/api/admin/properties/${id}`);
+}
+
+
 }
