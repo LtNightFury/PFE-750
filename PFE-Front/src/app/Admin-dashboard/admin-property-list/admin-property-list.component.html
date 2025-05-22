@@ -1,0 +1,129 @@
+<div class="page-body">
+    <div class="page-header">
+        <h4 class="page-title">Pending Requests</h4>
+    </div>
+<div class="container py-4">
+
+  <!-- 🔍 Search Bar -->
+  <div class="mb-4">
+    <input
+      type="text"
+      class="form-control"
+      placeholder="Search by title, city, or subcity..."
+      [(ngModel)]="searchTerm"
+    />
+  </div>
+
+  <!-- 🏠 Property Cards -->
+  <div class="row gy-4">
+    <div class="col-12" *ngFor="let property of filteredProperties | paginate: { itemsPerPage: 5, currentPage: p }">
+      <div class="card shadow-sm rounded border-0">
+        <div class="row g-0">
+          
+          <!-- Images Carousel -->
+          <div class="col-md-4">
+            <div [id]="'carousel' + property.id" class="carousel slide h-100" data-bs-ride="carousel">
+              <div class="carousel-inner h-100">
+                <div *ngFor="let photo of property.Media.photos; let i = index" class="carousel-item" [class.active]="i === 0">
+                  <img [src]="'http://backend.ddev.site' + photo.imageName" class="d-block w-100 h-100 object-fit-cover" />
+                </div>
+              </div>
+              <button class="carousel-control-prev" type="button" [attr.data-bs-target]="'#carousel' + property.id" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+              </button>
+              <button class="carousel-control-next" type="button" [attr.data-bs-target]="'#carousel' + property.id" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Property Details -->
+          <div class="col-md-8">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h5 class="card-title mb-0">
+                  {{ property.generalinfo.title }} - 
+                  <small class="text-muted">{{ property.generalinfo.propertyType | titlecase }}</small>
+                </h5>
+                <span class="badge rounded-pill px-3 py-2 fs-6"
+                      [ngClass]="{
+                        'bg-warning text-dark': property.approval === 'pending',
+                        'bg-success': property.approval === 'approved',
+                        'bg-danger': property.approval === 'rejected'
+                      }">
+                  {{ property.approval }}
+                </span>
+              </div>
+
+              <p class="mb-1">
+                <strong>Deal Type:</strong> {{ property.generalinfo.dealType | titlecase }}<br />
+                <strong>Location:</strong> {{ property.location.city | titlecase }}, {{ property.location.subcity | titlecase }}
+              </p>
+
+              <p class="mb-1">
+                <strong>Price:</strong> {{ property.price.price | number }} TND<br />
+                <strong>Size:</strong> {{ property.Specification.size }} m² |
+                <strong>Bedrooms:</strong> {{ property.Specification.bedrooms }} |
+                <strong>Bathrooms:</strong> {{ property.Specification.bathrooms }}
+              </p>
+
+              <p class="mb-2">
+                <strong>Description:</strong><br />
+                {{ property.generalinfo.description }}
+              </p>
+
+              <!-- 🔽 Collapsible Details -->
+              <button class="btn btn-link p-0 mb-2" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + property.id">
+                Show Amenities & Contact Info
+              </button>
+
+              <div class="collapse" [id]="'collapse' + property.id">
+                <!-- ✅ Amenities -->
+                <div class="mb-2">
+                  <strong>Amenities:</strong>
+                  <ul class="list-inline mt-1">
+                    <li class="list-inline-item badge bg-light text-dark border"
+                        *ngFor="let amenity of getTrueAmenities(property.Amenities)">
+                      {{ amenity }}
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- 📞 Contact Info -->
+                <div>
+                  <strong>Contact:</strong><br />
+                  <i class="bi bi-envelope"></i> {{ property.contacts.email }}<br />
+                  <i class="bi bi-telephone"></i> {{ property.contacts.phone }}
+                </div>
+              </div>
+
+              <!-- ✅ Action Buttons -->
+              <div class="d-flex gap-2 mt-3">
+                <button class="btn btn-outline-success btn-sm"
+                        (click)="confirmAction(property, 'approved')"
+                        [disabled]="property.approval === 'approved'">
+                  <i class="bi bi-check-circle me-1"></i> Approve
+                </button>
+                <button class="btn btn-outline-danger btn-sm"
+                        (click)="confirmAction(property, 'rejected')"
+                        [disabled]="property.approval === 'rejected'">
+                  <i class="bi bi-x-circle me-1"></i> Reject
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 📄 Pagination -->
+  <div class="d-flex justify-content-center mt-4">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+
+</div>
+
+</div>

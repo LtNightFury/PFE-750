@@ -1,0 +1,60 @@
+<div class="container my-4">
+  <h3 class="mb-3">User Management</h3>
+  <input
+    type="text"
+    class="form-control mb-3"
+    placeholder="Search by name or email"
+    [(ngModel)]="searchText"
+  />
+
+  <div class="table-responsive rounded shadow">
+    <table class="table table-bordered table-hover table-striped align-middle">
+      <thead class="table-dark text-center">
+        <tr>
+          <th>ID</th>
+          <th>Profile</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Roles</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <tr *ngFor="let user of filteredUsers()">
+          <td>{{ user.id }}</td>
+          <td>
+            <img
+              [src]="user.profileImage ? getFullImageUrl(user.profileImage) : '/assets/default-avatar.png'"
+              alt="Profile"
+              width="40"
+              height="40"
+              class="rounded-circle"
+            />
+          </td>
+          <td>{{ user.name }} {{ user.lastName }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.phoneNumber }}</td>
+          <td>
+            <span
+              *ngFor="let role of user.roles"
+              class="badge me-1"
+              [ngClass]="{
+                'bg-success': role === 'ROLE_USER',
+                'bg-warning text-dark': role === 'ROLE_OWNER',
+                'bg-danger': role === 'ROLE_ADMIN'
+              }"
+            >
+              {{ role.replace('ROLE_', '') }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-danger" (click)="deleteUser(user.id)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

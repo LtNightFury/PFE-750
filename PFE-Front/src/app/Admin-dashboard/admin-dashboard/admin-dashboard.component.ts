@@ -15,6 +15,8 @@ export class AdminDashboardComponent implements OnInit {
   totalOwners = 0;
   totalProperties = 0;
   pendingProperties = 0;
+  showUserChart = false;
+
 
   public pieChartType: ChartType = 'doughnut';
 
@@ -66,6 +68,47 @@ export class AdminDashboardComponent implements OnInit {
       }
     }
   };
+  // Add below your existing properties
+public userGrowthData: ChartConfiguration<'line'>['data'] = {
+  labels: [],
+  datasets: [
+    {
+      data: [],
+      label: 'User Registrations',
+      borderColor: '#4F46E5',
+      backgroundColor: 'rgba(79, 70, 229, 0.3)',
+      fill: true,
+      tension: 0.3
+    }
+  ]
+};
+
+public propertyGrowthData: ChartConfiguration<'line'>['data'] = {
+  labels: [],
+  datasets: [
+    {
+      data: [],
+      label: 'Property Listings',
+      borderColor: '#06B6D4',
+      backgroundColor: 'rgba(6, 182, 212, 0.3)',
+      fill: true,
+      tension: 0.3
+    }
+  ]
+};
+
+public lineChartOptions: ChartConfiguration<'line'>['options'] = {
+  responsive: true,
+  plugins: {
+    legend: {
+      display: true,
+      position: 'top',
+    }
+  }
+};
+
+public lineChartType: ChartType = 'line';
+
 
 
 
@@ -73,6 +116,9 @@ export class AdminDashboardComponent implements OnInit {
 
 
     ngOnInit(): void {
+      this.loadUserGrowth();
+this.loadPropertyGrowth();
+
     this.loadDashboardData();
     this.propertyService.getallusers().subscribe((data) => {
     this.users = data;
@@ -87,8 +133,12 @@ loadDashboardData(): void {
     });
     this.propertyService.getAllProperties().subscribe(properties => {
       this.totalProperties = properties.length;
-      this.pendingProperties = properties.filter(p => p.approval === 'pending').length;
+      
     }); 
+    this.propertyService.getAdminProperties().subscribe(properties => {
+      
+      this.pendingProperties = properties.filter(p => p.approval === 'pending').length;
+    });
   }
 
   getImageUrl(path: string): string {
@@ -112,5 +162,19 @@ getRoleBadgeClass(role: string): string {
       return 'bg-secondary'; // Fallback
   }
 }
+loadUserGrowth() {
+  this.propertyService.getUserGrowthOverTime().subscribe(data => {
+    this.userGrowthData.labels = data.map(d => d.date);
+    this.userGrowthData.datasets[0].data = data.map(d => d.count);
+  });
+}
+
+loadPropertyGrowth() {
+  this.propertyService.getPropertyGrowthOverTime().subscribe(data => {
+    this.propertyGrowthData.labels = data.map(d => d.date);
+    this.propertyGrowthData.datasets[0].data = data.map(d => d.count);
+  });
+}
+
 
 }

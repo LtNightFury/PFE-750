@@ -3,8 +3,8 @@
   <div class="sidebar-container" [class.collapsed]="isCollapsed">
     <div class="sidebar-header">
       <div class="logo-area" *ngIf="!isCollapsed">
-        <img src="/api/placeholder/40/40" alt="Logo" class="logo" />
-        <span class="app-name">AppName</span>
+        
+        <span class="app-name">Admin Controle Center</span>
       </div>
       <button class="toggle-button" (click)="toggleSidebar()">
         <i class="toggle-icon" [ngClass]="isCollapsed ? 'chevron-right' : 'chevron-left'"></i>
@@ -14,23 +14,23 @@
     <div class="sidebar-content">
       <div class="sidebar-section">
         <div class="section-title" [class.collapsed-title]="isCollapsed">
-          <span *ngIf="!isCollapsed">Your Account</span>
-          <div *ngIf="isCollapsed" class="mini-title">AC</div>
+          <span *ngIf="!isCollapsed">Management Center </span>
+          <div *ngIf="isCollapsed" class="mini-title">MC</div>
         </div>
         <ul class="menu-list">
-          <li class="menu-item" routerLinkActive="active" routerLink="/user/profile">
+          <li class="menu-item" routerLinkActive="active" routerLink="/admin/dashboard">
             <div class="icon-container">
               <i class="menu-icon user-icon"></i>
             </div>
-            <span class="menu-text" *ngIf="!isCollapsed">Profile</span>
-            <div class="tooltip" *ngIf="shouldShowTooltip()">Profile</div>
+            <span class="menu-text" *ngIf="!isCollapsed">Dashboard</span>
+            <div class="tooltip" *ngIf="shouldShowTooltip()">Dashboard</div>
           </li>
-          <li class="menu-item" routerLinkActive="active" routerLink="/user/settings">
+          <li class="menu-item" routerLinkActive="active" routerLink="/admin/users">
             <div class="icon-container">
-              <i class="menu-icon preferences-icon"></i>
+              <i class="fa-solid fa-users"></i>
             </div>
-            <span class="menu-text" *ngIf="!isCollapsed">Profile Settings</span>
-            <div class="tooltip" *ngIf="shouldShowTooltip()">Profile Settings</div>
+            <span class="menu-text" *ngIf="!isCollapsed">Users List</span>
+            <div class="tooltip" *ngIf="shouldShowTooltip()">Users List</div>
           </li>
           <li class="menu-item" routerLinkActive="active" routerLink="/user/messages">
             <div class="icon-container">
@@ -40,19 +40,19 @@
             <span class="menu-text" *ngIf="!isCollapsed">Messages</span>
             <div class="tooltip" *ngIf="shouldShowTooltip()">Messages</div>
           </li>
-          <li class="menu-item" routerLinkActive="active" routerLink="/user/my-appointments">
+          <li class="menu-item" routerLinkActive="active" routerLink="/admin/properties-list">
             <div class="icon-container">
               <i class="menu-icon calendar-icon"></i>
             </div>
-            <span class="menu-text" *ngIf="!isCollapsed">My Appointments</span>
-            <div class="tooltip" *ngIf="shouldShowTooltip()">My Appointments</div>
+            <span class="menu-text" *ngIf="!isCollapsed">Pending Requests</span>
+            <div class="tooltip" *ngIf="shouldShowTooltip()">Pending Requests</div>
           </li>
-          <li class="menu-item" routerLinkActive="active" routerLink="/user/my-bookings">
+          <li class="menu-item" routerLinkActive="active" routerLink="/admin/properties">
             <div class="icon-container">
               <i class="menu-icon booking-icon"></i>
             </div>
-            <span class="menu-text" *ngIf="!isCollapsed">My Bookings</span>
-            <div class="tooltip" *ngIf="shouldShowTooltip()">My Bookings</div>
+            <span class="menu-text" *ngIf="!isCollapsed">Properties List</span>
+            <div class="tooltip" *ngIf="shouldShowTooltip()">Properties List</div>
           </li>
         </ul>
       </div>
