@@ -151,16 +151,16 @@ markMessageAsRead(messageId: number): Observable<any> {
 // booking.service.ts
 
 approveBooking(id: number): Observable<any> {
-  return this.http.post(`/api/booking/${id}/approval`, {
+  return this.http.post(`http://backend.ddev.site/api/booking/${id}/approval`, {
     approval: 'approved'
   });
 }
 getownerBookings(): Observable<Booking[]> {
-  return this.http.get<Booking[]>(`http://backend.ddev.site/api/owner/bookings`);
+  return this.http.get<Booking[]>(`http://backend.ddev.site/api/booking/owner/bookings`);
 }
 
 rejectBooking(id: number): Observable<any> {
-  return this.http.post(`/api/booking/${id}/approval`, {
+  return this.http.post(`http://backend.ddev.site/api/booking/${id}/approval`, {
     approval: 'rejected'
   });
 }
