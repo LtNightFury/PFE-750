@@ -116,6 +116,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->name;
     }
+    public function getFullName(): string
+    {
+        return trim($this->name . ' ' . $this->lastname);
+    }
     
     public function getprofileImage(): ?string
     {
