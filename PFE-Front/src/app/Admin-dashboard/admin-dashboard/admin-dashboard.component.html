@@ -76,28 +76,37 @@
 
     
     <div class="div5">
-  
   <div class="chart-container">
     <h5>User Growth Over Time</h5>
-    <canvas baseChart 
-      [data]="userGrowthData"
-      [options]="lineChartOptions"
-      type="line">
+    <canvas *ngIf="userGrowthLoaded" 
+            baseChart 
+            #userChart
+            [data]="userGrowthData"
+            [options]="lineChartOptions"
+            type="line">
     </canvas>
-  </div>
+    <div *ngIf="!userGrowthLoaded" class="loading-placeholder">
+      Loading user growth data...
     </div>
+  </div>
+</div>
 
 
-    <div class="div6 property-growth">
-              <div class="chart-container">
+   <div class="div6 property-growth">
+  <div class="chart-container">
     <h5>Property Growth Over Time</h5>
-    <canvas baseChart 
-      [data]="propertyGrowthData"
-      [options]="lineChartOptions"
-      type="line">
+    <canvas *ngIf="propertyGrowthLoaded" 
+            baseChart 
+            #propertyChart
+            [data]="propertyGrowthData"
+            [options]="lineChartOptions"
+            type="line">
     </canvas>
-  </div>
+    <div *ngIf="!propertyGrowthLoaded" class="loading-placeholder">
+      Loading property growth data...
     </div>
+  </div>
+</div>
 
 
    

@@ -75,6 +75,7 @@ import { AdminUserListComponent } from './Admin-dashboard/admin-user-list/admin-
 import { AdminPropertyListComponent } from './Admin-dashboard/admin-property-list/admin-property-list.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AdminPropertyDeleteListComponent } from './Admin-dashboard/admin-property-delete-list/admin-property-delete-list.component';
+import { OwnerBookingComponent } from './owner-dashboard/owner-booking/owner-booking.component';
 
 
 
@@ -139,6 +140,7 @@ import { AdminPropertyDeleteListComponent } from './Admin-dashboard/admin-proper
         AdminUserListComponent,
         AdminPropertyListComponent,
         AdminPropertyDeleteListComponent,
+        OwnerBookingComponent,
        
         
        

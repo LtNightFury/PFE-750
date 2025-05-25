@@ -23,7 +23,7 @@
               <span *ngIf="!isCollapsed">Dashboard</span>
             </a>
             <a routerLink="/owner/properties" class="nav-link" routerLinkActive="active">
-                <i class="fa-duotone fa-solid fa-house"></i>
+                <i class="fa-solid fa-house-user"></i>
               <span *ngIf="!isCollapsed">My Properties</span>
             </a>
             <a routerLink="/owner/calendar" class="nav-link" routerLinkActive="active">
@@ -31,12 +31,16 @@
               <span *ngIf="!isCollapsed">Appointments</span>
             </a>
             <a routerLink="/owner/messages" class="nav-link" routerLinkActive="active">
-              <i class="pi pi-comments"></i>
+              <i class="fa-solid fa-message"></i>
               <span *ngIf="!isCollapsed">Messages</span>
             </a>
-            <a routerLink="/owner/earnings" class="nav-link" routerLinkActive="active">
-              <i class="pi pi-wallet"></i>
-              <span *ngIf="!isCollapsed">Earnings</span>
+            <a routerLink="/owner/bookings" class="nav-link" routerLinkActive="active">
+              <i class="fa-solid fa-calendar-plus"></i>
+              <span *ngIf="!isCollapsed">Bookings</span>
+            </a>
+             <a routerLink="/home" class="nav-link" routerLinkActive="active">
+              <i class="fa-solid fa-house"></i>
+              <span *ngIf="!isCollapsed">Home</span>
             </a>
           </nav>
 

@@ -1,0 +1,66 @@
+<!-- owner-bookings.component.html -->
+<div class="booking-container">
+  <div class="table-wrapper">
+    <div class="table-header">
+      <h1 class="table-title">Property Bookings</h1>
+    </div>
+    
+    <table class="table" *ngIf="bookings && bookings.length > 0">
+      <thead>
+        <tr>
+          <th>Property</th>
+          <th>Dates</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let booking of bookings">
+          <td>
+            <div class="property-title">{{ booking.property.title }}</div>
+          </td>
+          <td>
+            <div class="booking-dates">
+              {{ booking.startDate | date }} - {{ booking.endDate | date }}
+            </div>
+          </td>
+          <td>
+            <span class="status-badge" 
+                  [ngClass]="{
+                    'status-pending': booking.approval === 'pending',
+                    'status-approved': booking.approval === 'approved',
+                    'status-rejected': booking.approval === 'rejected'
+                  }">
+              {{ booking.approval }}
+            </span>
+          </td>
+          <td>
+            <div class="action-buttons">
+              <button
+                *ngIf="booking.approval === 'pending'"
+                class="btn btn-success"
+                (click)="approve(booking.id)"
+                type="button">
+                Approve
+              </button>
+              <button
+                *ngIf="booking.approval === 'pending'"
+                class="btn btn-danger"
+                (click)="reject(booking.id)"
+                type="button">
+                Reject
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    
+    <!-- Empty state when no bookings -->
+    <div class="empty-state" *ngIf="!bookings || bookings.length === 0">
+      <div class="empty-state-icon">📋</div>
+      <div class="empty-state-text">No bookings yet</div>
+      <div class="empty-state-subtext">Your property bookings will appear here once guests start making reservations.</div>
+    </div>
+  </div>
+</div>

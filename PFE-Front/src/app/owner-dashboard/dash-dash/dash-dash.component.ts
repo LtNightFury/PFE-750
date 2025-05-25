@@ -42,6 +42,10 @@ chartOptions: ChartOptions = {
   
   responsive: true,
   
+  
+  
+
+  
   scales: {
     y: {
       beginAtZero: true

@@ -32,15 +32,16 @@ export class PropertyDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const id = params['id'];
-      if (id) {
-        this.loadPropertyDetails(id);
-      } else {
-        this.error = 'Property ID not found';
-        this.isLoading = false;
-      }
-    });
+   this.route.params.subscribe(params => {
+    const id = params['id'];
+    if (id) {
+      this.loadPropertyDetails(id);
+      this.recordPropertyView(+id); // <-- record view here
+    } else {
+      this.error = 'Property ID not found';
+      this.isLoading = false;
+    }
+  });
   }
 
   loadPropertyDetails(id: string): void {
@@ -188,4 +189,15 @@ export class PropertyDetailComponent implements OnInit {
       window.location.reload();
     }
   }
+  recordPropertyView(propertyId: number): void {
+  this.propertyService.recordView(propertyId).subscribe({
+    next: () => {
+      console.log('View recorded');
+    },
+    error: (err) => {
+      console.error('Failed to record view:', err);
+    }
+  });
+}
+
 }

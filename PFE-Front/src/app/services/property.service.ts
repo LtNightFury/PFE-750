@@ -21,7 +21,6 @@ export class PropertyService {
   private apiUrl2 = 'http://backend.ddev.site/api/user/properties';  // Symfony API endpoint
   private apiUrl = 'http://backend.ddev.site/api/properties/';  // Symfony API endpoint
   private baseApiUrl = 'http://backend.ddev.site/api';
-
   constructor(private http: HttpClient) {}
 
   // ✅ Get all properties from backend and set mainImage path
@@ -149,6 +148,23 @@ getauthcheck(): Observable<any> {
 markMessageAsRead(messageId: number): Observable<any> {
   return this.http.put(`${this.baseApiUrl}/messages/${messageId}`, {});
 }
+// booking.service.ts
+
+approveBooking(id: number): Observable<any> {
+  return this.http.post(`/api/booking/${id}/approval`, {
+    approval: 'approved'
+  });
+}
+getownerBookings(): Observable<Booking[]> {
+  return this.http.get<Booking[]>(`http://backend.ddev.site/api/owner/bookings`);
+}
+
+rejectBooking(id: number): Observable<any> {
+  return this.http.post(`/api/booking/${id}/approval`, {
+    approval: 'rejected'
+  });
+}
+
 
 //for admin dashbhoard
 getPendingPropertiesCount(): Observable<{ pendingProperties: number }> {
