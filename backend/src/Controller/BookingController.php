@@ -128,5 +128,28 @@ public function myBookings(BookingRepository $bookingRepository): JsonResponse
 
     return $this->json($data);
 }
+#[Route('/owner/bookings', name: 'owner_bookings', methods: ['GET'])]
+public function getBookingsForOwner(BookingRepository $bookingRepository): JsonResponse
+{
+    $owner = $this->getUser();
+    $bookings = $bookingRepository->findBookingsByOwner($owner);
+
+    $data = array_map(function (Booking $booking) {
+        return [
+            'id' => $booking->getId(),
+            'startDate' => $booking->getStartDate()->format('Y-m-d'),
+            'endDate' => $booking->getEndDate()->format('Y-m-d'),
+            'propertyId' => $booking->getProperty()->getId(),
+            'status' => $booking->getApproval(),
+            'propertyTitle' => $booking->getProperty()->getGeneralinfo()->getTitle(),
+            'propertyCity' => $booking->getProperty()->getLocation()->getCity(),
+            'propertySubcity' => $booking->getProperty()->getLocation()->getSubcity(),
+            'bookedBy' => $booking->getUser()->getEmail(), // or other user info
+        ];
+    }, $bookings);
+
+    return $this->json($data);
+}
+
 
 }
