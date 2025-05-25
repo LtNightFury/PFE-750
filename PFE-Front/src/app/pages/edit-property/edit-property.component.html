@@ -8,7 +8,7 @@
                 <ol class="breadcrumb">
                     
                     <li class="breadcrumb-item"><a href="/properties">Properties</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Property edit</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ isEditMode ? 'Property edit' : 'Property create' }}</li>
                 </ol>
             </nav>
         </div>
@@ -16,11 +16,11 @@
         <!-- breadcrumbs end -->
     </div>
     <div class="header_title  d-flex justify-content-between m-3 mb-4 align-items-center">
-        <h1 class="">Create Property</h1>
+        <h1 class="">{{ pageTitle }}</h1>
         <div class="header_end">
             <div class="header_end_btn">
-                <button type="reset" class="btn btn_cancel "><span class="text-decoration-underline">Cancel</span></button>
-                <button class="btn btn_save"(click)="onSubmit()" ><span>Save</span></button></div>
+                <button type="reset" class="btn btn_cancel "><span class="text-decoration-underline"(click)="onCancel()">Cancel</span></button>
+                <button class="btn btn_save"(click)="onSubmit()" ><span>{{ isSubmitting ? (isEditMode ? 'Updating...' : 'Creating...') : (isEditMode ? 'Update Property' : 'Create Property') }}</span></button></div>
             </div>
         
     </div>

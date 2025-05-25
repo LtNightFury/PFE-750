@@ -37,7 +37,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify-email/:token', component: VerifyEmailComponent },
-  { path: 'edit', component: EditPropertyComponent },
+  { path: 'property/new', component: EditPropertyComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'home',  component: HomeComponent },
   { path: 'property-list', component: PropertyListComponent },
@@ -50,7 +50,7 @@ const routes: Routes = [
   {path: 'owner-dashboard', component: OwnerDashComponent},
   
   {path: 'propertyview', component: PropertyViewsComponent},
-  { path: 'editproperty/:id', component: EditPropertyComponent},
+   { path: 'property/edit/:id', component: EditPropertyComponent },
 
     /*{ 
     path: 'appointments', 

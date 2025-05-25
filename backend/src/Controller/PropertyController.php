@@ -123,69 +123,62 @@ public function getPropertyById($id, PropertyRepository $propertyRepository, Ser
 
 
 
-#[Route('/properties/{id}', name: 'property_update', methods: ['PUT', 'PATCH'])]
+#[Route('/properties/{id}', name: 'property_update', methods: ['PUT','POST'])]
 public function update(int $id, Request $request): JsonResponse
 {
-    
     $user = $this->getUser();
-    
     if (!$user) {
         return new JsonResponse(['error' => 'Authentication required'], Response::HTTP_UNAUTHORIZED);
     }
 
-    // Retrieve the property
     $property = $this->propertyRepository->find($id);
-    
     if (!$property) {
         return new JsonResponse(['error' => 'Property not found'], Response::HTTP_NOT_FOUND);
     }
-    
 
-    $data = json_decode($request->getContent(), true); 
-    
+    $dataJson = $request->request->get('data');
+    if (!$dataJson) {
+        return new JsonResponse(['error' => 'Missing data parameter'], Response::HTTP_BAD_REQUEST);
+    }
+
+    $data = json_decode($dataJson, true);
     if (!$data) {
         return new JsonResponse(['error' => 'Invalid JSON data'], Response::HTTP_BAD_REQUEST);
     }
-    
+
+    // Handle media files as before
     $mediaFiles = [];
-    
-    // Handle file uploads (photos, floorplans, documents)
     $photos = $request->files->get('photos');
     if ($photos) {
         $mediaFiles['photos'] = $photos;
     }
-    
     $floorplans = $request->files->get('floorPlans');
     if ($floorplans) {
         $mediaFiles['floorPlans'] = $floorplans;
     }
-    
     $documents = $request->files->get('documents');
     if ($documents) {
         $mediaFiles['documents'] = $documents;
     }
-    
-    // If there are media files, add them to the data array
     if (!empty($mediaFiles)) {
         $data['mediaFiles'] = $mediaFiles;
     }
-    
+
     try {
-        // Call the update method on the property repository
         $property = $this->propertyRepository->updateProperty($property, $data, $user);
-        
+
         return $this->json([
             'success' => true,
             'property' => $property->getId()
         ]);
     } catch (\Exception $e) {
-        // Return an error response with exception message
         return $this->json([
             'success' => false,
             'message' => $e->getMessage()
         ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
+
 #[Route('/properties/{id}', name: 'property_delete', methods: ['DELETE'])]
 public function delete(int $id, EntityManagerInterface $em): JsonResponse
 {
