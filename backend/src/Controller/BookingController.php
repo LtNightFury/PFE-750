@@ -144,7 +144,7 @@ public function getBookingsForOwner(BookingRepository $bookingRepository): JsonR
             'propertyTitle' => $booking->getProperty()->getGeneralinfo()->getTitle(),
             'propertyCity' => $booking->getProperty()->getLocation()->getCity(),
             'propertySubcity' => $booking->getProperty()->getLocation()->getSubcity(),
-            'bookedBy' => $booking->getUser()->getEmail(), // or other user info
+            'bookedBy' => $booking->getUser()->getEmail(), 
         ];
     }, $bookings);
 
