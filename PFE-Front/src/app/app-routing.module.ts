@@ -31,6 +31,7 @@ import { AdminDashboardComponent } from './Admin-dashboard/admin-dashboard/admin
 import { AdminUserListComponent } from './Admin-dashboard/admin-user-list/admin-user-list.component';
 import { AdminPropertyListComponent } from './Admin-dashboard/admin-property-list/admin-property-list.component';
 import { AdminPropertyDeleteListComponent } from './Admin-dashboard/admin-property-delete-list/admin-property-delete-list.component';
+import { OwnerBookingComponent } from './owner-dashboard/owner-booking/owner-booking.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -115,7 +116,8 @@ const routes: Routes = [
       {
         path: 'messages',
         component:OwnerMessagesComponent
-      }
+      },
+      {path: 'bookings',component: OwnerBookingComponent},
     ]
   },
 
