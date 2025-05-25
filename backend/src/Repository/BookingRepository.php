@@ -60,5 +60,4 @@ public function findPendingBookingsForOwner(User $owner): array
         ->getResult();
 }
 
-
 }
