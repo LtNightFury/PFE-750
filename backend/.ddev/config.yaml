@@ -14,7 +14,10 @@ composer_version: "2"
 web_environment: []
 corepack_enable: false
 default_container_timeout: "240"
-
+mailpit:
+  http_port: "8030"  # Changed from 8026
+  https_port: "8031" # Changed from 8027
+  smtp_port: "1026"  # Changed from 1025
 # Key features of DDEV's config.yaml:
 
 # name: <projectname> # Name of the project, automatically provides

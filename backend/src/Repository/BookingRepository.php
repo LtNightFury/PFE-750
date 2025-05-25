@@ -48,16 +48,17 @@ class BookingRepository extends ServiceEntityRepository
 //    }
 
 
-public function findPendingBookingsForOwner(User $owner): array
+// src/Repository/BookingRepository.php
+public function findBookingsByOwner($owner): array
 {
     return $this->createQueryBuilder('b')
         ->join('b.property', 'p')
         ->where('p.user = :owner')
-        ->andWhere('b.approval = :status')
         ->setParameter('owner', $owner)
-        ->setParameter('status', 'pending')
+        ->orderBy('b.startDate', 'DESC')
         ->getQuery()
         ->getResult();
 }
+
 
 }
