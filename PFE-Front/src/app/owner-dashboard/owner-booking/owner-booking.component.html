@@ -4,11 +4,13 @@
     <div class="table-header">
       <h1 class="table-title">Property Bookings</h1>
     </div>
-    
+
     <table class="table" *ngIf="bookings && bookings.length > 0">
       <thead>
         <tr>
           <th>Property</th>
+          <th>Name</th>
+          <th>Phone</th>
           <th>Dates</th>
           <th>Status</th>
           <th>Actions</th>
@@ -18,6 +20,12 @@
         <tr *ngFor="let booking of bookings">
           <td>
             <div class="property-title">{{ booking.propertyTitle }}</div>
+          </td>
+          <td>
+            {{ booking.name }}
+          </td>
+          <td>
+            {{ booking.phone }}
           </td>
           <td>
             <div class="booking-dates">
@@ -55,7 +63,7 @@
         </tr>
       </tbody>
     </table>
-    
+
     <!-- Empty state when no bookings -->
     <div class="empty-state" *ngIf="!bookings || bookings.length === 0">
       <div class="empty-state-icon">📋</div>
