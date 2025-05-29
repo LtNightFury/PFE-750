@@ -60,6 +60,7 @@ class Property
     private ?Media $Media = null;
 
     #[ORM\Column(length: 255, options: ['default' => 'pending'])]
+    #[Groups(['property:read'])]
     private ?string $approval = 'pending';
 
     #[ORM\OneToMany(mappedBy: 'property', targetEntity: Booking::class, orphanRemoval: true)]
@@ -80,6 +81,7 @@ class Property
 
 
     #[ORM\Column(type: 'datetime_immutable')]
+    #[Groups(['property:read'])]
     
     private ?\DateTimeImmutable $createdAt = null;
 

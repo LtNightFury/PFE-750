@@ -98,6 +98,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['admin:read'])]
     private ?\DateTimeInterface $createdAt = null;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Notification::class)]
+    private Collection $notifications;
+
 
     public function __construct()
     {
@@ -110,6 +113,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->contactuses = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->propertyViews = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function getName(): ?string
@@ -498,6 +502,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 public function setCreatedAt(\DateTimeInterface $createdAt): static
 {
     $this->createdAt = $createdAt;
+    return $this;
+}
+
+/**
+ * @return Collection<int, Notification>
+ */
+public function getNotifications(): Collection
+{
+    return $this->notifications;
+}
+
+public function addNotification(Notification $notification): static
+{
+    if (!$this->notifications->contains($notification)) {
+        $this->notifications->add($notification);
+        $notification->setUser($this);
+    }
+
+    return $this;
+}
+
+public function removeNotification(Notification $notification): static
+{
+    if ($this->notifications->removeElement($notification)) {
+        // set the owning side to null (unless already changed)
+        if ($notification->getUser() === $this) {
+            $notification->setUser(null);
+        }
+    }
+
     return $this;
 }
 }
