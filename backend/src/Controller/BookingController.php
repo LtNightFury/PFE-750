@@ -193,13 +193,25 @@ public function getNotifications(): JsonResponse
     return $this->json($data);
 }
 #[Route('/notifications/{id}/read', name: 'mark_notification_read', methods: ['POST'])]
-public function markNotificationRead(Notification $notification): JsonResponse
+public function markNotificationRead(int $id): JsonResponse
 {
+    $notification = $this->entityManager->getRepository(Notification::class)->find($id);
+
+    if (!$notification) {
+        return $this->json(['error' => 'Notification not found'], 404);
+    }
+
+    // Security: ensure the notification belongs to the logged-in user
+    if ($notification->getUser() !== $this->getUser()) {
+        return $this->json(['error' => 'Unauthorized access to this notification.'], 403);
+    }
+
     $notification->setIsRead(true);
     $this->entityManager->flush();
 
     return $this->json(['message' => 'Notification marked as read']);
 }
+
 
 #[Route('/owner/new-booking-notifications', name: 'owner_new_booking_notifications', methods: ['GET'])]
 public function getNewBookingNotifications(): JsonResponse
