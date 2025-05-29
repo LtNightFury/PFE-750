@@ -165,7 +165,7 @@
     <div class="booking-card">
       <div class="price-section">
         <div class="price">
-          <span class="price-amount">TND {{property.price.price | number}}</span>
+          <span class="price-amount">{{property.price.price | currency:'TND'}}</span>
           <span class="price-period" *ngIf="property.generalinfo.deal_type === 'rent'">
             {{property.price.priceunit}}
           </span>

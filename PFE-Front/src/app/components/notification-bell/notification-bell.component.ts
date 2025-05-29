@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from 'src/app/services/notification.service';
 import { Notification } from 'src/app/models/notification.model';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-notification-bell',
@@ -11,11 +12,13 @@ export class NotificationBellComponent implements OnInit {
   notifications: Notification[] = [];
   dropdownOpen = false;
   unreadCount = 0;
+  private refreshSub!: Subscription;
 
   constructor(private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     this.loadNotifications();
+    this.refreshSub = interval(10000).subscribe(() => this.loadNotifications());
   }
 
   loadNotifications(): void {

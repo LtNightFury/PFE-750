@@ -22,4 +22,5 @@ export class NotificationService {
   markAsRead(id: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/notifications/${id}/read`, {});
   }
+  
 }
