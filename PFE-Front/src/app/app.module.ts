@@ -76,6 +76,7 @@ import { AdminPropertyListComponent } from './Admin-dashboard/admin-property-lis
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AdminPropertyDeleteListComponent } from './Admin-dashboard/admin-property-delete-list/admin-property-delete-list.component';
 import { OwnerBookingComponent } from './owner-dashboard/owner-booking/owner-booking.component';
+import { NotificationBellComponent } from './components/notification-bell/notification-bell.component';
 
 
 
@@ -141,6 +142,7 @@ import { OwnerBookingComponent } from './owner-dashboard/owner-booking/owner-boo
         AdminPropertyListComponent,
         AdminPropertyDeleteListComponent,
         OwnerBookingComponent,
+        NotificationBellComponent,
        
         
        

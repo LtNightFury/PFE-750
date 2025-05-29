@@ -42,8 +42,6 @@ chartOptions: ChartOptions = {
   
   responsive: true,
   
-  
-  
 
   
   scales: {

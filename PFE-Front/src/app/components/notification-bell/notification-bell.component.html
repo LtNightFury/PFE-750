@@ -1,0 +1,22 @@
+<div class="notification-bell-wrapper">
+  <div class="notification-bell" (click)="toggleDropdown()">
+    🔔
+    <span *ngIf="notifications.length > 0" class="badge">{{ notifications.length }}</span>
+
+    <div *ngIf="dropdownOpen" class="dropdown-menu">
+      <div *ngIf="notifications.length > 0; else noNotif">
+        <div
+          *ngFor="let notif of notifications"
+          class="notif-item"
+          [class.unread]="!notif.isRead"
+          (click)="markNotificationAsRead(notif)"
+        >
+          {{ notif.message }}
+        </div>
+      </div>
+      <ng-template #noNotif>
+        <div class="no-notif">No new notifications</div>
+      </ng-template>
+    </div>
+  </div>
+</div>

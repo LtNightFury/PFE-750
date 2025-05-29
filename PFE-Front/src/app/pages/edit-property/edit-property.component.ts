@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute,Router } from '@angular/router';
 import { PropertyService } from 'src/app/services/property.service';
 import { Property } from 'src/app/models/property.model';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -50,11 +51,8 @@ export class EditPropertyComponent implements OnInit {
       deal_type: ['sale', Validators.required],
       title: ['', Validators.required],
       description: ['', Validators.required],
-      PropertyCondition: ['', Validators.required],
-      propertyType: ['', Validators.required],
-      availabilityDate: [],
-      frequency: [],
-      cheques: []
+      PropertyCondition: [null, Validators.required],
+      propertyType: [null, Validators.required],  
     }),
     location: this.fb.group({
       latitude: ['', Validators.required],
@@ -234,25 +232,9 @@ export class EditPropertyComponent implements OnInit {
       });
     }
 
-    // Videos (if you handle videos similarly)
-    const videosArray = mediaGroup.get('videos') as FormArray;
-    if (videosArray && videosArray.length > 0) {
-      videosArray.controls.forEach((control: any, index: number) => {
-        if (control.value && control.value.file) {
-          formData.append(`videos[${index}]`, control.value.file);
-        }
-      });
-    }
+    
 
-    // Virtual Tours (if you handle these)
-    const virtualToursArray = mediaGroup.get('virtualTours') as FormArray;
-    if (virtualToursArray && virtualToursArray.length > 0) {
-      virtualToursArray.controls.forEach((control: any, index: number) => {
-        if (control.value && control.value.file) {
-          formData.append(`virtualTours[${index}]`, control.value.file);
-        }
-      });
-    }
+    
 
     // Choose request based on mode
     let request;
@@ -264,20 +246,29 @@ export class EditPropertyComponent implements OnInit {
       request = this.http.post('http://backend.ddev.site/api/properties', formData);
     }
 
-    request.subscribe(
-      response => {
-        this.isSubmitting = false;
-        console.log(`Property ${this.isEditMode ? 'updated' : 'created'} successfully`, response);
+  request.subscribe(
+    response => {
+      this.isSubmitting = false;
+      console.log(`Property ${this.isEditMode ? 'updated' : 'created'} successfully`, response);
 
-        // Redirect to list or wherever you want
-        this.router.navigate(['/owner']);
-      },
-      error => {
-        this.isSubmitting = false;
-        this.submitError = `There was an error ${this.isEditMode ? 'updating' : 'creating'} the property. Please try again.`;
-        console.error(`Error ${this.isEditMode ? 'updating' : 'creating'} property`, error);
-      }
-    );
+      // SweetAlert success message
+      Swal.fire({
+        icon: 'success',
+        title: `Property ${this.isEditMode ? 'Updated' : 'Created'}!`,
+        text: 'The property has been saved successfully.',
+        confirmButtonText: 'Go to My Properties',
+        timer: 2500,
+        timerProgressBar: true,
+      }).then(() => {
+        this.router.navigate(['/owner/properties']);
+      });
+    },
+    error => {
+      this.isSubmitting = false;
+      this.submitError = `There was an error ${this.isEditMode ? 'updating' : 'creating'} the property. Please try again.`;
+      console.error(`Error ${this.isEditMode ? 'updating' : 'creating'} property`, error);
+    }
+  );
   } else {
     this.markFormGroupAsTouched(this.propertyForm);
     console.log('Form is invalid:', this.propertyForm.errors);

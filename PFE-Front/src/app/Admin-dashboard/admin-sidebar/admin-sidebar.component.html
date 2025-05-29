@@ -32,13 +32,12 @@
             <span class="menu-text" *ngIf="!isCollapsed">Users List</span>
             <div class="tooltip" *ngIf="shouldShowTooltip()">Users List</div>
           </li>
-          <li class="menu-item" routerLinkActive="active" routerLink="/admin/messages">
+          <li class="menu-item " >
             <div class="icon-container">
-              <i class="menu-icon notifications-icon"></i>
-              
+              <i class="menu-icon contacts-icon"></i>
             </div>
-            <span class="menu-text" *ngIf="!isCollapsed">Messages</span>
-            <div class="tooltip" *ngIf="shouldShowTooltip()">Messages</div>
+            <span class="menu-text" *ngIf="!isCollapsed">Contacts</span>
+            <div class="tooltip" *ngIf="isCollapsed">Contacts</div>
           </li>
           <li class="menu-item" routerLinkActive="active" routerLink="/admin/properties-list">
             <div class="icon-container">
@@ -63,13 +62,7 @@
           <div *ngIf="isCollapsed" class="mini-title">QL</div>
         </div>
         <ul class="menu-list">
-          <li class="menu-item" routerLinkActive="active" routerLink="/user/history">
-            <div class="icon-container">
-              <i class="menu-icon history-icon"></i>
-            </div>
-            <span class="menu-text" *ngIf="!isCollapsed">My History</span>
-            <div class="tooltip" *ngIf="isCollapsed">My History</div>
-          </li>
+          
           <li class="menu-item" routerLinkActive="active" routerLink="/home">
             <div class="icon-container">
               <i class="menu-icon home-icon"></i>
@@ -77,41 +70,9 @@
             <span class="menu-text" *ngIf="!isCollapsed">Home</span>
             <div class="tooltip" *ngIf="isCollapsed">Home</div>
           </li>
-          <li class="menu-item">
-            <div class="icon-container">
-              <i class="menu-icon groups-icon"></i>
-            </div>
-            <span class="menu-text" *ngIf="!isCollapsed">Groups</span>
-            <div class="tooltip" *ngIf="isCollapsed">Groups</div>
-          </li>
-          <li class="menu-item">
-            <div class="icon-container">
-              <i class="menu-icon phone-icon"></i>
-            </div>
-            <span class="menu-text" *ngIf="!isCollapsed">Phone Numbers</span>
-            <div class="tooltip" *ngIf="isCollapsed">Phone Numbers</div>
-          </li>
-          <li class="menu-item">
-            <div class="icon-container">
-              <i class="menu-icon integrations-icon"></i>
-            </div>
-            <span class="menu-text" *ngIf="!isCollapsed">Integrations</span>
-            <div class="tooltip" *ngIf="isCollapsed">Integrations</div>
-          </li>
-          <li class="menu-item">
-            <div class="icon-container">
-              <i class="menu-icon plan-icon"></i>
-            </div>
-            <span class="menu-text" *ngIf="!isCollapsed">Plan & Billing</span>
-            <div class="tooltip" *ngIf="isCollapsed">Plan & Billing</div>
-          </li>
-          <li class="menu-item">
-            <div class="icon-container">
-              <i class="menu-icon contacts-icon"></i>
-            </div>
-            <span class="menu-text" *ngIf="!isCollapsed">Contacts</span>
-            <div class="tooltip" *ngIf="isCollapsed">Contacts</div>
-          </li>
+         
+              
+          
         </ul>
       </div>
     </div>
