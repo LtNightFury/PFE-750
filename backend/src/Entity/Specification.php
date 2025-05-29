@@ -31,7 +31,7 @@ class Specification
     private ?string $parkingSpots = null;
 
     #[ORM\Column(type: Types::BIGINT, nullable: true)]
-    #[Groups(['property:read'])]
+   #[Groups(['property:list', 'property:read'])]
 
     private ?string $size = null;
 
