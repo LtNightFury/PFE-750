@@ -14,6 +14,7 @@ use App\Repository\PropertyRepository;
 use Symfony\Component\Serializer\SerializerInterface;
 use App\Entity\Contract;
 use App\Repository\ContractRepository;
+use App\Entity\Notification;
 
 #[Route('api/booking', name: 'app_booking')]
 class BookingController extends AbstractController
@@ -75,6 +76,14 @@ public function approveBooking(
         $em->persist($contract);
         $em->flush();
     }
+    $notification = new Notification();
+    $notification->setUser($booking->getUser());
+    $notification->setMessage("Your booking for property '{$booking->getProperty()->getGeneralinfo()->getTitle()}' has been {$status}.");
+    $notification->setIsRead(false);
+    $notification->setCreatedAt(new \DateTimeImmutable());
+
+    $em->persist($notification);
+    $em->flush();
 
     return $this->json(['message' => "Booking $status"]);
 }
@@ -103,6 +112,17 @@ public function bookProperty(
 
     $em->persist($booking);
     $em->flush();
+    $owner = $property->getUser();
+
+    $notification = new Notification();
+    $notification->setUser($owner);
+    $notification->setMessage("You have a new booking request for your property: " . $property->getGeneralinfo()->getTitle());
+    $notification->setIsRead(false);
+    $notification->setCreatedAt(new \DateTimeImmutable());
+
+    $em->persist($notification);
+    $em->flush();
+
 
     return $this->json(['message' => 'Booking request submitted!'], 201);
 }
@@ -152,6 +172,58 @@ public function getBookingsForOwner(BookingRepository $bookingRepository): JsonR
 
     return $this->json($data);
 }
+#[Route('/notifications', name: 'get_notifications', methods: ['GET'])]
+public function getNotifications(): JsonResponse
+{
+    $user = $this->getUser();
+    $notifications = $this->entityManager->getRepository(Notification::class)->findBy(
+        ['user' => $user],
+        ['createdAt' => 'DESC']
+    );
+
+    $data = array_map(function (Notification $n) {
+        return [
+            'id' => $n->getId(),
+            'message' => $n->getMessage(),
+            'isRead' => $n->isIsRead(),
+            'createdAt' => $n->getCreatedAt()->format('Y-m-d H:i'),
+        ];
+    }, $notifications);
+
+    return $this->json($data);
+}
+#[Route('/notifications/{id}/read', name: 'mark_notification_read', methods: ['POST'])]
+public function markNotificationRead(Notification $notification): JsonResponse
+{
+    $notification->setIsRead(true);
+    $this->entityManager->flush();
+
+    return $this->json(['message' => 'Notification marked as read']);
+}
+
+#[Route('/owner/new-booking-notifications', name: 'owner_new_booking_notifications', methods: ['GET'])]
+public function getNewBookingNotifications(): JsonResponse
+{
+    $owner = $this->getUser();
+    
+    // Fetch all notifications related to this owner that are unread
+    $notifications = $this->entityManager->getRepository(Notification::class)->findBy([
+        'user' => $owner,
+        'isRead' => false,
+    ], ['createdAt' => 'DESC']);
+
+    // Filter only booking-related notifications (optional: add a type field to Notification if needed)
+    $data = array_map(function (Notification $notification) {
+        return [
+            'id' => $notification->getId(),
+            'message' => $notification->getMessage(),
+            'createdAt' => $notification->getCreatedAt()->format('Y-m-d H:i'),
+        ];
+    }, $notifications);
+
+    return $this->json($data);
+}
+
 
 
 }
