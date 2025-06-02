@@ -18,9 +18,9 @@ export interface EmailData {
 })
 export class PropertyService {
   
-  private apiUrl2 = 'http://backend.ddev.site/api/user/properties';  // Symfony API endpoint
-  private apiUrl = 'http://backend.ddev.site/api/properties/';  // Symfony API endpoint
-  private baseApiUrl = 'http://backend.ddev.site/api';
+  private apiUrl2 = 'https://backend.ddev.site/api/user/properties';  // Symfony API endpoint
+  private apiUrl = 'https://backend.ddev.site/api/properties/';  // Symfony API endpoint
+  private baseApiUrl = 'https://backend.ddev.site/api';
   constructor(private http: HttpClient) {}
 
   // ✅ Get all properties from backend and set mainImage path
@@ -29,7 +29,7 @@ export class PropertyService {
       map((properties: any[]) => {
         return properties.map(property => {
           if (property?.Media?.photos?.length > 0) {
-            property.mainImage = 'http://backend.ddev.site' + property.Media.photos[0].imageName;
+            property.mainImage = 'https://backend.ddev.site' + property.Media.photos[0].imageName;
           } else {
             property.mainImage = '/assets/default.jpg'; // fallback
           }
@@ -44,7 +44,7 @@ export class PropertyService {
       map((properties: any[]) => {
         return properties.map(property => {
           if (property?.Media?.photos?.length > 0) {
-            property.mainImage = 'http://backend.ddev.site' + property.Media.photos[0].imageName;
+            property.mainImage = 'https://backend.ddev.site' + property.Media.photos[0].imageName;
           } else {
             property.mainImage = '/assets/default.jpg'; // fallback
           }
@@ -57,7 +57,7 @@ export class PropertyService {
     return this.http.get<Property>(`${this.apiUrl}${id}`);
   }
   addBooking(propertyId: number, booking: Booking): Observable<Booking> {
-    return this.http.post<Booking>(`http://backend.ddev.site/api/booking/properties/${propertyId}/book`, booking);
+    return this.http.post<Booking>(`https://backend.ddev.site/api/booking/properties/${propertyId}/book`, booking);
     
   }
   
@@ -67,7 +67,7 @@ export class PropertyService {
   }
   // Fetch user bookings
   getUserBookings(): Observable<Booking[]> {
-    return this.http.get<Booking[]>('http://backend.ddev.site/api/booking/my-bookings');
+    return this.http.get<Booking[]>('https://backend.ddev.site/api/booking/my-bookings');
   }
   
 
@@ -82,23 +82,23 @@ export class PropertyService {
   }
 
   scheduleAppointment(appointment: Appointment): Observable<Appointment> {
-    return this.http.post<Appointment>('http://backend.ddev.site/api/appointments', appointment);
+    return this.http.post<Appointment>('https://backend.ddev.site/api/appointments', appointment);
   }
   
   getAvailableAppointmentSlots(propertyId: number, date: string): Observable<{ date: string; availableSlots: string[] }> {
     return this.http.get<{ date: string; availableSlots: string[] }>(
-      `http://backend.ddev.site/api/properties/${propertyId}/available-slots?date=${date}`
+      `https://backend.ddev.site/api/properties/${propertyId}/available-slots?date=${date}`
     );
   }
   getUserAppointments(): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>('http://backend.ddev.site/api/my-appointments');
+    return this.http.get<Appointment[]>('https://backend.ddev.site/api/my-appointments');
   }
   getOwnerAppointments(): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(`http://backend.ddev.site/api/owner/appointments`);
+    return this.http.get<Appointment[]>(`https://backend.ddev.site/api/owner/appointments`);
   }
 
   updateAppointmentStatus(appointmentId: number, status: 'approved' | 'canceled'): Observable<any> {
-    return this.http.patch(`http://backend.ddev.site/api/appointments/${appointmentId}/approve`, { status });
+    return this.http.patch(`https://backend.ddev.site/api/appointments/${appointmentId}/approve`, { status });
   }
   
   // New method for sending email to property owner/agent
@@ -122,7 +122,7 @@ export class PropertyService {
     return this.http.get<{ views: PropertyView[] }>(`${this.baseApiUrl}/user/views`);
   }
   getTotalViewsForOwner(): Observable<{ totalViews: number }> {
-    return this.http.get<{ totalViews: number }>('http://backend.ddev.site/api/owner/allviews');
+    return this.http.get<{ totalViews: number }>('https://backend.ddev.site/api/owner/allviews');
   }
   getApprovedPropertiesCount(): Observable<{ approvedProperties: number }> {
     return this.http.get<{ approvedProperties: number }>(`${this.baseApiUrl}/owner/approved-properties`);
@@ -151,16 +151,16 @@ markMessageAsRead(messageId: number): Observable<any> {
 // booking.service.ts
 
 approveBooking(id: number): Observable<any> {
-  return this.http.post(`http://backend.ddev.site/api/booking/${id}/approval`, {
+  return this.http.post(`https://backend.ddev.site/api/booking/${id}/approval`, {
     approval: 'approved'
   });
 }
 getownerBookings(): Observable<Booking[]> {
-  return this.http.get<Booking[]>(`http://backend.ddev.site/api/booking/owner/bookings`);
+  return this.http.get<Booking[]>(`https://backend.ddev.site/api/booking/owner/bookings`);
 }
 
 rejectBooking(id: number): Observable<any> {
-  return this.http.post(`http://backend.ddev.site/api/booking/${id}/approval`, {
+  return this.http.post(`https://backend.ddev.site/api/booking/${id}/approval`, {
     approval: 'rejected'
   });
 }
@@ -172,20 +172,20 @@ getPendingPropertiesCount(): Observable<{ pendingProperties: number }> {
 
 }
 getUserGrowthOverTime(): Observable<{ date: string, count: number }[]> {
-  return this.http.get<{ date: string, count: number }[]>('http://backend.ddev.site/api/admin/analytics/user-growth');
+  return this.http.get<{ date: string, count: number }[]>('https://backend.ddev.site/api/admin/analytics/user-growth');
 }
 
 getPropertyGrowthOverTime(): Observable<{ date: string, count: number }[]> {
-  return this.http.get<{ date: string, count: number }[]>('http://backend.ddev.site/api/admin/analytics/property-growth');
+  return this.http.get<{ date: string, count: number }[]>('https://backend.ddev.site/api/admin/analytics/property-growth');
 }
 
 
 getTotalUsersCount() {
-  return this.http.get<{ totalUsersCount: number }>('http://backend.ddev.site/api/admin/total-users');
+  return this.http.get<{ totalUsersCount: number }>('https://backend.ddev.site/api/admin/total-users');
 }
 
 getTotalOwnersCount() {
-  return this.http.get<{ totalOwnersCount: number }>('http://backend.ddev.site/api/admin/total-owners');
+  return this.http.get<{ totalOwnersCount: number }>('https://backend.ddev.site/api/admin/total-owners');
 }
 getallusers(): Observable<any[]> {
   return this.http.get<any[]>(`${this.baseApiUrl}/admin/users`);
@@ -198,13 +198,13 @@ deleteUser(id: number): Observable<any> {
   return this.http.delete<any>(`${this.baseApiUrl}/admin/user/${id}/delete`);
 }
 updatePropertyApproval(id: number, status: string): Observable<any> {
-  return this.http.patch(`http://backend.ddev.site/api/admin/properties/${id}/approval`, { approval: status });
+  return this.http.patch(`https://backend.ddev.site/api/admin/properties/${id}/approval`, { approval: status });
 }
 getAdminProperties(): Observable<Property[]> {
-  return this.http.get<Property[]>('http://backend.ddev.site/api/admin/properties');
+  return this.http.get<Property[]>('https://backend.ddev.site/api/admin/properties');
 }
 AdminDeleteProperty(id: number): Observable<any> {
-  return this.http.delete(`http://backend.ddev.site/api/admin/properties/${id}`);
+  return this.http.delete(`https://backend.ddev.site/api/admin/properties/${id}`);
 }
 
 

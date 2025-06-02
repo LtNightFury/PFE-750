@@ -7,7 +7,7 @@ import { Notification } from '../models/notification.model'; // Add this import
   providedIn: 'root'
 })
 export class NotificationService {
-  private apiUrl = 'http://backend.ddev.site/api/booking';
+  private apiUrl = 'https://backend.ddev.site/api/booking';
 
   constructor(private http: HttpClient) {}
 

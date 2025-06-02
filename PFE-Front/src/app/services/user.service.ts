@@ -10,7 +10,7 @@ export class UserService {
   getCurrentUserId() {
     throw new Error('Method not implemented.');
   }
-  private apiUrl = 'http://backend.ddev.site/api';
+  private apiUrl = 'https://backend.ddev.site/api';
 
   constructor(private http: HttpClient) {}
 
@@ -20,7 +20,7 @@ export class UserService {
   getImageUrl(path: string): string {
     if (!path) return 'assets/default-avatar.png';
     if (path.startsWith('http')) return path;
-    return `http://backend.ddev.site${path.startsWith('/') ? path : '/' + path}`;
+    return `https://backend.ddev.site${path.startsWith('/') ? path : '/' + path}`;
   }
   
 

@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class MessageService {
   
-  private baseApiUrl = 'http://backend.ddev.site/api';
+  private baseApiUrl = 'https://backend.ddev.site/api';
 
   constructor(private http: HttpClient) { }
    sendEmailToOwner(emailData: EmailData): Observable<any> {
