@@ -1,104 +1,298 @@
+/* Modern Futuristic Bookings Component */
+.d-flex.container-fluid {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.content-container {
+  padding: 2rem 3rem;
+}
+
+h2.mb-4 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #1a202c, #4DB299);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 3rem;
+  letter-spacing: -0.025em;
+}
+
+/* Loading and Empty States */
+.text-center {
+  padding: 4rem 0;
+  font-size: 1.1rem;
+  color: #64748b;
+}
+
+.text-muted.text-center {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 3rem;
+  border: 1px solid rgba(77, 178, 153, 0.1);
+}
+
+/* Timeline Structure */
 .timeline-item {
-    display: flex;
-    margin-bottom: 2rem;
-    position: relative;
+  position: relative;
+  padding-left: 4rem;
+  margin-bottom: 2.5rem;
+  animation: slideInUp 0.6s ease-out;
+}
+
+.timeline-item:not(:last-child)::before {
+  content: '';
+  position: absolute;
+  left: 1.5rem;
+  top: 4rem;
+  bottom: -2.5rem;
+  width: 2px;
+  background: linear-gradient(180deg, #4DB299, rgba(77, 178, 153, 0.2));
+}
+
+.timeline-marker {
+  position: absolute;
+  left: 0;
+  top: 1.5rem;
+  width: 3rem;
+  height: 3rem;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(77, 178, 153, 0.2);
+  border: 3px solid #4DB299;
+  z-index: 2;
+}
+
+.timeline-marker > div {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: #4DB299;
+  animation: pulse 2s infinite;
+}
+
+/* Status Classes for Timeline Markers */
+.marker-pending {
+  background: #f59e0b;
+}
+
+.marker-approved {
+  background: #4DB299;
+}
+
+.marker-confirmed {
+  background: #4DB299;
+}
+
+.marker-rejected {
+  background: #ef4444;
+}
+
+.marker-cancelled {
+  background: #ef4444;
+}
+
+.marker-canceled {
+  background: #ef4444;
+}
+
+/* Card Styling */
+.timeline-content.card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(77, 178, 153, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  position: relative;
+}
+
+.timeline-content.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #4DB299, #38a3a5);
+}
+
+.timeline-content.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 32px 64px rgba(77, 178, 153, 0.15);
+  border-color: rgba(77, 178, 153, 0.3);
+}
+
+.card-body {
+  padding: 2rem;
+}
+
+/* Card Title and Location */
+.card-title {
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 0.5rem;
+}
+
+.text-muted {
+  color: #64748b !important;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Status Pills */
+.pill {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+}
+
+.pill:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.bg-orange {
+  background: linear-gradient(135deg, #fef3c7, #f59e0b);
+  color: #92400e;
+  border-color: #f59e0b;
+}
+
+.bg-green {
+  background: linear-gradient(135deg, #d1fae5, #4DB299);
+  color: #065f46;
+  border-color: #4DB299;
+}
+
+.bg-red {
+  background: linear-gradient(135deg, #fecaca, #ef4444);
+  color: #991b1b;
+  border-color: #ef4444;
+}
+
+/* Booking Details */
+.booking-details {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(77, 178, 153, 0.1);
+}
+
+.booking-details p {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  color: #4a5568;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.booking-details p:last-child {
+  margin-bottom: 0;
+}
+
+.booking-details i {
+  margin-right: 0.75rem;
+  color: #4DB299;
+  font-size: 1.1rem;
+  width: 1.25rem;
+  flex-shrink: 0;
+}
+
+/* Animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
-  .container-fluid {
-    max-width: 100rem;
-    margin: 2rem auto;
-    padding: 0 1rem;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .content-container {
+    padding: 1.5rem;
+  }
+  
+  h2.mb-4 {
+    font-size: 2rem;
+  }
+  
+  .timeline-item {
+    padding-left: 3rem;
+  }
+  
   .timeline-marker {
-    position: relative;
-    margin-right: 20px;
-  }
-  
-  .timeline-marker div {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    border: 3px solid white;
-    position: relative;
-    top: 10px;
-  }
-  
-  .timeline-marker::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 7px;
-    width: 3px;
-    height: 100%;
-    background-color: #ddd;
-    z-index: -1;
-  }
-  
-  .card {
-    width: 100%;
-    border-left: 5px solid transparent;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  
-  .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    width: 2.5rem;
+    height: 2.5rem;
   }
   
   .card-body {
-    padding: 1rem 1.25rem;
+    padding: 1.5rem;
   }
   
-  .badge {
-    text-transform: capitalize;
-    padding: 0.35rem 0.6rem;
-    font-size: 0.75rem;
+  .d-flex.justify-content-between {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 1rem;
   }
-  
-  .booking-details i {
-    margin-right: 5px;
-  }
-  
-  .pending {
-    background-color: #ffc107;
-  }
-  
-  .approved {
-    background-color: #198754;
-  }
-  
-  .cancelled {
-    background-color: #dc3545;
-  }
-  
-  .marker-pending {
-    background-color: #ffc107;
-  }
-  
-  .marker-approved {
-    background-color: #198754;
-  }
-  
-  .marker-cancelled {
-    background-color: #dc3545;
-  }
-  
-  .pill {
-    padding: 5px 10px;
-    border-radius: 15px;
-    color: white;
-    font-size: 0.9rem;
-    display: inline-block;
-  }
-  
-  .bg-orange {
-    background-color: orange;
-  }
-  
-  .bg-green {
-    background-color: green;
-  }
-  
-  .bg-red {
-    background-color: crimson;
-  }
-  
+}
+
+/* Hover effects for better interactivity */
+.timeline-item:hover .timeline-marker {
+  transform: scale(1.1);
+  box-shadow: 0 12px 40px rgba(77, 178, 153, 0.3);
+}
+
+.timeline-item:hover .timeline-marker > div {
+  animation-duration: 1s;
+}
+
+/* Glassmorphism effect enhancement */
+.timeline-content.card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+/* Additional modern touches */
+.booking-details p:hover {
+  color: #2d3748;
+  transition: color 0.2s ease;
+}
+
+/* Date range styling enhancement */
+.text-muted small {
+  font-weight: 600;
+  background: rgba(77, 178, 153, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  color: #4DB299 !important;
+}

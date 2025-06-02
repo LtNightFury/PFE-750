@@ -145,4 +145,23 @@ export class UserMessagesComponent implements OnInit {
   getSenderInitials(message: Message): string {
     return (message.sender.name.charAt(0) + message.sender.lastname.charAt(0)).toUpperCase();
   }
+  hasValidProfileImage(sender: any): boolean {
+  return sender && 
+         sender.profileImage && 
+         typeof sender.profileImage === 'string' && 
+         sender.profileImage.includes('uploads');
+}
+
+getProfileImageUrl(profileImage: string | null): string {
+  // If profileImage is null, undefined, or doesn't contain 'uploads', return default image
+  if (!profileImage || !profileImage.includes('uploads')) {
+    return 'assets/images/default-avatar.png'; // Put your default image in assets folder
+  }
+  return 'http://backend.ddev.site' + profileImage;
+}
+
+onImageError(event: any): void {
+  // Fallback when image fails to load
+  event.target.src = 'assets/images/default-avatar.png';
+}
 }

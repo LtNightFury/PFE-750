@@ -18,7 +18,7 @@ export class NotificationBellComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadNotifications();
-    this.refreshSub = interval(10000).subscribe(() => this.loadNotifications());
+    this.refreshSub = interval(50000).subscribe(() => this.loadNotifications());
   }
 
   loadNotifications(): void {

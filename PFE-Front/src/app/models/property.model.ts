@@ -116,6 +116,9 @@ export interface Property {
     propertyId: number;
     approval?: string;
     status?: string;
+      popertyTitle: string;
+    propertyCity: string;
+    propertysubcity: string;
   }
 
   export interface userprofile {

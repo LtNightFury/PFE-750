@@ -52,7 +52,7 @@ export class MyAppointmentsComponent {
       case 'approved': // treat approved as confirmed
         return 'confirmed';
       case 'canceled':
-        return 'cancelled';
+        return 'canceled';
       default:
         return '';
     }

@@ -163,7 +163,10 @@ export class PropertyDetailComponent implements OnInit {
     const bookingData = {
       propertyId: this.property.id,
       startDate: this.selectedDateRange.startDate,
-      endDate: this.selectedDateRange.endDate
+      endDate: this.selectedDateRange.endDate,
+      popertyTitle: this.property.title || '',
+      propertyCity: this.property.city || '',
+      propertysubcity: this.property.subcity || ''
     };
     
     this.propertyService.addBooking(this.property.id, bookingData).subscribe({

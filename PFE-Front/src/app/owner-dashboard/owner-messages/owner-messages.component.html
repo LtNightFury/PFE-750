@@ -31,12 +31,12 @@
         [class.unread]="!message.isRead"
         (click)="selectMessage(message)"
       >
-        <div class="message-avatar" *ngIf="message.sender.profileImage.includes('uploads')">
-          <img [src]="'http://backend.ddev.site' + message.sender.profileImage" alt="Profile">
-        </div>
-        <div class="message-avatar initial-avatar" *ngIf="!message.sender.profileImage.includes('uploads')">
-          {{ getSenderInitials(message) }}
-        </div>
+  <div class="message-avatar" *ngIf="hasValidProfileImage(message.sender)">
+  <img [src]="'http://backend.ddev.site' + message.sender.profileImage" alt="Profile">
+</div>
+<div class="message-avatar initial-avatar" *ngIf="!hasValidProfileImage(message.sender)">
+  {{ getSenderInitials(message) }}
+</div>
         
         <div class="message-content">
           <div class="message-header">
@@ -106,12 +106,12 @@
     </div>
     
     <div class="message-sender-info">
-      <div class="sender-avatar" *ngIf="selectedMessage.sender.profileImage.includes('uploads')">
-        <img [src]="'http://backend.ddev.site' + selectedMessage.sender.profileImage" alt="Profile">
-      </div>
-      <div class="sender-avatar initial-avatar" *ngIf="!selectedMessage.sender.profileImage.includes('uploads')">
-        {{ getSenderInitials(selectedMessage) }}
-      </div>
+   <div class="sender-avatar" *ngIf="hasValidProfileImage(selectedMessage.sender)">
+  <img [src]="'http://backend.ddev.site' + selectedMessage.sender.profileImage" alt="Profile">
+</div>
+<div class="sender-avatar initial-avatar" *ngIf="!hasValidProfileImage(selectedMessage.sender)">
+  {{ getSenderInitials(selectedMessage) }}
+</div>
       
       <div class="sender-details">
         <div class="sender-name">

@@ -3,7 +3,9 @@ export interface Booking {
     startDate: string;
     endDate: string;
     propertyId: number;
-    
-    status: string; // You can expand the statuses as needed
+    status: string;
+    popertyTitle: string;
+    propertyCity: string;
+    propertysubcity: string;
   }
   
