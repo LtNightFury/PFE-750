@@ -140,9 +140,7 @@ public function replyToMessage(int $id, Request $request, EntityManagerInterface
         return new JsonResponse(['error' => 'Original message not found'], Response::HTTP_NOT_FOUND);
     }
 
-    if ($originalMessage->getOwner() !== $owner) {
-        return new JsonResponse(['error' => 'You are not authorized to reply to this message'], Response::HTTP_FORBIDDEN);
-    }
+    
 
     $data = json_decode($request->getContent(), true);
     $replyContent = $data['message'] ?? null;
@@ -178,12 +176,13 @@ public function userReplyToMessage(int $id, Request $request, EntityManagerInter
         return new JsonResponse(['error' => 'Original message not found'], Response::HTTP_NOT_FOUND);
     }
 
-    if ($originalMessage->getSender() !== $user) {
+    if ($originalMessage->getSender() !== $user && $originalMessage->getOwner() !== $user) {
         return new JsonResponse(['error' => 'You are not authorized to reply to this message'], Response::HTTP_FORBIDDEN);
     }
 
     $data = json_decode($request->getContent(), true);
     $replyContent = $data['message'] ?? null;
+    $property = $originalMessage->getProperty();
 
     if (!$replyContent) {
         return new JsonResponse(['error' => 'Reply message content is required.'], Response::HTTP_BAD_REQUEST);
@@ -194,7 +193,7 @@ public function userReplyToMessage(int $id, Request $request, EntityManagerInter
     $reply->setMessage($replyContent);
     $reply->setCreatedAt(new \DateTimeImmutable());
     $reply->setSender($user);
-    $reply->setOwner($originalMessage->getOwner()); // sending back to property owner
+    $reply->setOwner($property->getUser()); 
     $reply->setProperty($originalMessage->getProperty());
     $reply->setIsRead(false);
 

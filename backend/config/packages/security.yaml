@@ -46,6 +46,7 @@ security:
     - { path: ^/api/properties/\d+$, methods: [GET], roles: PUBLIC_ACCESS }
     - { path: ^/api/properties/\d+/view, methods: [POST], roles: PUBLIC_ACCESS }
     - { path: ^/api/user$, methods: [GET], roles: PUBLIC_ACCESS }
+    - { path: ^/api/booking/owner/new-booking-notifications, roles: PUBLIC_ACCESS }
     
     # User profile - should require authentication
     - { path: ^/api/user/update-password, roles: IS_AUTHENTICATED_FULLY }

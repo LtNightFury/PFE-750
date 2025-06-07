@@ -19,7 +19,7 @@ export interface EmailData {
 export class PropertyService {
   
   private apiUrl2 = 'http://backend.ddev.site/api/user/properties';  // Symfony API endpoint
-  private apiUrl = 'http://backend.ddev.site/api/properties/';  // Symfony API endpoint
+  private apiUrl = 'http://backend.ddev.site/api/properties';  // Symfony API endpoint
   private baseApiUrl = 'http://backend.ddev.site/api';
   constructor(private http: HttpClient) {}
 
@@ -53,9 +53,9 @@ export class PropertyService {
       })
     );}
 
-  getPropertyById(id: number): Observable<Property> {
-    return this.http.get<Property>(`${this.apiUrl}${id}`);
-  }
+ getPropertyById(id: number): Observable<Property> {
+  return this.http.get<Property>(`${this.apiUrl}/${id}`);
+}
   addBooking(propertyId: number, booking: Booking): Observable<Booking> {
     return this.http.post<Booking>(`http://backend.ddev.site/api/booking/properties/${propertyId}/book`, booking);
     

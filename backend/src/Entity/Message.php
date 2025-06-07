@@ -30,6 +30,7 @@ class Message
 
     #[ORM\ManyToOne(inversedBy: 'messages')]
     #[ORM\JoinColumn(nullable: false)]
+     #[Groups(['message:read'])]
     private ?User $owner = null;
 
     #[ORM\ManyToOne(inversedBy: 'messages')]
