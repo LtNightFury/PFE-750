@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Message } from 'src/app/models/message.model';
 import { MessageService } from 'src/app/services/message.service';
+import { AuthService } from 'src/app/login-register-verif/services/auth.service';
 
 @Component({
   selector: 'app-user-messages',
@@ -19,7 +20,9 @@ export class UserMessagesComponent implements OnInit {
   searchQuery = '';
   loading = true;
 
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService,
+              private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.fetchMessages();
@@ -58,34 +61,43 @@ export class UserMessagesComponent implements OnInit {
   }
 
   sendReply(): void {
-    if (!this.selectedMessage || !this.replyText.trim()) return;
+  if (!this.selectedMessage || !this.replyText.trim()) return;
 
-    const messageId = this.selectedMessage.id;
-    const replyPayload = { message: this.replyText };
-
-    this.messageService.sendUserReply(messageId, replyPayload).subscribe(
-      () => {
-        if (this.selectedMessage) {
-          if (!this.selectedMessage.replies) {
-            this.selectedMessage.replies = [];
-          }
-
-          this.selectedMessage.replies.push({
-            id: Math.floor(Math.random() * 10000), // temporary ID
-            message: this.replyText,
-            createdAt: new Date().toISOString(),
-            sender: 'You' // or actual user info
-          });
-
-          this.replyText = '';
-        }
-      },
-      error => {
-        console.error('Error sending reply:', error);
-        alert('Failed to send reply. Please try again.');
-      }
-    );
+  const currentUser = this.authService.currentUser;
+  if (!currentUser || !currentUser.roles || currentUser.roles.length === 0) {
+    alert('User role not found or user not authenticated.');
+    return;
   }
+
+  const isOwnerOrAdmin = currentUser.roles.includes('ROLE_OWNER') || currentUser.roles.includes('ROLE_ADMIN');
+  const messageId = this.selectedMessage.id;
+  const replyPayload = { message: this.replyText };
+
+  const sendReplyObservable = isOwnerOrAdmin
+    ? this.messageService.sendOwnerReply(messageId, replyPayload)
+    : this.messageService.sendUserReply(messageId, replyPayload);
+
+  sendReplyObservable.subscribe(
+    () => {
+      if (this.selectedMessage) {
+        this.selectedMessage.replies ??= [];
+        this.selectedMessage.replies.push({
+          id: Math.floor(Math.random() * 10000), // temporary ID
+          message: this.replyText,
+          createdAt: new Date().toISOString(),
+          sender: 'You'
+        });
+      }
+
+      this.replyText = '';
+    },
+    error => {
+      console.error('Error sending reply:', error);
+      alert('Failed to send reply. Please try again.');
+    }
+  );
+}
+
 
   searchMessages(): void {
     if (!this.searchQuery.trim()) {
