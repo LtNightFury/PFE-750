@@ -63,13 +63,6 @@
           <div *ngIf="isCollapsed" class="mini-title">QL</div>
         </div>
         <ul class="menu-list">
-          <li class="menu-item" routerLinkActive="active" routerLink="/user/history">
-            <div class="icon-container">
-              <i class="menu-icon history-icon"></i>
-            </div>
-            <span class="menu-text" *ngIf="!isCollapsed">My History</span>
-            <div class="tooltip" *ngIf="isCollapsed">My History</div>
-          </li>
           <li class="menu-item" routerLinkActive="active" routerLink="/home">
             <div class="icon-container">
               <i class="menu-icon home-icon"></i>
@@ -77,6 +70,14 @@
             <span class="menu-text" *ngIf="!isCollapsed">Home</span>
             <div class="tooltip" *ngIf="isCollapsed">Home</div>
           </li>
+          <li class="menu-item" routerLinkActive="active" routerLink="/user/history">
+            <div class="icon-container">
+              <i class="menu-icon history-icon"></i>
+            </div>
+            <span class="menu-text" *ngIf="!isCollapsed">My History</span>
+            <div class="tooltip" *ngIf="isCollapsed">My History</div>
+          </li>
+          
          
         </ul>
       </div>

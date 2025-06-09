@@ -20,13 +20,12 @@
         <button type="button" routerLink="/login" class="login-btn">Login</button>
       </div>
 
-      <!-- Display User Avatar and Dropdown when Logged In -->
-      <!-- Modify the user-profile div to use the directive -->
+      
       <div class="user-profile" *ngIf="isLoggedIn" clickOutside (clickOutside)="showDropdown = false">
         
         <div class="profile-container" >
-          <img [src]="getImageUrl(user?.profileImage || '')" class="avatar" />
-          <span class="username">{{ user?.name || 'User' }} {{user?.lastName}}</span>
+          <img [src]="getImageUrl(user?.profileImage || '')" routerLink="/user/profile" class="avatar" />
+          <span class="username" routerLink="/user/profile">{{ user?.name || 'User' }} {{user?.lastName}}</span>
           
           <div class="notification p-1" routerLink="/user/messages" routerLinkActive="active">
   

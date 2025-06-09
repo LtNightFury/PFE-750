@@ -32,13 +32,14 @@
             <span class="menu-text" *ngIf="!isCollapsed">Users List</span>
             <div class="tooltip" *ngIf="shouldShowTooltip()">Users List</div>
           </li>
+          <!--
           <li class="menu-item " >
             <div class="icon-container">
               <i class="menu-icon contacts-icon"></i>
             </div>
             <span class="menu-text" *ngIf="!isCollapsed">Contacts</span>
-            <div class="tooltip" *ngIf="isCollapsed">Contacts</div>
-          </li>
+            <div class="tooltip" *ngIf="isCollapsed" routerLink="">Contacts</div>
+          </li>-->
           <li class="menu-item" routerLinkActive="active" routerLink="/admin/properties-list">
             <div class="icon-container">
               <i class="menu-icon calendar-icon"></i>

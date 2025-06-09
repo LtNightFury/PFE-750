@@ -22,6 +22,10 @@
                   </svg>
               <span *ngIf="!isCollapsed">Dashboard</span>
             </a>
+            <a routerLink="/home" class="nav-link" routerLinkActive="active">
+             <i class="fa-solid fa-house"></i>
+             <span *ngIf="!isCollapsed">Home</span>
+           </a>
             <a routerLink="/owner/properties" class="nav-link" routerLinkActive="active">
                 <i class="fa-solid fa-house-user"></i>
               <span *ngIf="!isCollapsed">My Properties</span>
@@ -38,10 +42,7 @@
               <i class="fa-solid fa-calendar-plus"></i>
               <span *ngIf="!isCollapsed">Bookings</span>
             </a>
-             <a routerLink="/home" class="nav-link" routerLinkActive="active">
-              <i class="fa-solid fa-house"></i>
-              <span *ngIf="!isCollapsed">Home</span>
-            </a>
+            
           </nav>
 
           

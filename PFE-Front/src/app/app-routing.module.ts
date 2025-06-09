@@ -17,13 +17,11 @@ import { UserSettingsComponent } from './pages/user-settings/user-settings.compo
 import { MyAppointmentsComponent } from './components/my-appointments/my-appointments.component';
 import { MyBookingsComponent } from './components/my-bookings/my-bookings.component';
 import { OwnerDashComponent } from './owner-dashboard/owner-dash/owner-dash.component';
-
 import { PropertyListDashComponent } from './owner-dashboard/property-list-dash/property-list-dash.component';
 import { AuthGuard } from './login-register-verif/guards/auth.guard';
 import { AppointmentsCalendarComponent } from './owner-dashboard/appointments-calendar/appointments-calendar.component';
 import { DashDashComponent } from './owner-dashboard/dash-dash/dash-dash.component';
 import { PropertyViewsComponent } from './components/property-views/property-views.component';
-import { OwnerMessagesComponent } from './owner-dashboard/owner-messages/owner-messages.component';
 import { UserMessagesComponent } from './pages/user-messages/user-messages.component';
 import { UserLayoutComponent } from './layout/user-layout/user-layout.component';
 import { AdminDashLayoutComponent } from './Admin-dashboard/admin-dash-layout/admin-dash-layout.component';
@@ -32,7 +30,6 @@ import { AdminUserListComponent } from './Admin-dashboard/admin-user-list/admin-
 import { AdminPropertyListComponent } from './Admin-dashboard/admin-property-list/admin-property-list.component';
 import { AdminPropertyDeleteListComponent } from './Admin-dashboard/admin-property-delete-list/admin-property-delete-list.component';
 import { OwnerBookingComponent } from './owner-dashboard/owner-booking/owner-booking.component';
-
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
@@ -113,11 +110,9 @@ const routes: Routes = [
         path: 'calendar',
         component: AppointmentsCalendarComponent
       },
-      {
-        path: 'messages',
-        component:OwnerMessagesComponent
-      },
+      
       {path: 'bookings',component: OwnerBookingComponent},
+      {path: 'messages',component: UserMessagesComponent},
     ]
   },
 
