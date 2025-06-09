@@ -78,7 +78,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['admin:read', 'property:read','message:read'])]
     private ?string $phoneNumber = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Appointment::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Appointment::class, cascade: ['remove'], orphanRemoval: true)]
     private Collection $appointments;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -88,17 +88,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Contactus::class)]
     private Collection $contactuses;
 
-    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Message::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Message::class, cascade: ['remove'], orphanRemoval: true)]
     private Collection $messages;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: PropertyView::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: PropertyView::class, orphanRemoval: true)]
     private Collection $propertyViews;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Groups(['admin:read'])]
     private ?\DateTimeInterface $createdAt = null;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Notification::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Notification::class, cascade: ['remove'], orphanRemoval: true)]
     private Collection $notifications;
 
 
