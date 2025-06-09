@@ -20,7 +20,7 @@ export class PropertyFilterComponent {
   // Visual representations for the UI
   lookingFor: string = 'Residence in Tunis';
   selectedLocation: string = 'Tunis';
-  priceRangeDisplay: string = '10000 - 50000 TND';
+  priceRangeDisplay: string = '50000 - 100000 TND';
   
   // Options for dropdowns
   dealTypes: string[] = ['Rent', 'Sale'];
@@ -50,11 +50,11 @@ export class PropertyFilterComponent {
   'Tunis',
   'Zaghouan'];
   priceRanges: { display: string, min: number, max: number | null }[] = [
-    { display: '10000 - 50000 TND', min: 10000, max: 50000 },
+    { display: '1000 - 2000 TND', min:  1000, max: 2000 },
+    { display: '5000 - 10000 TND', min: 5000, max: 10000 },
     { display: '50000 - 100000 TND', min: 50000, max: 100000 },
-    { display: '100000 - 250000 TND', min: 100000, max: 250000 },
-    { display: '250000 - 500000 TND', min: 250000, max: 500000 },
-    { display: '500000+', min: 500000, max: null }
+    { display: '2500000 - 5000000 TND', min: 2500000, max: 5000000 },
+    { display: '5000000+', min: 50000000, max: null }
   ];
 
   /**
@@ -148,7 +148,7 @@ export class PropertyFilterComponent {
     // Reset UI elements
     this.lookingFor = 'Residence in Tunis';
     this.selectedLocation = 'Tunis';
-    this.priceRangeDisplay = '10000 - 50000 TND';
+    this.priceRangeDisplay = '50000 - 100000 TND';
     
     this.applyFilters();
   }

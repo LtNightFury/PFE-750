@@ -22,21 +22,35 @@ export class PropertyListComponent implements OnInit {
     });
   }
 
-  onFiltersChanged(filters: any) {
-    console.log('FILTER TYPE:', filters.type);
-    console.log('ACTUAL TYPES:', this.allProperties.map(p => p.generalinfo.propertyType));
+onFiltersChanged(filters: any) {
+  this.filteredProperties = this.allProperties.filter(prop => {
+    const rawPrice = prop.price.price;
+    const actualPrice = Number(rawPrice);
+
+    const minPrice = filters.minPrice !== null && filters.minPrice !== undefined ? Number(filters.minPrice) : null;
+    const maxPrice = filters.maxPrice !== null && filters.maxPrice !== undefined ? Number(filters.maxPrice) : null;
+
+    console.log(`Checking property price: ${rawPrice} → ${actualPrice} | min: ${minPrice} | max: ${maxPrice}`);
+
+    const matchesDealType = filters.dealType ? prop.generalinfo.deal_type.toLowerCase() === filters.dealType.toLowerCase() : true;
+    const matchesType = filters.type ? prop.generalinfo.propertyType === filters.type : true;
+    const matchesCity = filters.city ? prop.location.city.toLowerCase().includes(filters.city.toLowerCase()) : true;
+    const matchesMinPrice = minPrice !== null ? actualPrice >= minPrice : true;
+    const matchesMaxPrice = maxPrice !== null ? actualPrice <= maxPrice : true;
+    const matchesSearch = filters.search ? prop.generalinfo.title.toLowerCase().includes(filters.search.toLowerCase()) : true;
+
+    const matched = matchesDealType && matchesType && matchesCity && matchesMinPrice && matchesMaxPrice && matchesSearch;
+
+    if (!matched) {
+      console.log(`❌ Not matched: ${prop.generalinfo.title} | Price: ${actualPrice}`);
+    }
+
+    return matched;
+  });
+
+  console.log('✅ Filtered properties:', this.filteredProperties.length);
+}
 
 
-    this.filteredProperties = this.allProperties.filter(prop => {
-      const matchesDealType = filters.dealType ? prop.generalinfo.deal_type.toLowerCase() === filters.dealType.toLowerCase() : true;
-      const matchesType = filters.type ? prop.generalinfo.propertyType === filters.type : true;
-      const matchesCity = filters.city ? prop.location.city.toLowerCase().includes(filters.city.toLowerCase()) : true;
-      const matchesMinPrice = filters.minPrice ? +prop.price.price >= filters.minPrice : true;
-      const matchesMaxPrice = filters.maxPrice ? +prop.price.price <= filters.maxPrice : true;
-      const matchesSearch = filters.search ? prop.generalinfo.title.toLowerCase().includes(filters.search.toLowerCase()) : true;
-
-      return matchesDealType && matchesType && matchesCity && matchesMinPrice && matchesMaxPrice && matchesSearch;
-    });
-  }
 
 }
